@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
@@ -72,6 +71,8 @@ class _SignupState extends State<Signup> {
                         // Add functionality for form submission here
                         // For example, you can access the form data using:
                         // emailOfFormController.text and passwordOfFormController.text
+                        Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => SearchScreen()), );
                       }
                     },
                     child: Text(
@@ -93,9 +94,11 @@ class _SignupState extends State<Signup> {
   TextFormField passWrdFormWidget(
       TextEditingController passwordOfFormController) {
     return TextFormField(
+      
       controller: passwordOfFormController,
       obscureText: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
+        prefixIcon:  Icon(Icons.lock_outline),
         labelText: "Password",
         border: OutlineInputBorder(),
       ),
@@ -113,7 +116,8 @@ class _SignupState extends State<Signup> {
     return TextFormField(
       controller: emailOfFormController,
       keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.mail),
         labelText: "E-mail",
         border: OutlineInputBorder(),
       ),

@@ -41,30 +41,35 @@ class _SearchScreenState extends State<SearchScreen> {
                     _itemNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Item Name",
+                    prefixIcon:  Icons.sports_basketball,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
+                    prefixIcon:  Icons.branding_watermark,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _cityNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "City Name",
+                    prefixIcon:  Icons.location_city,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _universityNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "University Name",
+                    prefixIcon:  Icons.school,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _hostelNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Hostel Name",
+                    prefixIcon:  Icons.house_outlined,
                   ),
                   SizedBox(height: 30),
                   DropdownButtonFormField(
@@ -77,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       onChanged: (val) {}),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
+                    child: ElevatedButton.icon(
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber),
@@ -88,7 +93,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           print('Signing up with Username: $username');
                         }
                       },
-                      child: Text(
+                      icon: Icon(Icons.search), // Add your desired icon here
+                      label: Text(
                         'Search',
                         style: TextStyle(color: Colors.black),
                       ),
@@ -109,6 +115,7 @@ TextFormField nameFormWidget(
   RegExp regExp, {
   bool obscureText = false,
   String nameOfLabel = '',
+  IconData? prefixIcon, // Accepts an optional IconData parameter for the prefix icon
 }) {
   return TextFormField(
     controller: nameOfFormController,
@@ -116,6 +123,7 @@ TextFormField nameFormWidget(
     decoration: InputDecoration(
       labelText: nameOfLabel,
       border: OutlineInputBorder(),
+      prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null, // Use the provided icon if not null
     ),
     validator: (value) {
       // if (value == null || value.isEmpty) {
