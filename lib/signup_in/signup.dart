@@ -1,42 +1,128 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
-final GlobalKey _formKey = GlobalKey<FormState>();
+class Signup extends StatefulWidget {
+  Signup({Key? key}) : super(key: key);
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController passwordOfFormController;
+  late TextEditingController emailOfFormController;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordOfFormController = TextEditingController();
+    emailOfFormController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    passwordOfFormController.dispose();
+    emailOfFormController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+  double widtht_of_screen = MediaQuery.of(context).size.width;
+  double height_of_screen = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Form(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          // margin: EdgeInsets.all(20.0),
+      body: SingleChildScrollView(
+        child: Form(
           key: _formKey,
-          color: Colors.blueGrey[50],
-          child: Column(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopify_rounded),
-                onPressed: () {},
-              ),
-              Text(
-                "Campus Sell",
-              ),
-              const SizedBox(height: 128),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: "First Name",
-                
+          child: Container(
+            width:widtht_of_screen ,
+            height: height_of_screen,
+            padding: EdgeInsets.all(10),
+            color: Colors.blueGrey[50],
+            child: Column(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.shopify_rounded,
+                    size: 80,
+                    color: Colors.amber,
+                  ),
+                  onPressed: () {
+                    // Add functionality to the IconButton if needed
+                  },
                 ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-              },),
-            ],
+                Text(
+                  "Campus Sell",
+                ),
+                const SizedBox(height: 128),
+                emailFormWidget(emailOfFormController),
+                const SizedBox(height: 60),
+                passWrdFormWidget(passwordOfFormController),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.amber),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Add functionality for form submission here
+                        // For example, you can access the form data using:
+                        // emailOfFormController.text and passwordOfFormController.text
+                      }
+                    },
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                Text("Already have an account? Sign in",),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  // Form methods
+  TextFormField passWrdFormWidget(
+      TextEditingController passwordOfFormController) {
+    return TextFormField(
+      controller: passwordOfFormController,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: "Password",
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your password';
+        }
+        return null;
+      },
+    );
+  }
+
+  TextFormField emailFormWidget(
+      TextEditingController emailOfFormController) {
+    return TextFormField(
+      controller: emailOfFormController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        labelText: "E-mail",
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your email';
+        }
+        return null;
+      },
     );
   }
 }
