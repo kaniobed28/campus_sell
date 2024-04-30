@@ -1,27 +1,44 @@
+import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class Signup extends StatelessWidget {
-  Signup({Key? key})
-      : emailOfFormController = TextEditingController(),
-        passwordOfFormController = TextEditingController(),
-        super(key: key);
+class Signup extends StatefulWidget {
+  Signup({Key? key}) : super(key: key);
 
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController passwordOfFormController;
-  final TextEditingController emailOfFormController;
+  late TextEditingController passwordOfFormController;
+  late TextEditingController emailOfFormController;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordOfFormController = TextEditingController();
+    emailOfFormController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    passwordOfFormController.dispose();
+    emailOfFormController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    double widtht_of_screen = MediaQuery.of(context).size.width;
-    double height_of_screen = MediaQuery.of(context).size.height;
+  double widtht_of_screen = MediaQuery.of(context).size.width;
+  double height_of_screen = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Container(
-            width: widtht_of_screen,
+            width:widtht_of_screen ,
             height: height_of_screen,
             padding: EdgeInsets.all(10),
             color: Colors.blueGrey[50],
@@ -56,12 +73,8 @@ class Signup extends StatelessWidget {
                         // Add functionality for form submission here
                         // For example, you can access the form data using:
                         // emailOfFormController.text and passwordOfFormController.text
-                        Get.to(SellInfoScreen());
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => SellInfoScreen()),
-                        // );
+                        Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => SellInfoScreen()), );
                       }
                     },
                     child: Text(
@@ -70,9 +83,7 @@ class Signup extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  "Already have an account? Sign in",
-                ),
+                Text("Already have an account? Sign in",),
               ],
             ),
           ),
@@ -85,10 +96,11 @@ class Signup extends StatelessWidget {
   TextFormField passWrdFormWidget(
       TextEditingController passwordOfFormController) {
     return TextFormField(
+      
       controller: passwordOfFormController,
       obscureText: true,
       decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.lock_outline),
+        prefixIcon:  Icon(Icons.lock_outline),
         labelText: "Password",
         border: OutlineInputBorder(),
       ),
@@ -101,7 +113,8 @@ class Signup extends StatelessWidget {
     );
   }
 
-  TextFormField emailFormWidget(TextEditingController emailOfFormController) {
+  TextFormField emailFormWidget(
+      TextEditingController emailOfFormController) {
     return TextFormField(
       controller: emailOfFormController,
       keyboardType: TextInputType.emailAddress,
@@ -118,24 +131,4 @@ class Signup extends StatelessWidget {
       },
     );
   }
-}
-
-// class SellInfoScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Sell Info'),
-//       ),
-//       body: Center(
-//         child: Text('Sell Info Screen with some'),
-//       ),
-//     );
-//   }
-// }
-
-void main() {
-  runApp(MaterialApp(
-    home: Signup(),
-  ));
 }

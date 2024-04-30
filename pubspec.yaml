@@ -7,8 +7,11 @@ environment:
   sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
+  firebase_auth: ^4.19.2
+  firebase_core: ^2.30.0
   flutter:
     sdk: flutter
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +20,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+  - assets/img/
+
+
