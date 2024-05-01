@@ -26,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           title: Text("Search Here"),
           centerTitle: true,
-          leading: Icon(Icons.search),
+          actions: const [ Icon(Icons.search),],
           backgroundColor: Colors.amber,
         ),
         body: SingleChildScrollView(

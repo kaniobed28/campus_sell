@@ -1,13 +1,11 @@
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
-import 'package:campus_sell/signup_in/signin.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:campus_sell/signup_in/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class Signup extends StatelessWidget {
-  Signup({Key? key})
+class SignIn extends StatelessWidget {
+  SignIn({Key? key})
       : emailOfFormController = TextEditingController(),
         passwordOfFormController = TextEditingController(),
         super(key: key);
@@ -70,22 +68,23 @@ class Signup extends StatelessWidget {
                         }
                       },
                       child: const Text(
-                        'Sign Up',
+                        'Sign In',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
-                   Row(
-                    children: [ const Text(
-                      "Already have an account? ",
-                    ),GestureDetector(
-                      onTap: ()=>Get.to(()=>SignIn()),
+                  Row(children: [
+                    const Text(
+                      "Don't have an account? ",
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.to(() => Signup()),
                       child: const Text(
-                        "Sign in",
+                        "Sign Up",
                         style: TextStyle(color: Colors.amber),
                       ),
-                    )]
-                  ),
+                    )
+                  ]),
                 ],
               ),
             ),
@@ -148,8 +147,20 @@ class Signup extends StatelessWidget {
 //   }
 // }
 
-// void main() {
-//   runApp(MaterialApp(
-//     home: Signup(),
-//   ));
+// class Try extends StatelessWidget {
+//   const Try({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return  GetMaterialApp(
+//       home: SignIn() ,
+//     );
+//   }
 // }
+
+// the main is for trials only
+void main() {
+  runApp(GetMaterialApp(
+    home: SignIn(),
+  ));
+}

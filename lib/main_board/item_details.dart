@@ -36,34 +36,36 @@ class _ItemDetailsWidgetState extends State<ItemDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     double screen_height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: Text('Item Details'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AnimatedContainer(
-            duration: Duration(seconds: 1),
-            height: screen_height * 0.4,
-            decoration: BoxDecoration(
-              color: _colors[_currentIndex],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+          title: Text('Item Details'),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AnimatedContainer(
+              duration: Duration(seconds: 1),
+              height: screen_height * 0.4,
+              decoration: BoxDecoration(
+                color: _colors[_currentIndex],
+              ),
             ),
-          ),
-          SizedBox(height: 20), // Spacer
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              children: [
-                _buildInfoContainer('Info 1'),
-                _buildInfoContainer('Info 2'),
-                _buildInfoContainer('Info 3'),
-                _buildInfoContainer('Info 4'),
-              ],
+            SizedBox(height: 20), // Spacer
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: [
+                  _buildInfoContainer('Info 1'),
+                  _buildInfoContainer('Info 2'),
+                  _buildInfoContainer('Info 3'),
+                  _buildInfoContainer('Info 4'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

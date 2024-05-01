@@ -1,10 +1,16 @@
+import 'package:campus_sell/controllers/auth.dart';
+import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/main_board/item_details.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'signup_in/signup.dart';
 import 'main_board/dashboard.dart';
 // import "forms_repo/search_screen.dart";
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Get.put(AuthController());
   runApp( MainApp());
 }
 

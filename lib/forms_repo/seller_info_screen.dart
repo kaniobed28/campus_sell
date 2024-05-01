@@ -29,7 +29,7 @@ class _SellInfoScreen extends State<SellInfoScreen> {
         appBar: AppBar(
           title: Text("Additional Profile for Sellers"),
           centerTitle: true,
-          leading: Icon(Icons.person_4_rounded),
+          // leading: Icon(Icons.person_4_rounded),
           backgroundColor: Colors.amber,
         ),
         body: SingleChildScrollView(
@@ -73,6 +73,20 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                     prefixIcon:  Icons.house_outlined,
                   ),
                   SizedBox(height: 30),
+                  nameFormWidget(
+                    _hostelNameController,
+                    RegExp(r'^[a-zA-Z]+$'),
+                    nameOfLabel: "Phone Number",
+                    prefixIcon:  Icons.call,
+                  ),
+                  SizedBox(height: 30),
+                  nameFormWidget(
+                    _hostelNameController,
+                    RegExp(r'^[a-zA-Z]+$'),
+                    nameOfLabel: "Social Media  Links (optional)",
+                    prefixIcon:  Icons.message,
+                  ),
+                  SizedBox(height: 30),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -83,7 +97,7 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          Get.to(DashBoard());
+                          Get.to(() => DashBoard());
                           // Navigator.push(
                           // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                         }

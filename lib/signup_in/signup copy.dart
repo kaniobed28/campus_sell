@@ -2,6 +2,7 @@ import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
@@ -73,6 +74,9 @@ class _SignupState extends State<Signup> {
                         // Add functionality for form submission here
                         // For example, you can access the form data using:
                         // emailOfFormController.text and passwordOfFormController.text
+                          Get.to(() => SellInfoScreen());
+
+
                         Navigator.push(
                           context,MaterialPageRoute(builder: (context) => SellInfoScreen()), );
                       }
