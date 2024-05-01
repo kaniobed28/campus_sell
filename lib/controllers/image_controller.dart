@@ -23,7 +23,7 @@ class ImageController extends GetxController {
       try {
         File file = File(image.path);
         String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-         firebase_storage.Reference ref =  firebase_storage
+        firebase_storage.Reference ref = firebase_storage
             .FirebaseStorage.instance
             .ref()
             .child(fileName);

@@ -93,16 +93,16 @@ class SellPage extends StatelessWidget {
                   ImagePickerPage(),
                   ElevatedButton(
                     
-                    onPressed: () {
+                    onPressed: () async{
                     if (_formKey.currentState!.validate()) {
                       
                       ImageController imageController =
                           Get.find<ImageController>();
                       ItemForSaleController itemForSaleController =
                           Get.find<ItemForSaleController>();
-                      imageController
+                     await imageController
                           .uploadImagesToFirebase(); //upload  the images to firebase storage and get the download url
-                      //imageController.imagesUrls?.toList();//converting the list to list  of strings and storing them for firestore.
+                      imageController.imagesUrls.toList();//converting the list to list  of strings and storing them for firestore.
                       itemForSaleController.addItem(
                           itemNameController.text,
                           itemTypeController.text,
