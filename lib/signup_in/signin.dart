@@ -59,7 +59,7 @@ class SignIn extends StatelessWidget {
                           // Add functionality for form submission here
                           // For example, you can access the form data using:
                           // emailOfFormController.text and passwordOfFormController.text
-                          Get.to(() => DashBoard());
+                          Get.to(() => DashBoardM());
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(

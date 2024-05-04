@@ -97,7 +97,7 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => DashBoard());
+                          Get.to(() => DashBoardM());
                           // Navigator.push(
                           // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                         }

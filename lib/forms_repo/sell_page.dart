@@ -107,7 +107,7 @@ class SellPage extends StatelessWidget {
                             itemDescriptionController.text,
                             double.parse(itemPriceController.text),
                             imageController.imagesUrls.cast());
-                        Get.to(() => DashBoard());
+                        Get.to(() => DashBoardM());
                       }
                     },
                     child: Text('Upload'),
