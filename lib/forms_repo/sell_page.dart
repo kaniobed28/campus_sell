@@ -92,26 +92,24 @@ class SellPage extends StatelessWidget {
                   ),
                   ImagePickerPage(),
                   ElevatedButton(
-                    
-                    onPressed: () async{
-                    if (_formKey.currentState!.validate()) {
-                      
-                      ImageController imageController =
-                          Get.find<ImageController>();
-                      ItemForSaleController itemForSaleController =
-                          Get.find<ItemForSaleController>();
-                     await imageController
-                          .uploadImagesToFirebase(); //upload  the images to firebase storage and get the download url
-                      imageController.imagesUrls.toList();//converting the list to list  of strings and storing them for firestore.
-                      itemForSaleController.addItem(
-                          itemNameController.text,
-                          itemTypeController.text,
-                          itemDescriptionController.text,
-                          double.parse(itemPriceController.text),
-                           imageController.imagesUrls.cast());
-                      Get.to(() => DashBoard());
-                    }
-                    } , 
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        ImageController imageController =
+                            Get.find<ImageController>();
+                        ItemForSaleController itemForSaleController =
+                            Get.find<ItemForSaleController>();
+                        await imageController
+                            .uploadImagesToFirebase(); //upload  the images to firebase storage and get the download url
+                        //imageController.imagesUrls.toList();//converting the list to list  of strings and storing them for firestore.
+                        itemForSaleController.addItem(
+                            itemNameController.text,
+                            itemTypeController.text,
+                            itemDescriptionController.text,
+                            double.parse(itemPriceController.text),
+                            imageController.imagesUrls.cast());
+                        Get.to(() => DashBoard());
+                      }
+                    },
                     child: Text('Upload'),
                   ),
                 ],
