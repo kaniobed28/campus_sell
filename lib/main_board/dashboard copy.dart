@@ -1,6 +1,9 @@
+import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/main_board/item_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:get/get.dart';
@@ -57,17 +60,18 @@ class _DashBoardState extends State<DashBoard> {
                   centerTitle: false,
                   title: TitleSingleScrollView(),
                   background: Container(
-                    child: const Image(
-                        image: AssetImage(
-                            "assets/img/campus-sell-logo-transparent.png")),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         // color: Colors.amber,
                         borderRadius: BorderRadius.all(Radius.circular(0))),
                     margin: EdgeInsets.all(0),
+                    child: const Image(
+                        image: AssetImage(
+                            "assets/img/campus-sell-logo-transparent.png")),
                   ),
                 ),
               ),
-              // SliverToBoxForTrial(widtht_of_screen, height_of_screen),
+              SliverToBoxForTrial(widtht_of_screen, height_of_screen),
+              // FutureBuilderForRowItemsOnDashboard(widtht_of_screen),
               SliverToBoxAdapter(
                 child: Container(
                   height: 5,
@@ -394,4 +398,54 @@ goods by seller and each seller has the room to post one thing for 24 hours. */
       ),
     );
   }
+}
+FutureBuilder<QuerySnapshot<Map<String, dynamic>>> FutureBuilderForRowItemsOnDashboard(double screenWidth,) {
+    return FutureBuilder(
+          future: FirebaseFirestore.instance.collection("users").get(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return SizedBox(
+                height: 200,
+                width: screenWidth,//size of the horizontal display for groups of items
+                
+                  child: GridView.builder( // used gridview because listview was giving me problem on horizontal axis
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 1,
+                      mainAxisSpacing: 1, // Set the spacing between items
+                    ),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        child: Container(// container for color purpose and to help design
+                          color: Colors.blueAccent,
+                          
+                          child: ListTile(
+                            selectedColor: Colors.black26,
+                            title: Text(snapshot.data!.docs[index].data()['name'] ?? "no name"),
+                            trailing: Text("last"),
+                          ),
+                        ),
+                        onTap: () => print('${index.toString()}'),
+                      );
+                    },
+                  ),
+              
+              );
+            } else {
+              return Center(child: Text('Error Loading Data'));
+            }
+          },
+        );
+  }
+  void main(List<String> args) {
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(DashBoard());
+}
 }
