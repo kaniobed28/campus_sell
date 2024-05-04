@@ -1,3 +1,4 @@
+import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:campus_sell/signup_in/signup.dart';
@@ -13,84 +14,98 @@ class SignIn extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
+  AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     double widtht_of_screen = MediaQuery.of(context).size.width;
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Container(
-              width: widtht_of_screen,
-              height: height_of_screen,
-              padding: EdgeInsets.all(10),
-              color: Colors.blueGrey[50],
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.shopify_rounded,
-                      size: 80,
-                      color: Colors.amber,
+      child: authController.isAuthenticated.isTrue
+          ? DashBoardM()
+          : Scaffold(
+              body: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    width: widtht_of_screen,
+                    height: height_of_screen,
+                    padding: EdgeInsets.all(10),
+                    color: Colors.blueGrey[50],
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.shopify_rounded,
+                            size: 80,
+                            color: Colors.amber,
+                          ),
+                          onPressed: () {
+                            // Add functionality to the IconButton if needed
+                          },
+                        ),
+                        Text(
+                          "Campus Sell",
+                        ),
+                        const SizedBox(height: 128),
+                        emailFormWidget(emailOfFormController),
+                        const SizedBox(height: 60),
+                        passWrdFormWidget(passwordOfFormController),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.amber),
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                // Add functionality for form submission here
+                                // For example, you can access the form data using:
+                                // emailOfFormController.text and passwordOfFormController.text
+                                AuthController authController =
+                                    Get.find<AuthController>();
+                                try {
+                                 await authController.signInWithEmailAndPassword(
+                                      emailOfFormController.text.trim(),
+                                      passwordOfFormController.text.trim());
+                                  if (authController.uid.isNotEmpty) {
+                                    Get.to(() => DashBoardM());
+                                  } else {
+                                    print("wrong"); //do some message to user here
+                                  }
+                                } catch (e) {}
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => SellInfoScreen()),
+                                // );
+                              }
+                            },
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        Row(children: [
+                          const Text(
+                            "Don't have an account? ",
+                          ),
+                          GestureDetector(
+                            onTap: () => Get.to(() => Signup()),
+                            child: const Text(
+                              "Sign Up",
+                              style: TextStyle(color: Colors.amber),
+                            ),
+                          )
+                        ]),
+                      ],
                     ),
-                    onPressed: () {
-                      // Add functionality to the IconButton if needed
-                    },
                   ),
-                  Text(
-                    "Campus Sell",
-                  ),
-                  const SizedBox(height: 128),
-                  emailFormWidget(emailOfFormController),
-                  const SizedBox(height: 60),
-                  passWrdFormWidget(passwordOfFormController),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.amber),
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Add functionality for form submission here
-                          // For example, you can access the form data using:
-                          // emailOfFormController.text and passwordOfFormController.text
-                          Get.to(() => DashBoardM());
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => SellInfoScreen()),
-                          // );
-                        }
-                      },
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  Row(children: [
-                    const Text(
-                      "Don't have an account? ",
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.to(() => Signup()),
-                      child: const Text(
-                        "Sign Up",
-                        style: TextStyle(color: Colors.amber),
-                      ),
-                    )
-                  ]),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 

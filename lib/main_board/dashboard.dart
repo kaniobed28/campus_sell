@@ -1,6 +1,8 @@
+import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
+import 'package:campus_sell/signup_in/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,6 +36,16 @@ class DashBoardM extends StatelessWidget {
                   leading: const Icon(Icons.sell),
                   title: const Text('Sell Item'),
                   onTap: () => Get.to(() => SellPage()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.outbond),
+                  title: const Text('SignOut'),
+                  onTap: () {
+                      AuthController authController = Get.find<AuthController>();
+                      authController.signOut();
+                      Get.to(() => SignIn());
+
+                  },
                 ),
               ],
             ),

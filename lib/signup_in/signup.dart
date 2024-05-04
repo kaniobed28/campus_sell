@@ -1,3 +1,4 @@
+import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:campus_sell/signup_in/signin.dart';
@@ -16,12 +17,14 @@ class Signup extends StatelessWidget {
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
 
+  AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     double widtht_of_screen = MediaQuery.of(context).size.width;
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: Scaffold(
+      
+      child: authController.isAuthenticated.isTrue?DashBoardM(): Scaffold(
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -56,12 +59,24 @@ class Signup extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           // Add functionality for form submission here
                           // For example, you can access the form data using:
                           // emailOfFormController.text and passwordOfFormController.text
+                          try {
+                          await authController.signUpWithEmailAndPassword(emailOfFormController.text.trim(), passwordOfFormController.text.trim());
+                            if (authController.isAuthenticated.isTrue) {
+                              // print(authController.uid.isNotEmpty);
+                              // print(authController.uid.value);
                           Get.to(() => DashBoardM());
+                              
+                            } else {
+                              print("wrong");     //I have to work here
+                            }
+                          } catch (e) {
+                            
+                          }
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(
