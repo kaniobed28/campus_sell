@@ -1,6 +1,6 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/main_board/item_details.dart';
+import 'package:campus_sell/main_board/clicked_item.dart';
 import 'package:campus_sell/signup_in/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

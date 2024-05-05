@@ -2,6 +2,7 @@ import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
+import 'package:campus_sell/main_board/clicked_item.dart';
 import 'package:campus_sell/signup_in/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,14 @@ class DashBoardM extends StatelessWidget {
                   leading: const Icon(Icons.sell),
                   title: const Text('Sell Item'),
                   onTap: () => Get.to(() => SellPage()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.tv),
+                  title: const Text('Advertisment'),
+                  onTap: () {
+                      // 
+
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.outbond),
@@ -218,7 +227,7 @@ class DashBoardM extends StatelessWidget {
                       // trailing: Text("last"),
                     ),
                   ),
-                  onTap: () => print('${index.toString()}'),
+                  onTap: () => Get.to(ClickedItem(),arguments: filteredItems[index].data()),
                 );
               },
             ),
