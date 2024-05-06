@@ -97,7 +97,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "Fashion"),
                 ),
                 SliverToBoxAdapter(
@@ -111,7 +111,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "Food"),
                 ),
                 SliverToBoxAdapter(
@@ -125,7 +125,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "electronic"),
                 ),
                 SliverToBoxAdapter(
@@ -139,7 +139,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "beauty"),
                 ),
                 SliverToBoxAdapter(
@@ -153,7 +153,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "sports"),
                 ),
                 SliverToBoxAdapter(
@@ -167,7 +167,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "stationery"),
                 ),
                 SliverToBoxAdapter(
@@ -181,7 +181,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "healthcare "),
                 ),
                 SliverToBoxAdapter(
@@ -195,7 +195,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "kitchen"),
                 ),
                 SliverToBoxAdapter(
@@ -209,7 +209,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "jewelry"),
                 ),
                 SliverToBoxAdapter(
@@ -223,7 +223,7 @@ class DashBoardM extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilderForRowItemsOnDashboard(
+                  child: StreamBuilderForRowItemsOnDashboard(
                       widtht_of_screen, "others"),
                 ),
                 SliverToBoxAdapter(
@@ -240,88 +240,87 @@ class DashBoardM extends StatelessWidget {
     
   }
 
-  FutureBuilder<QuerySnapshot<Map<String, dynamic>>>
-      FutureBuilderForRowItemsOnDashboard(double screenWidth, String itemType) {
-    return FutureBuilder(
-      future: FirebaseFirestore.instance.collection("items").get(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasData) {
-          List<DocumentSnapshot<Map<String, dynamic>>> items =
-              snapshot.data!.docs;
-          List<DocumentSnapshot<Map<String, dynamic>>> filteredItems = items
-              .where((item) => item.data()!['itemType'] == itemType)
-              .toList();
-          return SizedBox(
-            height: 200,
-            width:
-                screenWidth, //size of the horizontal display for groups of items
-
-            child: GridView.builder(
-              // used gridview because listview was giving me problem on horizontal axis
-              scrollDirection: Axis.horizontal,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                crossAxisSpacing: 1,
-                mainAxisSpacing: 1, // Set the spacing between items
-              ),
-              itemCount: filteredItems
-                  .length, //remember to change always to filtered length
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: Container(
-                    color: Colors.amber,
-                    child: ListTile(
-                      selectedColor: Colors.black26,
-                      title: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              10), // Adjust the radius as needed
-                        ),
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(10), // Same radius as above
-                          child: Image(
-                            height: 170, // Adjust the width as needed. I will change it to dynamic screen later
-                            image: NetworkImage(
-                                filteredItems[index].data()!['imagesUrls'][0]),
-                          ),
-                        ),
-                      ),
-                      subtitle: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              10), // Adjust the radius as needed
-                          border: Border.all(
-                              color: Colors.black), // Optional: Add a border
-                        ),
-                        child: Row(
-                          children: [
-                            Text(filteredItems[index]
-                                .data()!['itemName']
-                                .toString().trim()),
-                                Expanded(child: SizedBox()),
-                            Text(filteredItems[index]
-                                .data()!['price']
-                                .toString().trim()),
-                          ],
-                        ),
-                      ),
-                      // trailing: Text("last"),
-                    ),
-                  ),
-                  onTap: () => Get.to(ClickedItem(),arguments: filteredItems[index].data()),
-                );
-              },
+  StreamBuilder<QuerySnapshot<Map<String, dynamic>>> StreamBuilderForRowItemsOnDashboard(double screenWidth, String itemType) {
+  return StreamBuilder(
+    stream: FirebaseFirestore.instance.collection("items").snapshots(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasData) {
+        List<DocumentSnapshot<Map<String, dynamic>>> items =
+            snapshot.data!.docs;
+        List<DocumentSnapshot<Map<String, dynamic>>> filteredItems = items
+            .where((item) => item.data()!['itemType'] == itemType)
+            .toList();
+        return SizedBox(
+          height: 200,
+          width:
+              screenWidth, //size of the horizontal display for groups of items
+          child: GridView.builder(
+            // used gridview because listview was giving me problem on horizontal axis
+            scrollDirection: Axis.horizontal,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1, // Set the spacing between items
             ),
-          );
-        } else {
-          return Center(child: Text('Error Loading Data'));
-        }
-      },
-    );
-  }
+            itemCount: filteredItems
+                .length, //remember to change always to filtered length
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                child: Container(
+                  color: Colors.amber,
+                  child: ListTile(
+                    selectedColor: Colors.black26,
+                    title: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            10), // Adjust the radius as needed
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(10), // Same radius as above
+                        child: Image(
+                          height: 170, // Adjust the width as needed. I will change it to dynamic screen later
+                          image: NetworkImage(
+                              filteredItems[index].data()!['imagesUrls'][0]),
+                        ),
+                      ),
+                    ),
+                    subtitle: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            10), // Adjust the radius as needed
+                        border: Border.all(
+                            color: Colors.black), // Optional: Add a border
+                      ),
+                      child: Row(
+                        children: [
+                          Text(filteredItems[index]
+                              .data()!['itemName']
+                              .toString().trim()),
+                          Expanded(child: SizedBox()),
+                          Text(filteredItems[index]
+                              .data()!['price']
+                              .toString().trim()),
+                        ],
+                      ),
+                    ),
+                    // trailing: Text("last"),
+                  ),
+                ),
+                onTap: () => Get.to(ClickedItem(),arguments: filteredItems[index].data()),
+              );
+            },
+          ),
+        );
+      } else {
+        return Center(child: Text('Error Loading Data'));
+      }
+    },
+  );
+}
+
 }
 
 // void main(List<String> args) async {
