@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageController extends GetxController {
   RxList<XFile> images = <XFile>[].obs;
-  List imagesUrls = <String>[]; // I have to change it to normal list if there is not need for it later.
+  List<String> imagesUrls = <String>[];
 
   Future<void> pickImage(ImageSource source) async {
     try {
@@ -29,13 +29,22 @@ class ImageController extends GetxController {
             .child(fileName);
         await ref.putFile(file);
         String imageUrl = await ref.getDownloadURL();
-        // Download links of the seller item images has been added  to the list of images ulrs.
         imagesUrls.add(imageUrl);
-        print(imagesUrls.toList());
         print('Image uploaded to Firebase: $imageUrl');
       } catch (e) {
         print('Error uploading image to Firebase: $e');
       }
     }
+
+    // If no image uploaded, add a placeholder URL before clearing the list
+    if (imagesUrls.isEmpty) {
+      imagesUrls.add('https://example.com/placeholder.jpg');
+    }
+
+    clearImages(); // Call the method to clear the images list
+  }
+
+  void clearImages() {
+    images.clear();
   }
 }

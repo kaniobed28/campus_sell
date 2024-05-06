@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDDOQUaX7xGtSYRCB-hT9CM5SapayaroZE',
-    appId: '1:1091091501344:web:aea288424434128e960745',
-    messagingSenderId: '1091091501344',
-    projectId: 'trialapp-7f05e',
-    authDomain: 'trialapp-7f05e.firebaseapp.com',
-    storageBucket: 'trialapp-7f05e.appspot.com',
+    apiKey: 'AIzaSyD_tdo8dVVpSYSGpx2lo4cfBOGQR6Ok2ns',
+    appId: '1:855349177144:web:403cfa7bd3e0bd151eefcd',
+    messagingSenderId: '855349177144',
+    projectId: 'camseltry',
+    authDomain: 'camseltry.firebaseapp.com',
+    storageBucket: 'camseltry.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6wHsTOOBnFY7zXH4BdvNAXRb1RXa7wVA',
-    appId: '1:1091091501344:android:e7c6f575c80e0285960745',
-    messagingSenderId: '1091091501344',
-    projectId: 'trialapp-7f05e',
-    storageBucket: 'trialapp-7f05e.appspot.com',
+    apiKey: 'AIzaSyAyrMmNY3IJZwEf-kO2TtEeWWdm05oaGL8',
+    appId: '1:855349177144:android:95ba4dbf73ee6c301eefcd',
+    messagingSenderId: '855349177144',
+    projectId: 'camseltry',
+    storageBucket: 'camseltry.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBAE9u80PiqD09G6v9Ghv33WsBuoNtg2Sk',
-    appId: '1:1091091501344:ios:7a19e125d2148dbf960745',
-    messagingSenderId: '1091091501344',
-    projectId: 'trialapp-7f05e',
-    storageBucket: 'trialapp-7f05e.appspot.com',
+    apiKey: 'AIzaSyDKfb22XFFk-xuf3zH5YNZrkgt8alAF4fg',
+    appId: '1:855349177144:ios:8ebee09193f3521d1eefcd',
+    messagingSenderId: '855349177144',
+    projectId: 'camseltry',
+    storageBucket: 'camseltry.appspot.com',
     iosBundleId: 'com.example.campusSell',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBAE9u80PiqD09G6v9Ghv33WsBuoNtg2Sk',
-    appId: '1:1091091501344:ios:7a19e125d2148dbf960745',
-    messagingSenderId: '1091091501344',
-    projectId: 'trialapp-7f05e',
-    storageBucket: 'trialapp-7f05e.appspot.com',
+    apiKey: 'AIzaSyDKfb22XFFk-xuf3zH5YNZrkgt8alAF4fg',
+    appId: '1:855349177144:ios:8ebee09193f3521d1eefcd',
+    messagingSenderId: '855349177144',
+    projectId: 'camseltry',
+    storageBucket: 'camseltry.appspot.com',
     iosBundleId: 'com.example.campusSell',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDDOQUaX7xGtSYRCB-hT9CM5SapayaroZE',
-    appId: '1:1091091501344:web:a0210f31dc16a811960745',
-    messagingSenderId: '1091091501344',
-    projectId: 'trialapp-7f05e',
-    authDomain: 'trialapp-7f05e.firebaseapp.com',
-    storageBucket: 'trialapp-7f05e.appspot.com',
+    apiKey: 'AIzaSyD_tdo8dVVpSYSGpx2lo4cfBOGQR6Ok2ns',
+    appId: '1:855349177144:web:a0d570862f714edd1eefcd',
+    messagingSenderId: '855349177144',
+    projectId: 'camseltry',
+    authDomain: 'camseltry.firebaseapp.com',
+    storageBucket: 'camseltry.appspot.com',
   );
 
 }

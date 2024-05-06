@@ -56,7 +56,7 @@ class SellPage extends StatelessWidget {
                         child: Text("Select Item Type"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Fashion",
+                        value: "Fashion", //I am not changing the value of fashion and food to begin with small because I just used for trial and doing it that was is possible but I must make changes in the code
                         child: Text("Fashion"),
                       ),
                       DropdownMenuItem<String>(
@@ -64,36 +64,36 @@ class SellPage extends StatelessWidget {
                         child: Text("Food"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Electronic",
+                        value: "electronic",
                         child: Text("Electronic"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Beauty Products",
+                        value: "beauty",
                         child: Text("Beauty Products"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Sports Equipment",
+                        value: "sports",
                         child: Text("Sports Equipment"),
                       ),
                       DropdownMenuItem<String>(
                         value: "Stationery",
-                        child: Text("Stationery"),
+                        child: Text("stationery"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Healthcare Products",
+                        value: "healthcare",
                         child: Text("Healthcare Products"),
                       ),
                       DropdownMenuItem<String>(
                         value: "Jewelry",
-                        child: Text("Jewelry"),
+                        child: Text("jewelry"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Kitchen Appliances",
+                        value: "kitchen",
                         child: Text("Kitchen Appliances"),
                       ),
                       DropdownMenuItem<String>(
                         value: "Others",
-                        child: Text("Others"),
+                        child: Text("others"),
                       ),
                     ],
                     onChanged: (val) {
@@ -156,6 +156,7 @@ class SellPage extends StatelessWidget {
                             itemDescriptionController.text,
                             double.parse(itemPriceController.text),
                             imageController.imagesUrls.cast<String>(),authController.uid.value);
+                            imageController.imagesUrls.clear();
                         Get.to(() => DashBoardM());
                       }
                     },

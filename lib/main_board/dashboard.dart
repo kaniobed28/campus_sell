@@ -112,7 +112,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: FutureBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "food"),
+                      widtht_of_screen, "Food"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
