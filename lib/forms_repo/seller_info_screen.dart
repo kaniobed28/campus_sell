@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
@@ -12,6 +16,33 @@ class SellInfoScreen extends StatefulWidget {
 
 class _SellInfoScreen extends State<SellInfoScreen> {
   List<String> searchResults = ["Select", "2", "3"];
+  List<String> universityList = [
+    "Select University",
+    "University of Ghana",
+    "KNUST",
+    "UCC",
+    "UEW",
+    "UDS",
+    "Ashesi University",
+    "GIMPA",
+    "Central University",
+    "UPSA",
+    "Valley View University"
+  ];
+  List<String> cityList = [
+    "Select City",
+    "Accra",
+    "Kumasi",
+    "Sunyani",
+    "Techiman",
+    "Kintampo",
+    "Tamale",
+    "Takoradi",
+    "Ho",
+    "Cape Coast",
+    "Bolgatanga",
+    "Wa"
+  ];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -21,6 +52,8 @@ class _SellInfoScreen extends State<SellInfoScreen> {
   final TextEditingController _universityNameController =
       TextEditingController();
   final TextEditingController _hostelNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _socialMediaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,50 +77,86 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                 */
                 children: [
                   SizedBox(height: 30),
-    
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
-                    prefixIcon:  Icons.branding_watermark,
+                    prefixIcon: Icons.branding_watermark,
                   ),
                   SizedBox(height: 30),
-                  nameFormWidget(
-                    _cityNameController,
-                    RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "City Name",
-                    prefixIcon:  Icons.location_city,
+                  DropdownButtonFormField<String>(
+                    value: _cityNameController.text.isNotEmpty
+                        ? _cityNameController.text
+                        : null,
+                    items: cityList.map((String city) {
+                      return DropdownMenuItem<String>(
+                        value: city,
+                        child: Text(city),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      _cityNameController.text = val!;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "City Name",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.location_city),
+                    ),
+                    validator: (value) {
+                      // if (value == null || value.isEmpty) {
+                      //   return 'This field is required';
+                      // }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 30),
-                  nameFormWidget(
-                    _universityNameController,
-                    RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "University Name",
-                    prefixIcon:  Icons.school,
+                  DropdownButtonFormField<String>(
+                    value: _universityNameController.text.isNotEmpty
+                        ? _universityNameController.text
+                        : null,
+                    items: universityList.map((String university) {
+                      return DropdownMenuItem<String>(
+                        value: university,
+                        child: Text(university),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      _universityNameController.text = val!;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "University Name",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.school),
+                    ),
+                    validator: (value) {
+                      // if (value == null || value.isEmpty) {
+                      //   return 'This field is required';
+                      // }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _hostelNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Hostel Name",
-                    prefixIcon:  Icons.house_outlined,
+                    prefixIcon: Icons.house_outlined,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
-                    _hostelNameController,
+                    _phoneController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Phone Number",
-                    prefixIcon:  Icons.call,
+                    prefixIcon: Icons.call,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
-                    _hostelNameController,
+                    _socialMediaController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Social Media  Links (optional)",
-                    prefixIcon:  Icons.message,
+                    nameOfLabel: "Social Media (eg.WhatsApp)",
+                    prefixIcon: Icons.message,
                   ),
                   SizedBox(height: 30),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton.icon(
@@ -95,14 +164,32 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber),
                       ),
-                      onPressed: () {
+                      onPressed: () async{
                         if (_formKey.currentState!.validate()) {
+                          AuthController authController =
+                              Get.find<AuthController>();
+                          AdditionalInfoController additionalInfoController =
+                              Get.find<AdditionalInfoController>();
+
+                          await additionalInfoController.updateDataInFirestore({
+                            // data for addition info goes in here
+                            "brand": _brandNameController.text,
+                            "city":_cityNameController.text,
+                            "university":_universityNameController.text,
+                            'hostel': _hostelNameController.text,
+                            'phone': _phoneController.text,
+                            'socialMedia': _socialMediaController.text,
+                          },
+                          
+                          
+                           authController.uid.toString());
                           Get.to(() => DashBoardM());
                           // Navigator.push(
                           // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                         }
                       },
-                      icon: Icon(Icons.person_4_rounded), // Add your desired icon here
+                      icon: Icon(
+                          Icons.person_4_rounded), // Add your desired icon here
                       label: Text(
                         'Update',
                         style: TextStyle(color: Colors.black),
@@ -124,7 +211,8 @@ TextFormField nameFormWidget(
   RegExp regExp, {
   bool obscureText = false,
   String nameOfLabel = '',
-  IconData? prefixIcon, // Accepts an optional IconData parameter for the prefix icon
+  IconData?
+      prefixIcon, // Accepts an optional IconData parameter for the prefix icon
 }) {
   return TextFormField(
     controller: nameOfFormController,
@@ -132,7 +220,9 @@ TextFormField nameFormWidget(
     decoration: InputDecoration(
       labelText: nameOfLabel,
       border: OutlineInputBorder(),
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null, // Use the provided icon if not null
+      prefixIcon: prefixIcon != null
+          ? Icon(prefixIcon)
+          : null, // Use the provided icon if not null
     ),
     validator: (value) {
       // if (value == null || value.isEmpty) {

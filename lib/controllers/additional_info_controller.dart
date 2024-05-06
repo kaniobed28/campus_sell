@@ -17,7 +17,7 @@ class AdditionalInfoController extends GetxController {
     }
   }
 
-  Future<void> updateDataInFirestore(String documentId, Map<String, dynamic>? data, String uid) async {
+  Future<void> updateDataInFirestore( Map<String, dynamic>? data, String uid) async {
     try {
       if (data != null) {
         await firebaseFirestore.collection('add_info').doc(uid).update(data);
@@ -29,4 +29,21 @@ class AdditionalInfoController extends GetxController {
       print('Error updating data: $e');
     }
   }
+
+ Future<Map<String, dynamic>?> getDocumentById(String docId) async {
+  try {
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await firebaseFirestore.collection('add_info').doc(docId).get();
+    if (snapshot.exists) {
+      print('Document data: ${snapshot.data()}');
+      return snapshot.data();
+    } else {
+      print('Document does not exist');
+      return null;
+    }
+  } catch (e) {
+    print('Error getting document: $e');
+    throw e;
+  }
+}
 }

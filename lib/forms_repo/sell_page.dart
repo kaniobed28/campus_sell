@@ -1,3 +1,4 @@
+import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/image_controller.dart';
 import 'package:campus_sell/controllers/selling_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
@@ -19,6 +20,7 @@ class SellPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put<ItemForSaleController>(ItemForSaleController());
+    AuthController authController = Get.find<AuthController>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -50,7 +52,7 @@ class SellPage extends StatelessWidget {
                         : null,
                     items: const [
                       DropdownMenuItem<String>(
-                        value: "Select Item Type",
+                        value: "",
                         child: Text("Select Item Type"),
                       ),
                       DropdownMenuItem<String>(
@@ -153,7 +155,7 @@ class SellPage extends StatelessWidget {
                             itemTypeController.text,
                             itemDescriptionController.text,
                             double.parse(itemPriceController.text),
-                            imageController.imagesUrls.cast<String>());
+                            imageController.imagesUrls.cast<String>(),authController.uid.value);
                         Get.to(() => DashBoardM());
                       }
                     },

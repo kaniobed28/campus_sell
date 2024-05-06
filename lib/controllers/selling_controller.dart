@@ -5,13 +5,14 @@ class ItemForSaleController extends GetxController {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Future<void> addItem(String itemName, String itemType, String description,
-      double price, List<String> imagesUrls) async {
+      double price, List<String> imagesUrls,String ownerId ) async {
     await firebaseFirestore.collection("items").add({
       "itemName": itemName,
       "itemType": itemType,
       "description": description,
       "price": price,
-      "imagesUrls": imagesUrls
+      "imagesUrls": imagesUrls,
+      "ownerId":ownerId
     });
   }
 }
