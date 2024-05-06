@@ -13,6 +13,7 @@ dependencies:
   firebase_storage: ^11.7.4
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   get: ^4.6.6
   image_picker: ^1.1.0
 
@@ -27,4 +28,21 @@ flutter:
   assets:
   - assets/img/
 
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "AppIcon"
+  image_path: "assets/img/png/logo-no-background.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/img/png/logo-no-background.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/img/png/logo-no-background.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/img/png/logo-no-background.png"
