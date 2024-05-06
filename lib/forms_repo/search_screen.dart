@@ -8,7 +8,46 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<String> searchResults = ["Select", "2", "3"];
+  List<String> cityList = [
+    "Select City",
+    "Accra",
+    "Kumasi",
+    "Sunyani",
+    "Techiman",
+    "Kintampo",
+    "Tamale",
+    "Takoradi",
+    "Ho",
+    "Cape Coast",
+    "Bolgatanga",
+    "Wa"
+  ];
+  List<String> itemypeList = [
+    "Select Item Type",
+    "Fashion",
+    "Food",
+    "Electronic",
+    "Beauty Products",
+    "Sports Equipment",
+    "Stationery",
+    "Healthcare Products",
+    "Jewelry",
+    "Kitchen Appliances",
+    "Others"
+  ];
+  List<String> universityList = [
+    "Select University",
+    "University of Ghana",
+    "KNUST",
+    "UCC",
+    "UEW",
+    "UDS",
+    "Ashesi University",
+    "GIMPA",
+    "Central University",
+    "UPSA",
+    "Valley View University"
+  ];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -26,7 +65,9 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           title: Text("Search Here"),
           centerTitle: true,
-          actions: const [ Icon(Icons.search),],
+          actions: const [
+            Icon(Icons.search),
+          ],
           backgroundColor: Colors.amber,
         ),
         body: SingleChildScrollView(
@@ -41,39 +82,46 @@ class _SearchScreenState extends State<SearchScreen> {
                     _itemNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Item Name",
-                    prefixIcon:  Icons.sports_basketball,
+                    prefixIcon: Icons.sports_basketball,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
-                    prefixIcon:  Icons.branding_watermark,
+                    prefixIcon: Icons.branding_watermark,
                   ),
                   SizedBox(height: 30),
                   nameFormWidget(
                     _cityNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "City Name",
-                    prefixIcon:  Icons.location_city,
-                  ),
-                  SizedBox(height: 30),
-                  nameFormWidget(
-                    _universityNameController,
-                    RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "University Name",
-                    prefixIcon:  Icons.school,
-                  ),
-                  SizedBox(height: 30),
-                  nameFormWidget(
-                    _hostelNameController,
-                    RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Hostel Name",
-                    prefixIcon:  Icons.house_outlined,
+                    prefixIcon: Icons.location_city,
                   ),
                   SizedBox(height: 30),
                   DropdownButtonFormField(
-                      items: searchResults
+                      value: cityList[0],
+                      items: cityList
+                          .map((e) => DropdownMenuItem(
+                                child: Text(e),
+                                value: e,
+                              ))
+                          .toList(),
+                      onChanged: (val) {}),
+                  SizedBox(height: 30),
+                  DropdownButtonFormField(
+                      value: universityList[0],
+                      items: universityList
+                          .map((e) => DropdownMenuItem(
+                                child: Text(e),
+                                value: e,
+                              ))
+                          .toList(),
+                      onChanged: (val) {}),
+                  SizedBox(height: 30),
+                  DropdownButtonFormField(
+                      value: itemypeList[0],
+                      items: itemypeList
                           .map((e) => DropdownMenuItem(
                                 child: Text(e),
                                 value: e,
@@ -115,7 +163,8 @@ TextFormField nameFormWidget(
   RegExp regExp, {
   bool obscureText = false,
   String nameOfLabel = '',
-  IconData? prefixIcon, // Accepts an optional IconData parameter for the prefix icon
+  IconData?
+      prefixIcon, // Accepts an optional IconData parameter for the prefix icon
 }) {
   return TextFormField(
     controller: nameOfFormController,
@@ -123,7 +172,9 @@ TextFormField nameFormWidget(
     decoration: InputDecoration(
       labelText: nameOfLabel,
       border: OutlineInputBorder(),
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null, // Use the provided icon if not null
+      prefixIcon: prefixIcon != null
+          ? Icon(prefixIcon)
+          : null, // Use the provided icon if not null
     ),
     validator: (value) {
       // if (value == null || value.isEmpty) {

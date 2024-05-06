@@ -88,7 +88,7 @@ class DashBoardM extends StatelessWidget {
                 
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Car"),
+                    children: [Text("Fashion"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -98,11 +98,11 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: FutureBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "car"),
+                      widtht_of_screen, "Fashion"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("ob"),
+                    children: [Text("Food"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -112,11 +112,11 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: FutureBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "ob"),
+                      widtht_of_screen, "food"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("items"),
+                    children: [Text("Electronic"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -126,11 +126,11 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: FutureBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "items"),
+                      widtht_of_screen, "electronic"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("items"),
+                    children: [Text("Beauty Products"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -140,7 +140,91 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: FutureBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "items"),
+                      widtht_of_screen, "beauty"),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Sports Equipmen"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "sports"),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Stationery"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "stationery"),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Healthcare Products"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "healthcare "),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Kitchen Appliances"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "kitchen"),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Jewelry"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "jewelry"),
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    children: [Text("Others"),
+                      Container(
+                        height: 5,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FutureBuilderForRowItemsOnDashboard(
+                      widtht_of_screen, "others"),
                 ),
                 SliverToBoxAdapter(
                   child: Container(

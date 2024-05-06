@@ -1,3 +1,4 @@
+import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
@@ -69,6 +70,8 @@ class Signup extends StatelessWidget {
                             if (authController.isAuthenticated.isTrue) {
                               // print(authController.uid.isNotEmpty);
                               // print(authController.uid.value);
+                              AdditionalInfoController additionalInfoController = Get.find<AdditionalInfoController>();
+                              await additionalInfoController.addDataToFirestore({}, authController.uid.value);
                           Get.to(() => DashBoardM());
                               
                             } else {

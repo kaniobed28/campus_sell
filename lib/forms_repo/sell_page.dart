@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SellPage extends StatelessWidget {
-  SellPage({super.key});
+  SellPage({Key? key}) : super(key: key);
+
   TextEditingController itemNameController = TextEditingController();
   TextEditingController itemTypeController = TextEditingController();
   TextEditingController itemDescriptionController = TextEditingController();
@@ -32,8 +33,9 @@ class SellPage extends StatelessWidget {
                   TextFormField(
                     controller: itemNameController,
                     decoration: const InputDecoration(
-                        labelText: "Product Name",
-                        border: OutlineInputBorder()),
+                      labelText: "Product Name",
+                      border: OutlineInputBorder(),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'This field is required';
@@ -41,14 +43,64 @@ class SellPage extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: itemTypeController,
-                    decoration: const InputDecoration(
-                        labelText: "Product Type",
-                        border: OutlineInputBorder()),
+                  const SizedBox(height: 10),
+                  DropdownButtonFormField<String>(
+                    value: itemTypeController.text.isNotEmpty
+                        ? itemTypeController.text
+                        : null,
+                    items: const [
+                      DropdownMenuItem<String>(
+                        value: "Select Item Type",
+                        child: Text("Select Item Type"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Fashion",
+                        child: Text("Fashion"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Food",
+                        child: Text("Food"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Electronic",
+                        child: Text("Electronic"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Beauty Products",
+                        child: Text("Beauty Products"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Sports Equipment",
+                        child: Text("Sports Equipment"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Stationery",
+                        child: Text("Stationery"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Healthcare Products",
+                        child: Text("Healthcare Products"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Jewelry",
+                        child: Text("Jewelry"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Kitchen Appliances",
+                        child: Text("Kitchen Appliances"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "Others",
+                        child: Text("Others"),
+                      ),
+                    ],
+                    onChanged: (val) {
+                      itemTypeController.text = val!;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Product Type",
+                      border: OutlineInputBorder(),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'This field is required';
@@ -56,17 +108,15 @@ class SellPage extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   TextFormField(
-                    controller:
-                        itemPriceController, // make sure that it accepts double as price not string.
+                    controller: itemPriceController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     decoration: const InputDecoration(
-                        labelText: "Product Price",
-                        border: OutlineInputBorder()),
+                      labelText: "Product Price",
+                      border: OutlineInputBorder(),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'This field is required';
@@ -74,15 +124,14 @@ class SellPage extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   TextFormField(
                     controller: itemDescriptionController,
                     keyboardType: TextInputType.multiline,
                     decoration: const InputDecoration(
-                        labelText: "Product Description",
-                        border: OutlineInputBorder()),
+                      labelText: "Product Description",
+                      border: OutlineInputBorder(),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'This field is required';
@@ -98,15 +147,13 @@ class SellPage extends StatelessWidget {
                             Get.find<ImageController>();
                         ItemForSaleController itemForSaleController =
                             Get.find<ItemForSaleController>();
-                        await imageController
-                            .uploadImagesToFirebase(); //upload  the images to firebase storage and get the download url
-                        //imageController.imagesUrls.toList();//converting the list to list  of strings and storing them for firestore.
+                        await imageController.uploadImagesToFirebase();
                         itemForSaleController.addItem(
                             itemNameController.text,
                             itemTypeController.text,
                             itemDescriptionController.text,
                             double.parse(itemPriceController.text),
-                            imageController.imagesUrls.cast());
+                            imageController.imagesUrls.cast<String>());
                         Get.to(() => DashBoardM());
                       }
                     },
@@ -122,11 +169,10 @@ class SellPage extends StatelessWidget {
   }
 }
 
-// void main(List<String> args) async{
-  
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-//   runApp(const GetMaterialApp(
-//     home: SellPage(),
-//   ));
-// }
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(GetMaterialApp(
+    home: SellPage(),
+  ));
+}
