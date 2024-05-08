@@ -21,7 +21,7 @@ class ImagePickerPage extends StatelessWidget {
           children: <Widget>[
             Obx(
               () => imageController.images.isEmpty
-                  ? Text('No images selected.')
+                  ?const Text('No images selected.')
                   : Column(
                       children: imageController.images
                           .map(
@@ -33,10 +33,10 @@ class ImagePickerPage extends StatelessWidget {
                           .toList(),
                     ),
             ),
-            SizedBox(height: 20),
+           const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => imageController.pickImage(ImageSource.camera),
-              child: Text('Take Picture'),
+              child:const Text('Take Picture'),
             ),
             ElevatedButton(
               onPressed: () =>
@@ -51,10 +51,3 @@ class ImagePickerPage extends StatelessWidget {
   }
 }
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(GetMaterialApp(
-    home: ImagePickerPage(),
-  ));
-}

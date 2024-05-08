@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
@@ -31,7 +32,7 @@ class DashBoardM extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.search),
                   title: const Text('Search Item'),
-                  onTap: () => Get.to(() => SearchScreen()),
+                  onTap: () => Get.to(() => const SearchScreen()),
                 ),
                 ListTile(
                   leading: const Icon(Icons.sell),
@@ -70,7 +71,7 @@ class DashBoardM extends StatelessWidget {
                   // pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
                     titlePadding:
-                        EdgeInsets.only(left: 2, top: 30, right: 2, bottom: 10),
+                        const EdgeInsets.only(left: 2, top: 30, right: 2, bottom: 10),
                     centerTitle: false,
                     title: TitleSingleScrollView(),
                     background: Container(
@@ -88,7 +89,7 @@ class DashBoardM extends StatelessWidget {
                 
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Fashion"),
+                    children: [const Text("Fashion"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -98,11 +99,11 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "Fashion"),
+                      widtht_of_screen, "fashion"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Food"),
+                    children: [const Text("Food"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -112,11 +113,11 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "Food"),
+                      widtht_of_screen, "food"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Electronic"),
+                    children: [const Text("Electronic"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -130,7 +131,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Beauty Products"),
+                    children: [const Text("Beauty Products"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -144,7 +145,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Sports Equipmen"),
+                    children: [const Text("Sports Equipmen"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -158,7 +159,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Stationery"),
+                    children: [const Text("Stationery"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -172,7 +173,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Row(
-                    children: [Text("Healthcare Products"),
+                    children: [ const Text("Healthcare Products"),
                       Container(
                         height: 5,
                         color: Colors.white,
@@ -245,7 +246,7 @@ class DashBoardM extends StatelessWidget {
     stream: FirebaseFirestore.instance.collection("items").snapshots(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else if (snapshot.hasData) {
         List<DocumentSnapshot<Map<String, dynamic>>> items =
             snapshot.data!.docs;
@@ -280,11 +281,13 @@ class DashBoardM extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius:
                             BorderRadius.circular(10), // Same radius as above
-                        child: Image(
-                          height: 170, // Adjust the width as needed. I will change it to dynamic screen later
-                          image: NetworkImage(
-                              filteredItems[index].data()!['imagesUrls'][0]),
-                        ),
+                        child: CachedNetworkImage(
+  height: 170, // Adjust the height as needed
+  imageUrl: filteredItems[index].data()!['imagesUrls'][0],
+  placeholder: (context, url) => CircularProgressIndicator(), // Placeholder widget while loading
+  errorWidget: (context, url, error) => Icon(Icons.error), // Widget to display in case of loading error
+),
+
                       ),
                     ),
                     subtitle: Container(
@@ -299,7 +302,7 @@ class DashBoardM extends StatelessWidget {
                           Text(filteredItems[index]
                               .data()!['itemName']
                               .toString().trim()),
-                          Expanded(child: SizedBox()),
+                         const Expanded(child: SizedBox()),
                           Text(filteredItems[index]
                               .data()!['price']
                               .toString().trim()),
@@ -309,13 +312,13 @@ class DashBoardM extends StatelessWidget {
                     // trailing: Text("last"),
                   ),
                 ),
-                onTap: () => Get.to(ClickedItem(),arguments: filteredItems[index].data()),
+                onTap: () => Get.to(const ClickedItem(),arguments: filteredItems[index].data()),
               );
             },
           ),
         );
       } else {
-        return Center(child: Text('Error Loading Data'));
+        return const Center(child: Text('Error Loading Data'));
       }
     },
   );
@@ -330,7 +333,7 @@ class DashBoardM extends StatelessWidget {
 //   runApp(DashBoardM());
 // }
 
-Visibility TitleSingleScrollView() {
+Visibility  TitleSingleScrollView() {
   const bool statusIsVisible = true;
 
   return const Visibility(

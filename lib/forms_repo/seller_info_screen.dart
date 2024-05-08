@@ -1,8 +1,6 @@
-import 'dart:ffi';
 
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:get/get.dart';
@@ -166,6 +164,7 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                       ),
                       onPressed: () async{
                         if (_formKey.currentState!.validate()) {
+
                           AuthController authController =
                               Get.find<AuthController>();
                           AdditionalInfoController additionalInfoController =
@@ -179,10 +178,11 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                             'hostel': _hostelNameController.text,
                             'phone': _phoneController.text,
                             'socialMedia': _socialMediaController.text,
-                          },
+                          } ,
                           
                           
                            authController.uid.toString());
+                             await additionalInfoController.updateWithAddInfo();
                           Get.to(() => DashBoardM());
                           // Navigator.push(
                           // context,MaterialPageRoute(builder: (context) => DashBoard()), );

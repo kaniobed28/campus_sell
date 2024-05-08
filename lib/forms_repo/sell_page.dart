@@ -56,11 +56,11 @@ class SellPage extends StatelessWidget {
                         child: Text("Select Item Type"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Fashion", //I am not changing the value of fashion and food to begin with small because I just used for trial and doing it that was is possible but I must make changes in the code
+                        value: "fashion", //I am not changing the value of fashion and food to begin with small because I just used for trial and doing it that was is possible but I must make changes in the code
                         child: Text("Fashion"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Food",
+                        value: "food",
                         child: Text("Food"),
                       ),
                       DropdownMenuItem<String>(
@@ -76,30 +76,30 @@ class SellPage extends StatelessWidget {
                         child: Text("Sports Equipment"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Stationery",
-                        child: Text("stationery"),
+                        value: "stationery",
+                        child: Text("Stationery"),
                       ),
                       DropdownMenuItem<String>(
                         value: "healthcare",
                         child: Text("Healthcare Products"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Jewelry",
-                        child: Text("jewelry"),
+                        value: "jewelry",
+                        child: Text("Jewelry"),
                       ),
                       DropdownMenuItem<String>(
                         value: "kitchen",
                         child: Text("Kitchen Appliances"),
                       ),
                       DropdownMenuItem<String>(
-                        value: "Others",
-                        child: Text("others"),
+                        value: "others",
+                        child: Text("Others"),
                       ),
                     ],
                     onChanged: (val) {
                       itemTypeController.text = val!;
                     },
-                    decoration: InputDecoration(
+                    decoration:const InputDecoration(
                       labelText: "Product Type",
                       border: OutlineInputBorder(),
                     ),
@@ -160,7 +160,7 @@ class SellPage extends StatelessWidget {
                         Get.to(() => DashBoardM());
                       }
                     },
-                    child: Text('Upload'),
+                    child: const Text('Upload'),
                   ),
                 ],
               ),

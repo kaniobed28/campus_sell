@@ -1,3 +1,7 @@
+import 'package:campus_sell/controllers/auth_controller.dart';
+import 'package:campus_sell/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,7 +16,16 @@ class ItemForSaleController extends GetxController {
       "description": description,
       "price": price,
       "imagesUrls": imagesUrls,
-      "ownerId":ownerId
+      "ownerId":ownerId,
+      "brand":"",
+      "city":"",
+      "hostel":"",
+      "phone":"",
+      "socialMedia":"",
+      "university":"",
     });
   }
+  // update with this anytime an item is added and anytime additional info is updated
+  
 }
+
