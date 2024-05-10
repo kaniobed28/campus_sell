@@ -99,7 +99,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "fashion"),
+                      widtht_of_screen, "Fashion"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -113,7 +113,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "food"),
+                      widtht_of_screen, "Food"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -127,7 +127,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "electronic"),
+                      widtht_of_screen, "Electronic"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -141,7 +141,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "beauty"),
+                      widtht_of_screen, "Beauty"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -155,7 +155,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "sports"),
+                      widtht_of_screen, "Sports"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -169,7 +169,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "stationery"),
+                      widtht_of_screen, "Stationery"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -183,7 +183,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "healthcare "),
+                      widtht_of_screen, "Healthcare "),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -197,7 +197,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "kitchen"),
+                      widtht_of_screen, "Kitchen"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -211,7 +211,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "jewelry"),
+                      widtht_of_screen, "Jewelry"),
                 ),
                 SliverToBoxAdapter(
                   child: Row(
@@ -225,7 +225,7 @@ class DashBoardM extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: StreamBuilderForRowItemsOnDashboard(
-                      widtht_of_screen, "others"),
+                      widtht_of_screen, "Others"),
                 ),
                 SliverToBoxAdapter(
                   child: Container(

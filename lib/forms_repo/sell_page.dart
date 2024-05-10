@@ -151,10 +151,10 @@ class SellPage extends StatelessWidget {
                             Get.find<ItemForSaleController>();
                         await imageController.uploadImagesToFirebase();
                         itemForSaleController.addItem(
-                            itemNameController.text,
-                            itemTypeController.text,
-                            itemDescriptionController.text,
-                            double.parse(itemPriceController.text),
+                            itemNameController.text.trim().capitalizeFirst!,
+                            itemTypeController.text.trim().capitalizeFirst!,
+                            itemDescriptionController.text.trim().capitalizeFirst!,
+                            double.parse(itemPriceController.text.trim().capitalizeFirst!),
                             imageController.imagesUrls.cast<String>(),authController.uid.value);
                             imageController.imagesUrls.clear();
                         Get.to(() => DashBoardM());

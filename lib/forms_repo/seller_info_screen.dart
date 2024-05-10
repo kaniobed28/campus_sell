@@ -172,12 +172,12 @@ class _SellInfoScreen extends State<SellInfoScreen> {
 
                           await additionalInfoController.updateDataInFirestore({
                             // data for addition info goes in here
-                            "brand": _brandNameController.text,
-                            "city":_cityNameController.text,
-                            "university":_universityNameController.text,
-                            'hostel': _hostelNameController.text,
-                            'phone': _phoneController.text,
-                            'socialMedia': _socialMediaController.text,
+                            "brand": _brandNameController.text.trim().capitalizeFirst,
+                            "city":_cityNameController.text.trim().capitalizeFirst,
+                            "university":_universityNameController.text.trim(),
+                            'hostel': _hostelNameController.text.trim().capitalizeFirst,
+                            'phone': _phoneController.text.trim().capitalizeFirst,
+                            'socialMedia': _socialMediaController.text.trim().capitalizeFirst,
                           } ,
                           
                           

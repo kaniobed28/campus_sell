@@ -1,5 +1,6 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/list_sold_items.dart';
+import 'package:campus_sell/controllers/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController universityNameController = TextEditingController();
 
   AuthController authController = Get.find<AuthController>();
-  ListSearchItems listSearchItems = Get.find<ListSearchItems>();
+  SearchedController searchedController = Get.find<SearchedController>();
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             ))
                         .toList(),
                     onChanged: (val) {
-                      itemTypeController.text = val as String;
+                     val = val  as String;
+                      itemTypeController.text = val ;
                     },
                   ),
                   Padding(
@@ -155,34 +157,20 @@ class _SearchScreenState extends State<SearchScreen> {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // _hostelNameController
-                          // _universityNameController
-                          // _cityNameController
-                          // _brandNameController_itemNameController
-                          // print(hostelNameController.text);
-                          // print(universityNameController.text);
-                          // print(itemNameController.text);
-                          // print(brandNameController.text);
-                          // print(cityNameController.text);
-                          // print(itemTypeController.text);
-                          // listSearchItems.listFromAddInfo(
+                          print(itemTypeController.text.trim());
+                          await searchedController.search(itemNameController.text.trim(), itemTypeController.text.trim().split(" ")[0], brandNameController.text.trim(), cityNameController.text.trim(), universityNameController.text
+                                .trim(), hostelController.text.trim());
+                          // listSearchItems.ownerIds.clear();
+                          // listSearchItems.listSearchItems(
+                          //     itemTypeController.text.trim).toLowerCase(),
                           //     universityNameController.text
                           //         .trim()
                           //         .toLowerCase(),
                           //     cityNameController.text.trim().toLowerCase(),
                           //     brandNameController.text.trim().toLowerCase(),
                           //     hostelController.text.trim().toLowerCase());
-                          // listSearchItems.ownerIds.clear();
-                          listSearchItems.listSearchItems(
-                              itemTypeController.text.trim().toLowerCase(),
-                              universityNameController.text
-                                  .trim()
-                                  .toLowerCase(),
-                              cityNameController.text.trim().toLowerCase(),
-                              brandNameController.text.trim().toLowerCase(),
-                              hostelController.text.trim().toLowerCase());
                         }
                       },
                       icon: const Icon(Icons.search), // Add your desired icon here
