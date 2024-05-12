@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
 class SearchedController extends GetxController {
-  List<dynamic> searchResults = [];
+  RxList<dynamic> searchResults = [].obs;
 
   Future<void> search(
       String itemName,
@@ -55,8 +55,8 @@ class SearchedController extends GetxController {
     querySnapshot.docs.forEach((element) {
       Map<String, dynamic> data = element.data() as Map<String, dynamic>;
       searchResults.add(data);
-      print(data.length);
-      print(data);
+      // print(data.length);
+      // print(data);
     });
   }
 }

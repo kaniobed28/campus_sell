@@ -1,6 +1,7 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/list_sold_items.dart';
 import 'package:campus_sell/controllers/search_controller.dart';
+import 'package:campus_sell/main_board/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -159,9 +160,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print(itemTypeController.text.trim());
+                          
                           await searchedController.search(itemNameController.text.trim(), itemTypeController.text.trim().split(" ")[0], brandNameController.text.trim(), cityNameController.text.trim(), universityNameController.text
                                 .trim(), hostelController.text.trim());
+                                Get.to(() =>SearchResultPage());
                           // listSearchItems.ownerIds.clear();
                           // listSearchItems.listSearchItems(
                           //     itemTypeController.text.trim).toLowerCase(),
