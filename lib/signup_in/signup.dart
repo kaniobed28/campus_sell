@@ -75,7 +75,7 @@ class Signup extends StatelessWidget {
                           Get.to(() => DashBoardM());
                               
                             } else {
-                              print("wrong");     //I have to work here
+                              // print("wrong");     //I have to work here
                             }
                           } catch (e) {
                             

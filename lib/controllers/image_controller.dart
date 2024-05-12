@@ -30,9 +30,9 @@ class ImageController extends GetxController {
         await ref.putFile(file);
         String imageUrl = await ref.getDownloadURL();
         imagesUrls.add(imageUrl);
-        print('Image uploaded to Firebase: $imageUrl');
+        // print('Image uploaded to Firebase: $imageUrl');
       } catch (e) {
-        print('Error uploading image to Firebase: $e');
+        // print('Error uploading image to Firebase: $e');
       }
     }
 

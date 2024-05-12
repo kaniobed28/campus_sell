@@ -17,6 +17,7 @@ class SearchResultPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("${searchedController.searchResults.length} results found"??"Nothing found"),
+          backgroundColor: Colors.amber,
         ),
         body: Column(
           children: [

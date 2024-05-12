@@ -10,12 +10,12 @@ class AdditionalInfoController extends GetxController {
     try {
       if (data != null) {
         await firebaseFirestore.collection('add_info').doc(uid).set(data);
-        print('Data added successfully');
+        // print('Data added successfully');
       } else {
-        print('Error: Data is empty or null');
+        // print('Error: Data is empty or null');
       }
     } catch (e) {
-      print('Error adding data: $e');
+      // print('Error adding data: $e');
     }
   }
 
@@ -24,12 +24,12 @@ class AdditionalInfoController extends GetxController {
     try {
       if (data != null) {
         await firebaseFirestore.collection('add_info').doc(uid).update(data);
-        print('Data updated successfully');
+        // print('Data updated successfully');
       } else {
-        print('Error: Data is empty or null');
+        // print('Error: Data is empty or null');
       }
     } catch (e) {
-      print('Error updating data: $e');
+      // print('Error updating data: $e');
     }
   }
 // this function updates both the additional info and the items collection together
@@ -58,14 +58,14 @@ class AdditionalInfoController extends GetxController {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
           await firebaseFirestore.collection('add_info').doc(docId).get();
       if (snapshot.exists) {
-        print('Document data: ${snapshot.data()}');
+        // print('Document data: ${snapshot.data()}');
         return snapshot.data();
       } else {
-        print('Document does not exist');
+        // print('Document does not exist');
         return null;
       }
     } catch (e) {
-      print('Error getting document: $e');
+      // print('Error getting document: $e');
       throw e;
     }
   }

@@ -20,11 +20,12 @@ class ClickedItem extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('${data["itemName"]?.toString() ?? "No "} Details'),
+          backgroundColor: Colors.amber,
         ),
         body: Column(
           children: [
             Container(
-              height: screenHeight * 0.4,
+              height: screenHeight * 0.5,
               width: screenWidth,
               decoration: BoxDecoration(
                 color: Colors.black54,
@@ -32,7 +33,13 @@ class ClickedItem extends StatelessWidget {
               ),
               child: Image.network(
                 '${data['imagesUrls'][0].toString()}',
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return const CircularProgressIndicator();
+                },
               ),
             ),
             Expanded(

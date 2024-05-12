@@ -27,7 +27,7 @@ class AuthController extends GetxController {
           await _auth.signInWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } catch (e) {
-      print("Sign-in error: $e");
+      // print("Sign-in error: $e");
       return null;
     }
   }
@@ -38,7 +38,7 @@ class AuthController extends GetxController {
           email: email, password: password);
       return userCredential.user;
     } catch (e) {
-      print("Sign-up error: $e");
+      // print("Sign-up error: $e");
       return null;
     }
   }
@@ -49,7 +49,7 @@ class AuthController extends GetxController {
       isAuthenticated.value = false;
       uid.value = '';
     } catch (e) {
-      print("Sign-out error: $e");
+      // print("Sign-out error: $e");
     }
   }
 }

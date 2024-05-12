@@ -31,7 +31,7 @@ class _SignUpFormState extends State<AppForm> {
                   String email = _emailController.text;
                   String password = _passwordController.text;
                   // You can handle signup logic here
-                  print('Signing up with Username: $username, Email: $email, Password: $password');
+                  // print('Signing up with Username: $username, Email: $email, Password: $password');
                 }
               },
               child: Text('Sign Up'),

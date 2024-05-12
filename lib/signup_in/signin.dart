@@ -72,7 +72,7 @@ class SignIn extends StatelessWidget {
                                   if (authController.uid.isNotEmpty) {
                                     Get.to(() => DashBoardM());
                                   } else {
-                                    print("wrong"); //do some message to user here
+                                    // print("wrong"); //do some message to user here
                                   }
                                 } catch (e) {}
                                 // Navigator.push(
