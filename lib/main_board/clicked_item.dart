@@ -24,24 +24,29 @@ class ClickedItem extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Container(
-              height: screenHeight * 0.5,
-              width: screenWidth,
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Image.network(
-                '${data['imagesUrls'][0].toString()}',
-                fit: BoxFit.fill,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return const CircularProgressIndicator();
-                },
-              ),
-            ),
+           Container(
+  height: screenHeight * 0.5,
+  width: screenWidth,
+  decoration: BoxDecoration(
+    color: Colors.black54,
+    borderRadius: BorderRadius.circular(20),
+  ),
+  child: PageView.builder(
+    itemCount: data['imagesUrls'].length,
+    itemBuilder: (context, index) {
+      return Image.network(
+        '${data['imagesUrls'][index].toString()}',
+        fit: BoxFit.fill,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          }
+          return const CircularProgressIndicator();
+        },
+      );
+    },
+  ),
+),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(

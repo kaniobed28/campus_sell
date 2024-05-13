@@ -5,14 +5,9 @@ import 'package:campus_sell/main_board/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatelessWidget {
+   SearchScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
   List<String> cityList = [
     "Select City",
     "Accra",
@@ -27,6 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
     "Bolgatanga",
     "Wa"
   ];
+
   List<String> itemypeList = [
     "Select Item Type",
     "Fashion",
@@ -40,6 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
     "Kitchen Appliances",
     "Others"
   ];
+
   List<String> universityList = [
     "Select University",
     "University of Ghana",
@@ -57,13 +54,19 @@ class _SearchScreenState extends State<SearchScreen> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController itemNameController = TextEditingController();
+
   TextEditingController itemTypeController = TextEditingController();
+
   TextEditingController hostelController = TextEditingController();
+
   TextEditingController brandNameController = TextEditingController();
+
   TextEditingController cityNameController = TextEditingController();
+
   TextEditingController universityNameController = TextEditingController();
 
   AuthController authController = Get.find<AuthController>();
+
   SearchedController searchedController = Get.find<SearchedController>();
 
   @override

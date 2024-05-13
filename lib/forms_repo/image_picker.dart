@@ -1,16 +1,14 @@
 import 'dart:io';
 import 'package:campus_sell/controllers/image_controller.dart';
-import 'package:campus_sell/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 
 
 class ImagePickerPage extends StatelessWidget {
-  final ImageController imageController = Get.put(ImageController());
 
+  final ImageController imageControllerf = Get.put(ImageController());
+  final ImageController imageController = Get.find<ImageController>();
   @override
   Widget build(BuildContext context) {
     return Container(

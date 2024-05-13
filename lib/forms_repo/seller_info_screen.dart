@@ -1,19 +1,16 @@
-
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:get/get.dart';
 
-class SellInfoScreen extends StatefulWidget {
-  const SellInfoScreen({Key? key}) : super(key: key);
+class SellInfoScreen extends StatelessWidget {
+  SellInfoScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SellInfoScreen> createState() => _SellInfoScreen();
-}
+  RxBool update_info = false.obs;
 
-class _SellInfoScreen extends State<SellInfoScreen> {
   List<String> searchResults = ["Select", "2", "3"];
+
   List<String> universityList = [
     "Select University",
     "University of Ghana",
@@ -27,6 +24,7 @@ class _SellInfoScreen extends State<SellInfoScreen> {
     "UPSA",
     "Valley View University"
   ];
+
   List<String> cityList = [
     "Select City",
     "Accra",
@@ -45,12 +43,18 @@ class _SellInfoScreen extends State<SellInfoScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _itemNameController = TextEditingController();
+
   final TextEditingController _brandNameController = TextEditingController();
+
   final TextEditingController _cityNameController = TextEditingController();
+
   final TextEditingController _universityNameController =
       TextEditingController();
+
   final TextEditingController _hostelNameController = TextEditingController();
+
   final TextEditingController _phoneController = TextEditingController();
+
   final TextEditingController _socialMediaController = TextEditingController();
 
   @override
@@ -157,42 +161,55 @@ class _SellInfoScreen extends State<SellInfoScreen> {
                   SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.amber),
-                      ),
-                      onPressed: () async{
-                        if (_formKey.currentState!.validate()) {
-
-                          AuthController authController =
-                              Get.find<AuthController>();
-                          AdditionalInfoController additionalInfoController =
-                              Get.find<AdditionalInfoController>();
-
-                          await additionalInfoController.updateDataInFirestore({
-                            // data for addition info goes in here
-                            "brand": _brandNameController.text.trim().capitalizeFirst,
-                            "city":_cityNameController.text.trim().capitalizeFirst,
-                            "university":_universityNameController.text.trim(),
-                            'hostel': _hostelNameController.text.trim().capitalizeFirst,
-                            'phone': _phoneController.text.trim().capitalizeFirst,
-                            'socialMedia': _socialMediaController.text.trim().capitalizeFirst,
-                          } ,
-                          
-                          
-                           authController.uid.toString());
-                             await additionalInfoController.updateWithAddInfo();
-                          Get.to(() => DashBoardM());
-                          // Navigator.push(
-                          // context,MaterialPageRoute(builder: (context) => DashBoard()), );
-                        }
-                      },
-                      icon: Icon(
-                          Icons.person_4_rounded), // Add your desired icon here
-                      label: Text(
-                        'Update',
-                        style: TextStyle(color: Colors.black),
+                    child: Obx(
+                      ()=> ElevatedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.amber),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            update_info.value = true;
+                            AuthController authController =
+                                Get.find<AuthController>();
+                            AdditionalInfoController additionalInfoController =
+                                Get.find<AdditionalInfoController>();
+                      
+                            await additionalInfoController.updateDataInFirestore({
+                              // data for addition info goes in here
+                              "brand": _brandNameController.text
+                                  .trim()
+                                  .capitalizeFirst,
+                              "city":
+                                  _cityNameController.text.trim().capitalizeFirst,
+                              "university": _universityNameController.text.trim(),
+                              'hostel': _hostelNameController.text
+                                  .trim()
+                                  .capitalizeFirst,
+                              'phone':
+                                  _phoneController.text.trim().capitalizeFirst,
+                              'socialMedia': _socialMediaController.text
+                                  .trim()
+                                  .capitalizeFirst,
+                            }, authController.uid.toString());
+                            await additionalInfoController.updateWithAddInfo();
+                            Get.to(() => DashBoardM());
+                            // Navigator.push(
+                            // context,MaterialPageRoute(builder: (context) => DashBoard()), );
+                          }
+                        },
+                        icon: const Icon(
+                            Icons.person_4_rounded), // Add your desired icon here
+                        label: update_info.value
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.blue),
+                                strokeWidth: 4.0,
+                              )
+                            : const Text(
+                                'Update',
+                                style: TextStyle(color: Colors.black),
+                              ),
                       ),
                     ),
                   ),

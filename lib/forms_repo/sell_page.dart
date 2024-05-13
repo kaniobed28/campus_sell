@@ -7,6 +7,7 @@ import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class SellPage extends StatelessWidget {
   SellPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class SellPage extends StatelessWidget {
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  RxBool uploading = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class SellPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Sell'),
+          backgroundColor: Colors.amber,
         ),
         body: Center(
           child: SingleChildScrollView(
@@ -142,25 +145,31 @@ class SellPage extends StatelessWidget {
                     },
                   ),
                   ImagePickerPage(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        ImageController imageController =
-                            Get.find<ImageController>();
-                        ItemForSaleController itemForSaleController =
-                            Get.find<ItemForSaleController>();
-                        await imageController.uploadImagesToFirebase();
-                        itemForSaleController.addItem(
-                            itemNameController.text.trim().capitalizeFirst!,
-                            itemTypeController.text.trim().capitalizeFirst!,
-                            itemDescriptionController.text.trim().capitalizeFirst!,
-                            double.parse(itemPriceController.text.trim().capitalizeFirst!),
-                            imageController.imagesUrls.cast<String>(),authController.uid.value);
-                            imageController.imagesUrls.clear();
-                        Get.to(() => DashBoardM());
-                      }
-                    },
-                    child: const Text('Upload'),
+                  Obx(
+                    ()=> ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          uploading.value = true;
+                          ImageController imageController =
+                              Get.find<ImageController>();
+                          ItemForSaleController itemForSaleController =
+                              Get.find<ItemForSaleController>();
+                          await imageController.uploadImagesToFirebase();
+                          itemForSaleController.addItem(
+                              itemNameController.text.trim().capitalizeFirst!,
+                              itemTypeController.text.trim().capitalizeFirst!,
+                              itemDescriptionController.text.trim().capitalizeFirst!,
+                              double.parse(itemPriceController.text.trim().capitalizeFirst!),
+                              imageController.imagesUrls.cast<String>(),authController.uid.value);
+                              imageController.imagesUrls.clear();
+                          Get.to(() => DashBoardM());
+                        }
+                      },
+                      child: uploading.value? const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              strokeWidth: 4.0,
+            ): const Text("upload to "),
+                    ),
                   ),
                 ],
               ),

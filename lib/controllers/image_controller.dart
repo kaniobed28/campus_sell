@@ -38,7 +38,7 @@ class ImageController extends GetxController {
 
     // If no image uploaded, add a placeholder URL before clearing the list
     if (imagesUrls.isEmpty) {
-      imagesUrls.add('https://example.com/placeholder.jpg');
+      // imagesUrls.add('https://example.com/placeholder.jpg');
     }
 
     clearImages(); // Call the method to clear the images list

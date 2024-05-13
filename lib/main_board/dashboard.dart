@@ -27,12 +27,12 @@ class DashBoardM extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Additional Info'),
-                onTap: () => Get.to(() => const SellInfoScreen()),
+                onTap: () => Get.to(() =>  SellInfoScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.search),
                 title: const Text('Search Item'),
-                onTap: () => Get.to(() => const SearchScreen()),
+                onTap: () => Get.to(() =>  SearchScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.sell),
