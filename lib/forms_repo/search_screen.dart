@@ -1,12 +1,11 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
-import 'package:campus_sell/controllers/list_sold_items.dart';
 import 'package:campus_sell/controllers/search_controller.dart';
 import 'package:campus_sell/main_board/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {
-   SearchScreen({Key? key}) : super(key: key);
+   SearchScreen({super.key});
 
   List<String> cityList = [
     "Select City",
@@ -121,8 +120,8 @@ class SearchScreen extends StatelessWidget {
                       value: cityList[0],
                       items: cityList
                           .map((e) => DropdownMenuItem(
-                                child: Text(e),
                                 value: e,
+                                child: Text(e),
                               ))
                           .toList(),
                       onChanged: (val) {
@@ -133,8 +132,8 @@ class SearchScreen extends StatelessWidget {
                       value: universityList[0],
                       items: universityList
                           .map((e) => DropdownMenuItem(
-                                child: Text(e),
                                 value: e,
+                                child: Text(e),
                               ))
                           .toList(),
                       onChanged: (val) {
@@ -145,8 +144,8 @@ class SearchScreen extends StatelessWidget {
                     value: itemypeList[0],
                     items: itemypeList
                         .map((e) => DropdownMenuItem(
-                              child: Text(e),
                               value: e,
+                              child: Text(e),
                             ))
                         .toList(),
                     onChanged: (val) {

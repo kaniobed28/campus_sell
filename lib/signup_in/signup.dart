@@ -75,10 +75,20 @@ class Signup extends StatelessWidget {
                           Get.to(() => DashBoardM());
                               
                             } else {
-                              // print("wrong");     //I have to work here
+                               Get.snackbar(
+                                      'Somethng went wrong',
+                                      'Check your Internet connection. Password must be minimum of length 6',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      duration: Duration(seconds: 3),
+                                    );     //I have to work here
                             }
                           } catch (e) {
-                            
+                             Get.snackbar(
+                                      'Somethng went wrong',
+                                      'Check your Internet connection. Password must be minimum of length 6',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      duration: Duration(seconds: 3),
+                                    );
                           }
                           // Navigator.push(
                           //   context,

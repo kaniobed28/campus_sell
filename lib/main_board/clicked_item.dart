@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,29 +25,29 @@ class ClickedItem extends StatelessWidget {
         ),
         body: Column(
           children: [
-           Container(
-  height: screenHeight * 0.5,
-  width: screenWidth,
-  decoration: BoxDecoration(
-    color: Colors.black54,
-    borderRadius: BorderRadius.circular(20),
-  ),
-  child: PageView.builder(
-    itemCount: data['imagesUrls'].length,
-    itemBuilder: (context, index) {
-      return Image.network(
-        '${data['imagesUrls'][index].toString()}',
-        fit: BoxFit.fill,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return const CircularProgressIndicator();
-        },
-      );
-    },
-  ),
-),
+            Container(
+              height: screenHeight * 0.5,
+              width: screenWidth,
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: PageView.builder(
+                itemCount: data['imagesUrls'].length,
+                itemBuilder: (context, index) {
+                  return CachedNetworkImage(
+                    imageUrl: data['imagesUrls'][index].toString(),
+                    fit: BoxFit.fill,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  );
+                },
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -55,26 +56,27 @@ class ClickedItem extends StatelessWidget {
                       title: Text(
                         'Item Name: ${data["itemName"]?.toString() ?? "Not Set"}',
                       ),
-                    ),FutureBuilder<Map<String, dynamic>?>(
-                      future: ownerInfo,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+                    ),
+                    FutureBuilder<Map<String, dynamic>?>(
+                        future: ownerInfo,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListTile(
+                              title: Text(
+                                'Brand: ${snapshot.data?["brand"]?.toString() ?? "Not Set"}',
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return ListTile(
+                              title: Text('Error retrieving owner information'),
+                            );
+                          }
                           return ListTile(
-                            title: Text(
-                              'Brand: ${snapshot.data?["brand"]?.toString() ?? "Not Set"}',
-                            ),
+                            title: Text('Loading owner information...'),
                           );
-                        } else if (snapshot.hasError) {
-                          return ListTile(
-                            title: Text('Error retrieving owner information'),
-                          );
-                        }
-                        return ListTile(
-                          title: Text('Loading owner information...'),
-                        );
-                   
-                    // Add more ListTile widgets for other data fields
-  }),
+
+                          // Add more ListTile widgets for other data fields
+                        }),
                     ListTile(
                       title: Text(
                         'Price: ${data["price"]?.toString() ?? "Not Set"}',
@@ -98,84 +100,88 @@ class ClickedItem extends StatelessWidget {
                           title: Text('Loading owner information...'),
                         );
                       },
-                    ),FutureBuilder<Map<String, dynamic>?>(
-                      future: ownerInfo,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListTile(
-                            title: Text(
-                              'Social Media: ${snapshot.data?["socialMedia"]?.toString() ?? "Not Set"}',
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return ListTile(
-                            title: Text('Error retrieving owner information'),
-                          );
-                        }
-                        return ListTile(
-                          title: Text('Loading owner information...'),
-                        );
-                   
-                    // Add more ListTile widgets for other data fields
-  }),FutureBuilder<Map<String, dynamic>?>(
-                      future: ownerInfo,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListTile(
-                            title: Text(
-                              'City: ${snapshot.data?["city"]?.toString() ?? "Not Set"}',
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return ListTile(
-                            title: Text('Error retrieving owner information'),
-                          );
-                        }
-                        return ListTile(
-                          title: Text('Loading owner information...'),
-                        );
-                   
-                    // Add more ListTile widgets for other data fields
-  }),
+                    ),
                     FutureBuilder<Map<String, dynamic>?>(
-                      future: ownerInfo,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+                        future: ownerInfo,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListTile(
+                              title: Text(
+                                'Social Media: ${snapshot.data?["socialMedia"]?.toString() ?? "Not Set"}',
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return ListTile(
+                              title: Text('Error retrieving owner information'),
+                            );
+                          }
                           return ListTile(
-                            title: Text(
-                              'University: ${snapshot.data?["university"]?.toString() ?? "Not Set"}',
-                            ),
+                            title: Text('Loading owner information...'),
                           );
-                        } else if (snapshot.hasError) {
+
+                          // Add more ListTile widgets for other data fields
+                        }),
+                    FutureBuilder<Map<String, dynamic>?>(
+                        future: ownerInfo,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListTile(
+                              title: Text(
+                                'City: ${snapshot.data?["city"]?.toString() ?? "Not Set"}',
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return ListTile(
+                              title: Text('Error retrieving owner information'),
+                            );
+                          }
                           return ListTile(
-                            title: Text('Error retrieving owner information'),
+                            title: Text('Loading owner information...'),
                           );
-                        }
-                        return ListTile(
-                          title: Text('Loading owner information...'),
-                        );
-                   
-                    // Add more ListTile widgets for other data fields
-  }),FutureBuilder<Map<String, dynamic>?>(
-                      future: ownerInfo,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+
+                          // Add more ListTile widgets for other data fields
+                        }),
+                    FutureBuilder<Map<String, dynamic>?>(
+                        future: ownerInfo,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListTile(
+                              title: Text(
+                                'University: ${snapshot.data?["university"]?.toString() ?? "Not Set"}',
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return ListTile(
+                              title: Text('Error retrieving owner information'),
+                            );
+                          }
                           return ListTile(
-                            title: Text(
-                              'Hostel: ${snapshot.data?["hostel"]?.toString() ?? "Not Set"}',
-                            ),
+                            title: Text('Loading owner information...'),
                           );
-                        } else if (snapshot.hasError) {
+
+                          // Add more ListTile widgets for other data fields
+                        }),
+                    FutureBuilder<Map<String, dynamic>?>(
+                        future: ownerInfo,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListTile(
+                              title: Text(
+                                'Hostel: ${snapshot.data?["hostel"]?.toString() ?? "Not Set"}',
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return ListTile(
+                              title: Text('Error retrieving owner information'),
+                            );
+                          }
                           return ListTile(
-                            title: Text('Error retrieving owner information'),
+                            title: Text('Loading owner information...'),
                           );
-                        }
-                        return ListTile(
-                          title: Text('Loading owner information...'),
-                        );
-                   
-                    // Add more ListTile widgets for other data fields
-  }),],
+
+                          // Add more ListTile widgets for other data fields
+                        }),
+                  ],
                 ),
               ),
             ),

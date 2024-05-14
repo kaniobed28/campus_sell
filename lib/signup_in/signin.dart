@@ -66,15 +66,29 @@ class SignIn extends StatelessWidget {
                                 AuthController authController =
                                     Get.find<AuthController>();
                                 try {
-                                 await authController.signInWithEmailAndPassword(
-                                      emailOfFormController.text.trim(),
-                                      passwordOfFormController.text.trim());
+                                  await authController
+                                      .signInWithEmailAndPassword(
+                                          emailOfFormController.text.trim(),
+                                          passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
                                     Get.to(() => DashBoardM());
                                   } else {
                                     // print("wrong"); //do some message to user here
+                                    Get.snackbar(
+                                      'Somethng went wrong',
+                                      'Check your credentials or Internet connection',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      duration: Duration(seconds: 3),
+                                    );
                                   }
-                                } catch (e) {}
+                                } catch (e) {
+                                  Get.snackbar(
+                                      'Somethng went wrong',
+                                      'Check your Internet connection',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                }
                                 // Navigator.push(
                                 //   context,
                                 //   MaterialPageRoute(

@@ -4,6 +4,7 @@ import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/clicked_item.dart';
+import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/signup_in/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,30 +15,37 @@ class DashBoardM extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double widtht_of_screen =
+    const double itemTypeFontSize = 25.0;
+    const FontWeight fontWeight = FontWeight.bold;
+    double widthtOfScreen =
         MediaQuery.of(context).size.width; // returns width of the screen
-    double height_of_screen =
-        MediaQuery.of(context).size.height; // returns width of the screen
-    double screenWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(
+            255, 245, 245, 245), // should be changed to theme.
         endDrawer: Drawer(
           child: ListView(
             children: [
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Additional Info'),
-                onTap: () => Get.to(() =>  SellInfoScreen()),
+                onTap: () => Get.to(() => SellInfoScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.search),
                 title: const Text('Search Item'),
-                onTap: () => Get.to(() =>  SearchScreen()),
+                onTap: () => Get.to(() => SearchScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.sell),
                 title: const Text('Sell Item'),
                 onTap: () => Get.to(() => SellPage()),
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_sweep),
+                title: const Text('Remove Item'),
+                onTap: () => Get.to(() => const DeleteScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.tv),
@@ -58,8 +66,8 @@ class DashBoardM extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
-          width: widtht_of_screen,
+        body: SizedBox(
+          width: widthtOfScreen,
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -70,16 +78,17 @@ class DashBoardM extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: const EdgeInsets.only(
                       left: 2, top: 30, right: 2, bottom: 10),
-                  centerTitle: false,
+                  centerTitle: true,
                   title: TitleSingleScrollView(),
+                  expandedTitleScale: 2,
                   background: Container(
+                    decoration: const BoxDecoration(
+                        // color: Colors.amber,
+                        borderRadius: BorderRadius.all(Radius.circular(0))),
+                    margin: const EdgeInsets.all(0),
                     child: const Image(
                         image: AssetImage(
                             "assets/img/campus-sell-logo-transparent.png")),
-                    decoration: BoxDecoration(
-                        // color: Colors.amber,
-                        borderRadius: BorderRadius.all(Radius.circular(0))),
-                    margin: EdgeInsets.all(0),
                   ),
                 ),
               ),
@@ -88,7 +97,11 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Fashion"),
+                    const Text(
+                      "Fashion",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -97,13 +110,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Fashion"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Fashion"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Food"),
+                    const Text(
+                      "Food",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -112,13 +129,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Food"),
+                child:
+                    streamBuilderForRowItemsOnDashboard(widthtOfScreen, "Food"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Electronic"),
+                    const Text(
+                      "Electronic",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -127,13 +148,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Electronic"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Electronic"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Beauty Products"),
+                    const Text(
+                      "Beauty Products",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -142,13 +167,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Beauty"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Beauty"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Sports Equipmen"),
+                    const Text(
+                      "Sports Equipmen",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -157,13 +186,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Sports"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Sports"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Stationery"),
+                    const Text(
+                      "Stationery",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -172,13 +205,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Stationery"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Stationery"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text("Healthcare Products"),
+                    const Text(
+                      "Healthcare Products",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -187,13 +224,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Healthcare "),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Healthcare "),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    Text("Kitchen Appliances"),
+                    const Text(
+                      "Kitchen Appliances",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -202,13 +243,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Kitchen"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Kitchen"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    Text("Jewelry"),
+                    const Text(
+                      "Jewelry",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -217,13 +262,17 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Jewelry"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Jewelry"),
               ),
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    Text("Others"),
+                    const Text(
+                      "Others",
+                      style: TextStyle(
+                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -232,8 +281,8 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StreamBuilderForRowItemsOnDashboard(
-                    widtht_of_screen, "Others"),
+                child: streamBuilderForRowItemsOnDashboard(
+                    widthtOfScreen, "Others"),
               ),
               SliverToBoxAdapter(
                 child: Container(
@@ -249,7 +298,7 @@ class DashBoardM extends StatelessWidget {
   }
 
   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>
-      StreamBuilderForRowItemsOnDashboard(double screenWidth, String itemType) {
+      streamBuilderForRowItemsOnDashboard(double screenWidth, String itemType) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection("items").snapshots(),
       builder: (context, snapshot) {
@@ -320,7 +369,8 @@ class DashBoardM extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)), // Adjust the radius as needed
+                  bottomRight:
+                      Radius.circular(10)), // Adjust the radius as needed
 
               border: Border.all(color: Colors.amber),
               color: Colors.amber,
@@ -362,83 +412,78 @@ class DashBoardM extends StatelessWidget {
 Visibility TitleSingleScrollView() {
   const bool statusIsVisible = true;
 
-  return const Visibility(
+  return Visibility(
     visible: statusIsVisible,
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
+      child: SizedBox(
+        // width: ,
+        child: Row(
+          children: [
+            Container(
+              width: 60,
+              height: 40,
+              decoration:  BoxDecoration(
+                // color: Colors.amberAccent,
+
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+              ),
+              child: const Image(
+                  image: AssetImage(
+                      "assets/img/campus-sell-logo-transparent.png")),
             ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
+            const SizedBox(
+              width: 4,
             ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
+            Container(
+              width: 60,
+              height: 40,
+              decoration:  BoxDecoration(
+                // color: Colors.amberAccent,
+
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+              ),
+              child: const Image(
+                  image: AssetImage(
+                      "assets/img/campus-sell-logo-transparent.png")),
             ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
+            Container(
+              width: 60,
+              height: 40,
+              decoration:  BoxDecoration(
+                // color: Colors.amberAccent,
+
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+              ),
+              child: const Image(
+                  image: AssetImage(
+                      "assets/img/campus-sell-logo-transparent.png")),
             ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
+            Container(
+              width: 60,
+              height: 40,
+              decoration:  BoxDecoration(
+                // color: Colors.amberAccent,
+
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+              ),
+              child: const Image(
+                  image: AssetImage(
+                      "assets/img/campus-sell-logo-transparent.png")),
             ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
-            ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
-            ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
-            ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
-            ),
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.black,
-            child: CircleAvatar(
-              radius: 15,
-            ),
-          ),
-        ],
+            // CircleAvatar(
+            //   radius: 20,
+            //   backgroundColor: Colors.black,
+            //   child: CircleAvatar(
+            //     radius: 17,
+            //   ),
+            // ),
+          ],
+        ),
       ),
     ),
   );
