@@ -33,12 +33,12 @@ class ImagePickerPage extends StatelessWidget {
             ),
            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => imageController.pickImage(ImageSource.camera),
+              onPressed: ()async => await imageController.pickImage(ImageSource.camera),
               child:const Text('Take Picture'),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  imageController.pickImage(ImageSource.gallery),
+              onPressed: () async =>
+                  await imageController.pickImage(ImageSource.gallery),
               child: Text('Choose from Gallery'),
             ),
             

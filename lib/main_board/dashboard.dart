@@ -40,7 +40,7 @@ class DashBoardM extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.sell),
                 title: const Text('Sell Item'),
-                onTap: () => Get.to(() => SellPage()),
+                onTap: ()async => await Get.off(() => SellPage()),
               ),
               ListTile(
                 leading: const Icon(Icons.delete_sweep),
@@ -225,7 +225,7 @@ class DashBoardM extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: streamBuilderForRowItemsOnDashboard(
-                    widthtOfScreen, "Healthcare "),
+                    widthtOfScreen, "Healthcare"),
               ),
               SliverToBoxAdapter(
                 child: Row(
@@ -327,7 +327,7 @@ class DashBoardM extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   child: displayCard(filteredItems, index),
-                  onTap: () => Get.to(const ClickedItem(),
+                  onTap: () async => await Get.offAll(() => const ClickedItem(),
                       arguments: filteredItems[index].data()),
                 );
               },

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,14 @@ class ClickedItem extends StatelessWidget {
         appBar: AppBar(
           title: Text('${data["itemName"]?.toString() ?? "No "} Details'),
           backgroundColor: Colors.amber,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () async{
+              // Handle the back button press here
+              // For example, you can use Get.back() to navigate back
+             await Get.offAll(()=>DashBoardM());
+            },
+          ),
         ),
         body: Column(
           children: [
