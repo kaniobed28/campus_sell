@@ -72,10 +72,10 @@ class SignIn extends StatelessWidget {
                                           emailOfFormController.text.trim(),
                                           passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
-                                    authController.dispose();
+                                    // authController.dispose();
+                                    // print("wrong"); //do some message to user here
                                     Get.to(() => DashBoardM());
                                   } else {
-                                    // print("wrong"); //do some message to user here
                                     Get.snackbar(
                                       'Somethng went wrong',
                                       'Check your credentials or Internet connection',

@@ -18,109 +18,119 @@ class Signup extends StatelessWidget {
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
 
+  // AuthController authController = Get.put(AuthController());
+
   AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     double widtht_of_screen = MediaQuery.of(context).size.width;
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
-      
-      child: authController.isAuthenticated.isTrue?DashBoardM(): Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Container(
-              width: widtht_of_screen,
-              height: height_of_screen,
-              padding: EdgeInsets.all(10),
-              color: Colors.blueGrey[50],
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.shopify_rounded,
-                      size: 80,
-                      color: Colors.amber,
-                    ),
-                    onPressed: () {
-                      // Add functionality to the IconButton if needed
-                    },
-                  ),
-                  Text(
-                    "Campus Sell",
-                  ),
-                  const SizedBox(height: 128),
-                  emailFormWidget(emailOfFormController),
-                  const SizedBox(height: 60),
-                  passWrdFormWidget(passwordOfFormController),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.amber),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          // Add functionality for form submission here
-                          // For example, you can access the form data using:
-                          // emailOfFormController.text and passwordOfFormController.text
-                          try {
-                          await authController.signUpWithEmailAndPassword(emailOfFormController.text.trim(), passwordOfFormController.text.trim());
-                            if (authController.isAuthenticated.isTrue) {
-                              // print(authController.uid.isNotEmpty);
-                              // print(authController.uid.value);
-                              AdditionalInfoController additionalInfoController = Get.find<AdditionalInfoController>();
-                              await additionalInfoController.addDataToFirestore({}, authController.uid.value);
-                              authController.dispose();
-                          Get.to(() => DashBoardM());
-                              
-                            } else {
-                               Get.snackbar(
+      child: authController.isAuthenticated.isTrue
+          ? DashBoardM()
+          : Scaffold(
+              body: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    width: widtht_of_screen,
+                    height: height_of_screen,
+                    padding: EdgeInsets.all(10),
+                    color: Colors.blueGrey[50],
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.shopify_rounded,
+                            size: 80,
+                            color: Colors.amber,
+                          ),
+                          onPressed: () {
+                            // Add functionality to the IconButton if needed
+                          },
+                        ),
+                        Text(
+                          "Campus Sell",
+                        ),
+                        const SizedBox(height: 128),
+                        emailFormWidget(emailOfFormController),
+                        const SizedBox(height: 60),
+                        passWrdFormWidget(passwordOfFormController),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.amber),
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                // Add functionality for form submission here
+                                // For example, you can access the form data using:
+                                // emailOfFormController.text and passwordOfFormController.text
+                                try {
+                                  await authController
+                                      .signUpWithEmailAndPassword(
+                                          emailOfFormController.text.trim(),
+                                          passwordOfFormController.text.trim());
+                                          
+                                  if (authController.uid.value.isNotEmpty) {
+                                    // print(authController.uid.isNotEmpty);
+                                    AdditionalInfoController
+                                        additionalInfoController =
+                                        Get.find<AdditionalInfoController>();
+                                    await additionalInfoController
+                                        .addDataToFirestore(
+                                            {}, authController.uid.value);
+                                    // authController.dispose();
+                                    Get.to(() => DashBoardM());
+                                  } else {
+                                    Get.snackbar(
                                       'Somethng went wrong',
-                                      'Check your Internet connection. Password must be minimum of length 6',
+                                      'Check your Internet connection. Password must be minimum of length 6,',
                                       snackPosition: SnackPosition.BOTTOM,
                                       duration: Duration(seconds: 3),
-                                    );     //I have to work here
-                            }
-                          } catch (e) {
-                             Get.snackbar(
-                                      'Somethng went wrong',
-                                      'Check your Internet connection. Password must be minimum of length 6',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      duration: Duration(seconds: 3),
-                                    );
-                          }
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => SellInfoScreen()),
-                          // );
-                        }
-                      },
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.black),
-                      ),
+                                    ); //I have to work here
+                                  }
+                                } catch (e) {
+                                  Get.snackbar(
+                                    'Somethng went wrong',
+                                    'Check your Internet connection. Password must be minimum of length 6',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    duration: Duration(seconds: 3),
+                                  );
+                                }
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => SellInfoScreen()),
+                                // );
+                              }
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        Row(children: [
+                          const Text(
+                            "Already have an account? ",
+                          ),
+                          GestureDetector(
+                            onTap: () => Get.to(() => SignIn()),
+                            child: const Text(
+                              "Sign in",
+                              style: TextStyle(color: Colors.amber),
+                            ),
+                          )
+                        ]),
+                      ],
                     ),
                   ),
-                   Row(
-                    children: [ const Text(
-                      "Already have an account? ",
-                    ),GestureDetector(
-                      onTap: ()=>Get.to(()=>SignIn()),
-                      child: const Text(
-                        "Sign in",
-                        style: TextStyle(color: Colors.amber),
-                      ),
-                    )]
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 

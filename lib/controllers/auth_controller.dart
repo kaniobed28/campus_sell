@@ -25,6 +25,8 @@ class AuthController extends GetxController {
     try {
       UserCredential userCredential =
           await _auth.signInWithEmailAndPassword(email: email, password: password);
+         uid.value=  userCredential.user!.uid;
+
       return userCredential.user;
     } catch (e) {
       // print("Sign-in error: $e");
@@ -36,6 +38,8 @@ class AuthController extends GetxController {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+          uid.value=  userCredential.user!.uid;
+          print(uid.value);
       return userCredential.user;
     } catch (e) {
       // print("Sign-up error: $e");

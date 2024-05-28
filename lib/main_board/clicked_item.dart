@@ -63,7 +63,7 @@ class ClickedItem extends StatelessWidget {
                           if (snapshot.hasData) {
                             return ListTile(
                               title: Text(
-                                'Brand: ${snapshot.data?["brand"]?.toString() ?? "Not Set"}',
+                                'Owner"s Brand: ${snapshot.data?["brand"]?.toString() ?? "Not Set"}',
                               ),
                             );
                           } else if (snapshot.hasError) {
@@ -79,7 +79,7 @@ class ClickedItem extends StatelessWidget {
                         }),
                     ListTile(
                       title: Text(
-                        'Price: ${data["price"]?.toString() ?? "Not Set"}',
+                        'Price: GHS ${data["price"]?.toString() ?? "Not Set"}',
                       ),
                     ),
                     FutureBuilder<Map<String, dynamic>?>(
@@ -181,6 +181,11 @@ class ClickedItem extends StatelessWidget {
 
                           // Add more ListTile widgets for other data fields
                         }),
+                        ListTile(
+                      title: Text(
+                        'Description: ${data["description"]?.toString() ?? "Not Set"}',
+                      ),
+                    ),
                   ],
                 ),
               ),

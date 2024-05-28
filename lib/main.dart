@@ -12,7 +12,7 @@ void main() async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Get.put(AuthController());
   // Get.put(SearchedController());
-  // Get.put(AdditionalInfoController());
+  Get.put(AdditionalInfoController());
   runApp( MainApp());
 }
 

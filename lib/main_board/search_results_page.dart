@@ -31,7 +31,7 @@ class SearchResultPage extends StatelessWidget {
                       title: Text(searchedController.searchResults[index]["itemName"].toString()),
                       subtitle: Text(searchedController.searchResults[index]["itemType"].toString()),
                       trailing: Text(searchedController.searchResults[index]["price"].toString()),
-                      onTap: () => Get.off(()=> const ClickedItem(),arguments: searchedController.searchResults[index]),
+                      onTap: () => Get.to(()=> const ClickedItem(),arguments: searchedController.searchResults[index]),
                       // () => Get.to(const searchedController.searchResults[index]),
                     );
                   },

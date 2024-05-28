@@ -42,7 +42,7 @@ final AuthController authController = Get.put(AuthController());
               ListTile(
                 leading: const Icon(Icons.sell),
                 title: const Text('Sell Item'),
-                onTap: () => Get.off(() => SellPage()),
+                onTap: () => Get.to(() => SellPage()),
               ),
               ListTile(
                 leading: const Icon(Icons.delete_sweep),
@@ -64,7 +64,7 @@ final AuthController authController = Get.put(AuthController());
                   // AuthController authController = Get.find<AuthController>();
                   // AuthController authController = Get.put(AuthController());
                   authController.signOut();
-                  authController.dispose();
+                  // authController.dispose();
                   Get.to(() => SignIn());
                 },
               ),
@@ -395,7 +395,7 @@ final AuthController authController = Get.put(AuthController());
                   ),
                   const Spacer(),
                   Text(
-                    filteredItems[index].data()!['price'].toString().trim(),
+                    "GHS ${filteredItems[index].data()!['price'].toString().trim()}",
                   ),
                 ],
               ),
