@@ -9,7 +9,7 @@ class ClickedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AdditionalInfoController additionalInfoController =
-        Get.find<AdditionalInfoController>();
+        Get.put(AdditionalInfoController());
     Map<String, dynamic> data = Get.arguments ?? {};
     Future<Map<String, dynamic>?> ownerInfo =
         additionalInfoController.getDocumentById(data["ownerId"]);

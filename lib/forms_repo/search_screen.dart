@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {
-   SearchScreen({super.key});
+  SearchScreen({super.key});
 
   List<String> cityList = [
     "Select City",
@@ -64,9 +64,10 @@ class SearchScreen extends StatelessWidget {
 
   TextEditingController universityNameController = TextEditingController();
 
-  AuthController authController = Get.find<AuthController>();
+  AuthController authController = Get.put(AuthController());
+  // AuthController authController = Get.find<AuthController>();
 
-  SearchedController searchedController = Get.find<SearchedController>();
+  SearchedController searchedController = Get.put(SearchedController());
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class SearchScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title:const Text("Search Here"),
+          title: const Text("Search Here"),
           centerTitle: true,
           actions: const [
             Icon(Icons.search),
@@ -91,31 +92,31 @@ class SearchScreen extends StatelessWidget {
           child: Form(
             key: _formKey, // Assign the _formKey to the Form widget
             child: Container(
-              margin:const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                const  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     itemNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Item Name",
                     prefixIcon: Icons.sports_basketball,
                   ),
-                const  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
-                const  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     hostelController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Hostel Name",
                     prefixIcon: Icons.location_city,
                   ),
-                const  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField(
                       value: cityList[0],
                       items: cityList
@@ -127,7 +128,7 @@ class SearchScreen extends StatelessWidget {
                       onChanged: (val) {
                         cityNameController.text = val as String;
                       }),
-                 const SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField(
                       value: universityList[0],
                       items: universityList
@@ -139,7 +140,7 @@ class SearchScreen extends StatelessWidget {
                       onChanged: (val) {
                         universityNameController.text = val as String;
                       }),
-                 const SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField(
                     value: itemypeList[0],
                     items: itemypeList
@@ -149,8 +150,8 @@ class SearchScreen extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (val) {
-                     val = val  as String;
-                      itemTypeController.text = val ;
+                      val = val as String;
+                      itemTypeController.text = val;
                     },
                   ),
                   Padding(
@@ -162,10 +163,14 @@ class SearchScreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          
-                          await searchedController.search(itemNameController.text.trim(), itemTypeController.text.trim().split(" ")[0], brandNameController.text.trim(), cityNameController.text.trim(), universityNameController.text
-                                .trim(), hostelController.text.trim());
-                                Get.to(() =>SearchResultPage());
+                          await searchedController.search(
+                              itemNameController.text.trim(),
+                              itemTypeController.text.trim().split(" ")[0],
+                              brandNameController.text.trim(),
+                              cityNameController.text.trim(),
+                              universityNameController.text.trim(),
+                              hostelController.text.trim());
+                          Get.to(() => SearchResultPage());
                           // listSearchItems.ownerIds.clear();
                           // listSearchItems.listSearchItems(
                           //     itemTypeController.text.trim).toLowerCase(),
@@ -177,7 +182,8 @@ class SearchScreen extends StatelessWidget {
                           //     hostelController.text.trim().toLowerCase());
                         }
                       },
-                      icon: const Icon(Icons.search), // Add your desired icon here
+                      icon: const Icon(
+                          Icons.search), // Add your desired icon here
                       label: const Text(
                         'Search',
                         style: TextStyle(color: Colors.black),
@@ -207,7 +213,7 @@ TextFormField nameFormWidget(
     obscureText: obscureText,
     decoration: InputDecoration(
       labelText: nameOfLabel,
-      border:const OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       prefixIcon: prefixIcon != null
           ? Icon(prefixIcon)
           : null, // Use the provided icon if not null

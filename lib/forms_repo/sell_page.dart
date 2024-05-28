@@ -1,5 +1,6 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/image_controller.dart';
+import 'package:campus_sell/controllers/request_controller.dart';
 import 'package:campus_sell/controllers/selling_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/forms_repo/image_picker.dart';
@@ -7,7 +8,6 @@ import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 class SellPage extends StatelessWidget {
   SellPage({Key? key}) : super(key: key);
@@ -22,7 +22,12 @@ class SellPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put<ItemForSaleController>(ItemForSaleController());
+      Get.put(AuthController());
     AuthController authController = Get.find<AuthController>();
+    PermissionController permissionController = Get.put(PermissionController());
+    // permissionController
+
+    // permissionController.dispose();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -144,16 +149,16 @@ class SellPage extends StatelessWidget {
                       return null;
                     },
                   ),
-                  ImagePickerPage(),
+                   ImagePickerPage(),
                   Obx(
                     ()=> ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           uploading.value = true;
                           ImageController imageController =
-                              Get.find<ImageController>();
+                              Get.put(ImageController());
                           ItemForSaleController itemForSaleController =
-                              Get.find<ItemForSaleController>();
+                              Get.put(ItemForSaleController());
                           await imageController.uploadImagesToFirebase();
                           itemForSaleController.addItem(
                               itemNameController.text.trim().capitalizeFirst!,
@@ -162,7 +167,9 @@ class SellPage extends StatelessWidget {
                               double.parse(itemPriceController.text.trim().capitalizeFirst!),
                               imageController.imagesUrls.cast<String>(),authController.uid.value);
                               imageController.imagesUrls.clear();
-                          Get.to(() => DashBoardM());
+                          Get.to(() => DashBoardM())?.then((value) {
+                            uploading.value = false;
+                          },);
                         }
                       },
                       child: uploading.value? const CircularProgressIndicator(

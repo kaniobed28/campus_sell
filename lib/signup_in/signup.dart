@@ -72,6 +72,7 @@ class Signup extends StatelessWidget {
                               // print(authController.uid.value);
                               AdditionalInfoController additionalInfoController = Get.find<AdditionalInfoController>();
                               await additionalInfoController.addDataToFirestore({}, authController.uid.value);
+                              authController.dispose();
                           Get.to(() => DashBoardM());
                               
                             } else {

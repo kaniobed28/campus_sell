@@ -3,6 +3,7 @@ import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
+import 'package:campus_sell/main_board/buy_promotion.dart';
 import 'package:campus_sell/main_board/clicked_item.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/signup_in/signin.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 class DashBoardM extends StatelessWidget {
   DashBoardM({Key? key}) : super(key: key);
+final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class DashBoardM extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.sell),
                 title: const Text('Sell Item'),
-                onTap: () => Get.to(() => SellPage()),
+                onTap: () => Get.off(() => SellPage()),
               ),
               ListTile(
                 leading: const Icon(Icons.delete_sweep),
@@ -49,17 +51,20 @@ class DashBoardM extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.tv),
-                title: const Text('Advertisment'),
+                title: const Text('Promotion'),
                 onTap: () {
                   //
+                  Get.to(() =>  BuyPromotion());
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.outbond),
                 title: const Text('SignOut'),
                 onTap: () {
-                  AuthController authController = Get.find<AuthController>();
+                  // AuthController authController = Get.find<AuthController>();
+                  // AuthController authController = Get.put(AuthController());
                   authController.signOut();
+                  authController.dispose();
                   Get.to(() => SignIn());
                 },
               ),
@@ -225,7 +230,7 @@ class DashBoardM extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: streamBuilderForRowItemsOnDashboard(
-                    widthtOfScreen, "Healthcare "),
+                    widthtOfScreen, "Healthcare"),
               ),
               SliverToBoxAdapter(
                 child: Row(

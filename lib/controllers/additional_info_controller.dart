@@ -35,7 +35,7 @@ class AdditionalInfoController extends GetxController {
 // this function updates both the additional info and the items collection together
   Future<void> updateWithAddInfo() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    AuthController authController = Get.find<AuthController>();
+    AuthController authController = Get.put(AuthController());
     if (authController.isAuthenticated.value) {
       DocumentSnapshot<Map<String, dynamic>> snapshota = await firebaseFirestore
           .collection("add_info")

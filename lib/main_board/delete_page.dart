@@ -15,6 +15,10 @@ class DeleteScreen extends StatelessWidget {
     AuthController authController = Get.find<AuthController>();
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Delete your Items'),
+        backgroundColor: Colors.amber,
+        ),
       body: StreamBuilder(
         stream: deleteController.listForDelete(authController.uid.value),
         builder: (context, snapshot) {

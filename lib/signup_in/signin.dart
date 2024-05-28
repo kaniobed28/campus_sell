@@ -14,7 +14,8 @@ class SignIn extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
-  AuthController authController = Get.find<AuthController>();
+  AuthController authController = Get.put(AuthController());
+  // AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,7 @@ class SignIn extends StatelessWidget {
                                           emailOfFormController.text.trim(),
                                           passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
+                                    authController.dispose();
                                     Get.to(() => DashBoardM());
                                   } else {
                                     // print("wrong"); //do some message to user here
