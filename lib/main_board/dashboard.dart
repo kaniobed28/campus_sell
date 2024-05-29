@@ -65,7 +65,7 @@ final AuthController authController = Get.put(AuthController());
                   // AuthController authController = Get.put(AuthController());
                   authController.signOut();
                   // authController.dispose();
-                  Get.to(() => SignIn());
+                  Get.offAll(() => SignIn());
                 },
               ),
             ],
