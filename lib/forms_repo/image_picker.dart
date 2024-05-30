@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:campus_sell/controllers/image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -34,12 +35,12 @@ class ImagePickerPage extends StatelessWidget {
            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async { await imageController.pickImage(ImageSource.camera);},
-              child:const Text('Take Picture'),
+              child: Text('Take Picture',style: GoogleFonts.average(color: Colors.black),),
             ),
             ElevatedButton(
               onPressed: () async=>
                   await imageController.pickImage(ImageSource.gallery),
-              child: Text('Choose from Gallery'),
+              child: Text('Choose from Gallery',style: GoogleFonts.average(color: Colors.black),),
             ),
             
           ],

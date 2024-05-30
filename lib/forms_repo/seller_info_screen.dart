@@ -3,6 +3,7 @@ import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SellInfoScreen extends StatelessWidget {
   SellInfoScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class SellInfoScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Additional Profile for Sellers"),
+          title:  Text("Additional Profile for Sellers",style: GoogleFonts.average(),),
           centerTitle: true,
           // leading: Icon(Icons.person_4_rounded),
           backgroundColor: Colors.amber,
@@ -199,17 +200,17 @@ class SellInfoScreen extends StatelessWidget {
                           }
                         },
                         icon: const Icon(
-                            Icons.person_4_rounded), // Add your desired icon here
+                            Icons.person_4_rounded,color: Color.fromARGB(255, 56, 54, 54),), // Add your desired icon here
                         label: update_info.value
                             ? const CircularProgressIndicator(
                                 valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.blue),
+                                    AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 56, 54, 54)),
                                 strokeWidth: 4.0,
                               )
-                            : const Text(
+                            :  Text(
                                 'Update',
-                                style: TextStyle(color: Colors.black),
-                              ),
+                                style: GoogleFonts.average(color:const Color.fromARGB(255, 56, 54, 54)),),
+                              
                       ),
                     ),
                   ),

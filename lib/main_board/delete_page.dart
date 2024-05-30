@@ -1,6 +1,7 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/delete_controller.dart';
 
@@ -16,7 +17,7 @@ class DeleteScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delete your Items'),
+        title:  Text('Delete your Items',style: GoogleFonts.aclonica(color: Colors.black),),
         backgroundColor: Colors.amber,
         ),
       body: StreamBuilder(
@@ -30,8 +31,8 @@ class DeleteScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 Map<String, dynamic> data = snapshot.data!.docs[index].data();
                 return ListTile(
-                  title: Text(data["itemName"]),
-                  subtitle: Text(data["itemType"]),
+                  title: Text(data["itemName"],style: GoogleFonts.average(color: Colors.black),),
+                  subtitle: Text(data["itemType"],style: GoogleFonts.average(color: Colors.black),),
                   trailing: FittedBox(
                     child: Column(
                       children: [
@@ -54,7 +55,7 @@ class DeleteScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        Text("GHS ${data["price"].toString()}"),
+                        Text("GHS ${data["price"].toString()}",style: GoogleFonts.average(color: Colors.black),),
                       ],
                     ),
                   ),

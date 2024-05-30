@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
       //   "/": (context)=> SearchScreen(),
       //   "SignUp": (context)=> Signup(),
       // },
-      theme: ThemeData(primaryColor: Colors.amber),
+      theme: ThemeData(primaryColor: const Color.fromARGB(255, 255, 255, 255)),
       home: SafeArea(
         
         child:  SignIn (),

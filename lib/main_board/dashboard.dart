@@ -8,17 +8,21 @@ import 'package:campus_sell/main_board/clicked_item.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/signup_in/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DashBoardM extends StatelessWidget {
   DashBoardM({Key? key}) : super(key: key);
-final AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    const double itemTypeFontSize = 25.0;
     const FontWeight fontWeight = FontWeight.bold;
+    const double itemTypeFontSize = 25.0;
+    TextStyle fontStyeleForItemTypes =
+        GoogleFonts.average(fontWeight: fontWeight, fontSize: itemTypeFontSize,);
     double widthtOfScreen =
         MediaQuery.of(context).size.width; // returns width of the screen
 
@@ -31,35 +35,35 @@ final AuthController authController = Get.put(AuthController());
             children: [
               ListTile(
                 leading: const Icon(Icons.person),
-                title: const Text('Additional Info'),
+                title:  Text('Additional Info',style: GoogleFonts.average(),),
                 onTap: () => Get.to(() => SellInfoScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.search),
-                title: const Text('Search Item'),
+                title:  Text('Search Item',style: GoogleFonts.average(),),
                 onTap: () => Get.to(() => SearchScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.sell),
-                title: const Text('Sell Item'),
+                title:  Text('Sell Item',style: GoogleFonts.average(),),
                 onTap: () => Get.to(() => SellPage()),
               ),
               ListTile(
                 leading: const Icon(Icons.delete_sweep),
-                title: const Text('Remove Item'),
+                title:  Text('Remove Item',style: GoogleFonts.average(),),
                 onTap: () => Get.to(() => const DeleteScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.tv),
-                title: const Text('Promotion'),
+                title:  Text('Promotion',style: GoogleFonts.average(),),
                 onTap: () {
                   //
-                  Get.to(() =>  BuyPromotion());
+                  Get.to(() => BuyPromotion());
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.outbond),
-                title: const Text('SignOut'),
+                title:  Text('SignOut',style: GoogleFonts.average(),),
                 onTap: () {
                   // AuthController authController = Get.find<AuthController>();
                   // AuthController authController = Get.put(AuthController());
@@ -102,11 +106,8 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
-                      "Fashion",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
-                    ),
+                    const SizedBox(width: 30,),
+                    Text("Fashion", style: fontStyeleForItemTypes),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -121,10 +122,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),
+                    Text(
                       "Food",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -140,10 +141,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),
+                    Text(
                       "Electronic",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -159,11 +160,8 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
-                      "Beauty Products",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
-                    ),
+                    const SizedBox(width: 30,),
+                    Text("Beauty Products", style: fontStyeleForItemTypes),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -178,11 +176,8 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
-                      "Sports Equipmen",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
-                    ),
+                    const SizedBox(width: 30,),
+                    Text("Sports Equipmen", style: fontStyeleForItemTypes),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -197,10 +192,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),
+                    Text(
                       "Stationery",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -216,10 +211,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),
+                    Text(
                       "Healthcare Products",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -235,6 +230,7 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
+                    const SizedBox(width: 30,),
                     const Text(
                       "Kitchen Appliances",
                       style: TextStyle(
@@ -254,10 +250,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),
+                    Text(
                       "Jewelry",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -273,10 +269,10 @@ final AuthController authController = Get.put(AuthController());
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Text(
+                    const SizedBox(width: 30,),                
+                    Text(
                       "Others",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                      style: fontStyeleForItemTypes,
                     ),
                     Container(
                       height: 5,
@@ -331,7 +327,22 @@ final AuthController authController = Get.put(AuthController());
                   .length, //remember to change always to filtered length
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  child: displayCard(filteredItems, index),
+                  // padding and container is wrapped on the display card just for shadow effect and allow padding.
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.8),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(
+                                    2, 3), // changes the position of the shadow
+                              ),
+                            ],
+                          ),
+                          child: displayCard(filteredItems, index))),
                   onTap: () => Get.to(const ClickedItem(),
                       arguments: filteredItems[index].data()),
                 );
@@ -377,8 +388,9 @@ final AuthController authController = Get.put(AuthController());
                   bottomRight:
                       Radius.circular(10)), // Adjust the radius as needed
 
-              border: Border.all(color: Colors.amber),
-              color: Colors.amber,
+              border:
+                  Border.all(color: const Color.fromARGB(255, 222, 222, 222)),
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -390,6 +402,7 @@ final AuthController authController = Get.put(AuthController());
                           .data()!['itemName']
                           .toString()
                           .trim(),
+                      style: GoogleFonts.aclonica(),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -428,11 +441,12 @@ Visibility TitleSingleScrollView() {
             Container(
               width: 60,
               height: 40,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+                border:
+                    Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
               ),
               child: const Image(
                   image: AssetImage(
@@ -444,11 +458,11 @@ Visibility TitleSingleScrollView() {
             Container(
               width: 60,
               height: 40,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
@@ -457,11 +471,11 @@ Visibility TitleSingleScrollView() {
             Container(
               width: 60,
               height: 40,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
@@ -470,11 +484,11 @@ Visibility TitleSingleScrollView() {
             Container(
               width: 60,
               height: 40,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: const Color.fromARGB(255, 255, 255, 245)),
+                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
