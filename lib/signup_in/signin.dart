@@ -1,5 +1,4 @@
 import 'package:campus_sell/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/dashboard.dart';
 import 'package:campus_sell/signup_in/signup.dart';
 import 'package:flutter/material.dart';
@@ -85,11 +84,11 @@ class SignIn extends StatelessWidget {
                                   }
                                 } catch (e) {
                                   Get.snackbar(
-                                      'Somethng went wrong',
-                                      'Check your Internet connection',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      duration: Duration(seconds: 3),
-                                    );
+                                    'Somethng went wrong',
+                                    'Check your Internet connection',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    duration: Duration(seconds: 3),
+                                  );
                                 }
                                 // Navigator.push(
                                 //   context,
