@@ -24,10 +24,7 @@ class MainApp extends StatelessWidget {
     
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // routes: {
-      //   "/": (context)=> SearchScreen(),
-      //   "SignUp": (context)=> Signup(),
-      // },
+      
       theme: ThemeData(primaryColor: const Color.fromARGB(255, 255, 255, 255)),
       home: SafeArea(
         

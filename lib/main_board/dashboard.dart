@@ -21,8 +21,10 @@ class DashBoardM extends StatelessWidget {
   Widget build(BuildContext context) {
     const FontWeight fontWeight = FontWeight.bold;
     const double itemTypeFontSize = 25.0;
-    TextStyle fontStyeleForItemTypes =
-        GoogleFonts.average(fontWeight: fontWeight, fontSize: itemTypeFontSize,);
+    TextStyle fontStyeleForItemTypes = GoogleFonts.average(
+        fontWeight: fontWeight,
+        fontSize: itemTypeFontSize,
+        color: Colors.white);
     double widthtOfScreen =
         MediaQuery.of(context).size.width; // returns width of the screen
 
@@ -31,31 +33,74 @@ class DashBoardM extends StatelessWidget {
         backgroundColor: const Color.fromARGB(
             255, 245, 245, 245), // should be changed to theme.
         endDrawer: Drawer(
+          backgroundColor: Colors.white,
           child: ListView(
             children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
+                child: Center(
+                  child: Container(
+                    width: 120.0, // Adjust width as needed
+                    height: 120.0, // Adjust height as needed
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.amber,
+                        width: 2.0, // Adjust border width as needed
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/img/campus-sell-favicon-color.png",
+                        width: 100.0, // Adjust width as needed
+                        height: 100.0, // Adjust height as needed
+                        fit: BoxFit
+                            .cover, // Ensures the image fits within the given dimensions
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               ListTile(
                 leading: const Icon(Icons.person),
-                title:  Text('Additional Info',style: GoogleFonts.average(),),
+                title: Text(
+                  'Additional Info',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () => Get.to(() => SellInfoScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.search),
-                title:  Text('Search Item',style: GoogleFonts.average(),),
+                title: Text(
+                  'Search Item',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () => Get.to(() => SearchScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.sell),
-                title:  Text('Sell Item',style: GoogleFonts.average(),),
+                title: Text(
+                  'Sell Item',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () => Get.to(() => SellPage()),
               ),
               ListTile(
                 leading: const Icon(Icons.delete_sweep),
-                title:  Text('Remove Item',style: GoogleFonts.average(),),
+                title: Text(
+                  'Remove Item',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () => Get.to(() => const DeleteScreen()),
               ),
               ListTile(
                 leading: const Icon(Icons.tv),
-                title:  Text('Promotion',style: GoogleFonts.average(),),
+                title: Text(
+                  'Promotion',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () {
                   //
                   Get.to(() => BuyPromotion());
@@ -63,7 +108,10 @@ class DashBoardM extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.outbond),
-                title:  Text('SignOut',style: GoogleFonts.average(),),
+                title: Text(
+                  'SignOut',
+                  style: GoogleFonts.average(),
+                ),
                 onTap: () {
                   // AuthController authController = Get.find<AuthController>();
                   // AuthController authController = Get.put(AuthController());
@@ -106,8 +154,23 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text("Fashion", style: fontStyeleForItemTypes),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Fashion",
+                        style: fontStyeleForItemTypes,
+                      ),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -122,10 +185,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text(
-                      "Food",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Food",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -141,10 +216,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text(
-                      "Electronic",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Electronic",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -160,8 +247,23 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text("Beauty Products", style: fontStyeleForItemTypes),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Beauty Product",
+                        style: fontStyeleForItemTypes,
+                      ),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -176,8 +278,23 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text("Sports Equipmen", style: fontStyeleForItemTypes),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Sports Equipment",
+                        style: fontStyeleForItemTypes,
+                      ),
+                    ),
                     Container(
                       height: 5,
                       color: Colors.white,
@@ -192,10 +309,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text(
-                      "Stationery",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Stationery",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -211,10 +340,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text(
-                      "Healthcare Products",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Healthcare Product",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -230,11 +371,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    const Text(
-                      "Kitchen Appliances",
-                      style: TextStyle(
-                          fontWeight: fontWeight, fontSize: itemTypeFontSize),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Kitchen Appliances",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -250,10 +402,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),
-                    Text(
-                      "Jewelry",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Jewelry",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -269,10 +433,22 @@ class DashBoardM extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const SizedBox(width: 30,),                
-                    Text(
-                      "Others",
-                      style: fontStyeleForItemTypes,
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  const Color.fromARGB(255, 46, 48, 48), // Background color
+                        borderRadius:
+                            BorderRadius.circular(20), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6), // Adjust padding as needed
+                      child: Text(
+                        "Other",
+                        style: fontStyeleForItemTypes,
+                      ),
                     ),
                     Container(
                       height: 5,
@@ -390,7 +566,7 @@ class DashBoardM extends StatelessWidget {
 
               border:
                   Border.all(color: const Color.fromARGB(255, 222, 222, 222)),
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -428,7 +604,7 @@ class DashBoardM extends StatelessWidget {
 // }
 
 Visibility TitleSingleScrollView() {
-  const bool statusIsVisible = true;
+  const bool statusIsVisible = false;
 
   return Visibility(
     visible: statusIsVisible,
@@ -462,7 +638,7 @@ Visibility TitleSingleScrollView() {
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
@@ -475,7 +651,7 @@ Visibility TitleSingleScrollView() {
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
@@ -488,7 +664,7 @@ Visibility TitleSingleScrollView() {
                 // color: Colors.amberAccent,
 
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+                border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
               ),
               child: const Image(
                   image: AssetImage(
