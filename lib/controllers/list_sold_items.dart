@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-import 'package:campus_sell/auth/controllers/auth_controller.dart';
-=======
->>>>>>> c8065632fe2d20d82a1f3d85121330c51077fbd0
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class ListSearchItems extends GetxController {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
