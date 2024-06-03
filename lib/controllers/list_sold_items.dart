@@ -1,6 +1,8 @@
+<<<<<<< HEAD
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+=======
+>>>>>>> c8065632fe2d20d82a1f3d85121330c51077fbd0
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
 class ListSearchItems extends GetxController {
@@ -39,11 +41,8 @@ class ListSearchItems extends GetxController {
 
     // Get the documents from add_info collection
 
-
-
     // Construct the query for items collection based on ownerIds and itemType
 
- 
     if (itemType != "Select Item Type" && itemType.isNotEmpty) {
       itemQuery = itemQuery.where("itemType", isEqualTo: itemType);
     }
