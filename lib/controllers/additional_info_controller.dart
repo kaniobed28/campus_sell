@@ -1,4 +1,4 @@
-import 'package:campus_sell/controllers/auth_controller.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 

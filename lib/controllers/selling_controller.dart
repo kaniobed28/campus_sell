@@ -1,4 +1,4 @@
-import 'package:campus_sell/controllers/auth_controller.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
-import 'package:campus_sell/controllers/auth_controller.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
-import 'package:campus_sell/main_board/dashboard.dart';
-import 'package:campus_sell/signup_in/signup.dart';
+import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
+import 'package:campus_sell/auth/views/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

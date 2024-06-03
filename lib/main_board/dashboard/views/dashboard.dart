@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:campus_sell/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/search_screen.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/main_board/select.dart';
+import 'package:campus_sell/search/views/search_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/main_board/buy_promotion.dart';
 import 'package:campus_sell/main_board/clicked_item.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
-import 'package:campus_sell/signup_in/signin.dart';
+import 'package:campus_sell/auth/views/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 class DashBoardM extends StatelessWidget {
   DashBoardM({Key? key}) : super(key: key);
   final AuthController authController = Get.put(AuthController());
+  // var Home = Text("this is home");
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +152,7 @@ class DashBoardM extends StatelessWidget {
                 ),
               ),
               // FutureBuilderForRowItemsOnDashboard( widtht_of_screen,),
-
+            SelectableTextRow(),// for selecting type of item
               SliverToBoxAdapter(
                 child: Row(
                   children: [

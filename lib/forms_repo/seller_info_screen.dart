@@ -1,7 +1,7 @@
 import 'package:campus_sell/controllers/additional_info_controller.dart';
-import 'package:campus_sell/controllers/auth_controller.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:campus_sell/main_board/dashboard.dart';
+import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
