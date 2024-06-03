@@ -1,6 +1,5 @@
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/search/controllers/search_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/auth/views/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
