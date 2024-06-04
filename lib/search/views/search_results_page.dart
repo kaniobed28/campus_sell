@@ -1,6 +1,6 @@
 import 'package:campus_sell/search/controllers/search_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/main_board/clicked_item.dart';
+import 'package:campus_sell/clicked_item/clicked_item.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

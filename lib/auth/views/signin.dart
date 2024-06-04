@@ -1,6 +1,5 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/seller_info_screen.dart';
-import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
+import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/auth/views/signup.dart';
 
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class SignIn extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? DashBoardM()
+          ? DashBoard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -75,7 +74,7 @@ class SignIn extends StatelessWidget {
                                   if (authController.uid.isNotEmpty) {
                                     // authController.dispose();
                                     // print("wrong"); //do some message to user here
-                                    Get.to(() => DashBoardM());
+                                    Get.to(() => DashBoard());
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',

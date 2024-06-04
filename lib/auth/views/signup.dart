@@ -1,9 +1,7 @@
+import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/seller_info_screen.dart';
-import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
 import 'package:campus_sell/auth/views/signin.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +25,7 @@ class Signup extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? DashBoardM()
+          ? DashBoard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -35,7 +33,7 @@ class Signup extends StatelessWidget {
                   child: Container(
                     width: widtht_of_screen,
                     height: height_of_screen,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     color: Colors.blueGrey[50],
                     child: Column(
                       children: [
@@ -83,7 +81,7 @@ class Signup extends StatelessWidget {
                                         .addDataToFirestore(
                                             {}, authController.uid.value);
                                     // authController.dispose();
-                                    Get.to(() => DashBoardM());
+                                    Get.to(() => DashBoard());
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',
