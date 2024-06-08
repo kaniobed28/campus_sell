@@ -2,8 +2,8 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/all_cat.dart';
 import 'package:campus_sell/dashboard/cus_appbar.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/dashboard/select.dart';
-import 'package:campus_sell/dashboard/streamer_controller.dart';
+import 'package:campus_sell/dashboard/select_type_row.dart';
+import 'package:campus_sell/dashboard/controllers/streamer_controller.dart';
 import 'package:campus_sell/dashboard/type_card.dart';
 
 import 'package:flutter/material.dart';

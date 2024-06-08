@@ -1,6 +1,7 @@
-import 'package:campus_sell/dashboard/streamer_controller.dart';
+import 'package:campus_sell/dashboard/controllers/streamer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SelectableTextRow extends StatelessWidget {
   final SelectableTextController controller = Get.put(SelectableTextController());
@@ -40,23 +41,23 @@ class SelectableTextRow extends StatelessWidget {
                       controller.setSelectedIndex(index);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('You clicked on $index'),
-                          duration: Duration(seconds: 1),
+                          content: Text('Changed to ${categories[index]}',style: GoogleFonts.aclonica(),),
+                          duration: const Duration(seconds: 1),
                         ),
                       );
                       // Get.to(() => Fash());
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
-                        color: controller.selectedIndex == index ? Colors.blue : Colors.transparent,
+                        color: controller.selectedIndex == index ? const Color.fromARGB(255, 33, 33, 34) : Colors.transparent,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           category,
-                          style: TextStyle(
+                          style: TextStyle(fontFamily: GoogleFonts.average().fontFamily,fontWeight: FontWeight.w800 ,
                             color: controller.selectedIndex == index ? Colors.white : Colors.black,
                           ),
                         ),

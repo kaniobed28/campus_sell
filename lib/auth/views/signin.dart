@@ -39,7 +39,7 @@ class SignIn extends StatelessWidget {
                           icon: const Icon(
                             Icons.shopify_rounded,
                             size: 80,
-                            color: Colors.amber,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             // Add functionality to the IconButton if needed
@@ -57,7 +57,7 @@ class SignIn extends StatelessWidget {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.amber),
+                                  Colors.transparent),
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
@@ -112,7 +112,7 @@ class SignIn extends StatelessWidget {
                             onTap: () => Get.to(() => Signup()),
                             child: const Text(
                               "Sign Up",
-                              style: TextStyle(color: Colors.amber),
+                              style: TextStyle(color: Colors.black),
                             ),
                           )
                         ]),

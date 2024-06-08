@@ -12,88 +12,140 @@ class TypeCard extends StatelessWidget {
 
   final RxList<dynamic> typeList;
 
-  Stack displayCard(List<Map<String, dynamic>> filteredItems, int index) {
-    return Stack(
-      children: [
-        GestureDetector(
-          onTap: () => Get.to(const ClickedItem(),
-                      arguments: filteredItems[index]),
-          child: Padding(
-            padding: const EdgeInsets.all(0.0),//I didnt use this padding because I used it else where
-            child: SizedBox(
-              height: 170+46,
-              width: double.infinity,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)), // Adjust the radius as needed
-                child: CachedNetworkImage(
-                  height: 170,
-                  imageUrl: filteredItems[index]['imagesUrls'][0],
-                  placeholder: (context, url) => const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.fill,
+  GestureDetector displayCard(List<Map<String, dynamic>> filteredItems, int index) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => const ClickedItem(), arguments: filteredItems[index]);
+      },
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: CachedNetworkImage(
+                imageUrl: filteredItems[index]['imagesUrls'][0],
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
+                height: double.infinity,
+                width: double.infinity,
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withOpacity(0.025),
+                      Colors.black.withOpacity(0.15),
+                      Colors.black.withOpacity(0.2),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 46,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 222, 222, 222),
-                        ),
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.9),
-                            spreadRadius: 4,
-                            blurRadius: 6,
-                            offset: const Offset(
-                                -2, 5), // changes the position of the shadow
-                          ),
-                        ],
-                      ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      filteredItems[index]['itemName'].toString().trim(),
-                      style: GoogleFonts.aclonica(),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    "GHS ${filteredItems[index]['price'].toString().trim()}",
-                  ),
-                ],
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Icon(
+                Icons.favorite_border,
+                color: Colors.white,
               ),
             ),
-          ),
+            Positioned(
+              top: 8,
+              left: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  "GH¢ ${filteredItems[index]['price'].toString().trim()}",
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.99),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        filteredItems[index]['itemName'].toString().trim(),
+                        style: GoogleFonts.aclonica(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "GH¢ ${filteredItems[index]['price'].toString().trim()}",
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
+  }
+
+  int _calculateCrossAxisCount(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount;
+
+    if (screenWidth >= 800) {
+      crossAxisCount = 4;
+    } else if (screenWidth >= 450) {
+      crossAxisCount = 3;
+    } else {
+      crossAxisCount = 2;
+    }
+
+    return crossAxisCount;
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: _calculateCrossAxisCount(context),
           childAspectRatio: 1,
         ),
         itemCount: typeList.length,

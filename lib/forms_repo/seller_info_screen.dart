@@ -66,7 +66,7 @@ class SellInfoScreen extends StatelessWidget {
           title:  Text("Additional Profile for Sellers",style: GoogleFonts.average(),),
           centerTitle: true,
           // leading: Icon(Icons.person_4_rounded),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -166,7 +166,7 @@ class SellInfoScreen extends StatelessWidget {
                       ()=> ElevatedButton.icon(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.amber),
+                              MaterialStateProperty.all<Color>(Colors.transparent),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {

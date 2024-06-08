@@ -6,6 +6,7 @@ import 'package:campus_sell/controllers/selling_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/forms_repo/image_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,9 +34,9 @@ class SellPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title:  Text('Sell',style: GoogleFonts.average(),),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.transparent,
         ),
-        body: Center(
+        body: (defaultTargetPlatform == TargetPlatform.iOS)||(defaultTargetPlatform == TargetPlatform.android)? Center(
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -188,7 +189,7 @@ class SellPage extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ):Center(child: Text("Selling is allowed only on smart phones."),),
       ),
     );
   }

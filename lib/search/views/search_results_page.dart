@@ -18,7 +18,7 @@ class SearchResultPage extends StatelessWidget {
           title: Text(
               "${searchedController.searchResults.length} results found" ??
                   "Nothing found"),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.transparent,
         ),
         body: Column(
           children: [
@@ -30,7 +30,7 @@ class SearchResultPage extends StatelessWidget {
                     return ListTile(
                       title: Text(searchedController.searchResults[index]["itemName"].toString()),
                       subtitle: Text(searchedController.searchResults[index]["itemType"].toString()),
-                      trailing: Text("Ghs ${searchedController.searchResults[index]["price"]}"),
+                      trailing: Text("Gh¢ ${searchedController.searchResults[index]["price"]}"),
                       onTap: () => Get.to(()=> const ClickedItem(),arguments: searchedController.searchResults[index]),
                       // () => Get.to(const searchedController.searchResults[index]),
                     );
