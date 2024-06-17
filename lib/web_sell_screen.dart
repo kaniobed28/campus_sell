@@ -1,44 +1,36 @@
+
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/dashboard/main.dart';
-import 'package:campus_sell/clicked_item/image_controller.dart';
-import 'package:campus_sell/controllers/request_controller.dart';
 import 'package:campus_sell/controllers/selling_controller.dart';
-import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/forms_repo/image_picker.dart';
-import 'package:campus_sell/web_sell_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:campus_sell/dashboard/main.dart';
+import 'package:campus_sell/web_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SellPage extends StatelessWidget {
-  SellPage({Key? key}) : super(key: key);
-
-  TextEditingController itemNameController = TextEditingController();
+class WebFilePickerUI extends StatelessWidget {
+  final WebFilePickerController controller = Get.put(WebFilePickerController());
+   TextEditingController itemNameController = TextEditingController();
   TextEditingController itemTypeController = TextEditingController();
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  RxBool uploading = false.obs;
+    RxBool uploading = false.obs;
+
 
   @override
   Widget build(BuildContext context) {
-    Get.put<ItemForSaleController>(ItemForSaleController());
-      Get.put(AuthController());
-    AuthController authController = Get.find<AuthController>();
-    PermissionController permissionController = Get.put(PermissionController());
-    // permissionController
+  // Get.put(AuthController());
 
-    // permissionController.dispose();
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title:  Text('Sell',style: GoogleFonts.average(),),
-          backgroundColor: Colors.transparent,
-        ),
-        body: (defaultTargetPlatform == TargetPlatform.iOS)||(defaultTargetPlatform == TargetPlatform.android)? Center(
-          child: SingleChildScrollView(
+    AuthController authController = Get.find<AuthController>();
+    
+    return Scaffold(
+      
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Padding(
@@ -156,24 +148,54 @@ class SellPage extends StatelessWidget {
                         return null;
                       },
                     ),
-                     ImagePickerPage(),
-                    Obx(
+                    //  ImagePickerPage(),
+                   
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+
+
+            Obx(() => controller.pickedFile.value != null
+                ? Text('Picked file: ${controller.pickedFile.value!.name}')
+                : Text('No file picked')),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: controller.pickFile,
+              child: Text('Pick File'),
+            ),
+            SizedBox(height: 20),
+            Obx(() => controller.isUploading.value
+                ? Column(
+                    children: [
+                      LinearProgressIndicator(value: controller.uploadProgress.value / 100),
+                      SizedBox(height: 10),
+                      Text('${controller.uploadProgress.value.toStringAsFixed(2)}% uploaded'),
+                    ],
+                  )
+                : Container()),
+            
+            SizedBox(height: 20),
+           
+                 Obx(
                       ()=> ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            uploading.value = true;
-                            ImageController imageController =
-                                Get.put(ImageController());
+                            // uploading.value = true;
+                            WebFilePickerController webFilePickerController =
+                                Get.put(WebFilePickerController());
                             ItemForSaleController itemForSaleController =
                                 Get.put(ItemForSaleController());
-                            await imageController.uploadImagesToFirebase();
+                            await webFilePickerController.uploadFile();
                             itemForSaleController.addItem(
                                 itemNameController.text.trim().capitalizeFirst!,
                                 itemTypeController.text.trim().capitalizeFirst!,
                                 itemDescriptionController.text.trim().capitalizeFirst!,
                                 double.parse(itemPriceController.text.trim().capitalizeFirst!),
-                                imageController.imagesUrls.cast<String>(),authController.uid.value);
-                                imageController.imagesUrls.clear();
+                                <String>[webFilePickerController.downloadUrl.value],
+                                authController.uid.value);
                             Get.to(() => DashBoard())?.then((value) {
                               uploading.value = false;
                             },);
@@ -185,21 +207,9 @@ class SellPage extends StatelessWidget {
                             ):  Text("upload to Store",style: GoogleFonts.aclonica(color: Colors.black),),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ):Center(child: WebFilePickerUI(),),
+          ],
+        ),
       ),
     );
   }
-}
-
-void main(List<String> args) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(GetMaterialApp(
-    home: SellPage(),
-  ));
 }
