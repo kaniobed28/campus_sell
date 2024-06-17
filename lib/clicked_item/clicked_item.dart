@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,8 +50,11 @@ class ClickedItem extends StatelessWidget {
             Obx(() {
               return IconButton(
                 icon: Icon(
-                  loveController.isLoved.value ? Icons.favorite : Icons.favorite_border,
-                  color: loveController.isLoved.value ? Colors.red : Colors.black,
+                  loveController.isLoved.value
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color:
+                      loveController.isLoved.value ? Colors.red : Colors.black,
                 ),
                 onPressed: loveController.toggleLove,
               );
@@ -66,7 +70,7 @@ class ClickedItem extends StatelessWidget {
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(
+                  const BoxShadow(
                     color: Colors.black26,
                     blurRadius: 10,
                     offset: Offset(0, 5),
@@ -86,9 +90,12 @@ class ClickedItem extends StatelessWidget {
                         return CachedNetworkImage(
                           imageUrl: data['imagesUrls'][index].toString(),
                           fit: BoxFit.fill,
-                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                              Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) => const Icon(Icons.error, size: 50),
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error, size: 50),
                         );
                       },
                     ),
@@ -97,14 +104,16 @@ class ClickedItem extends StatelessWidget {
                     top: 10,
                     right: 10,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         'GH¢ ${data["price"]?.toString() ?? "Not Set"}',
-                        style: GoogleFonts.aclonica(color: Colors.white, fontSize: 16),
+                        style: GoogleFonts.aclonica(
+                            color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ),
@@ -119,12 +128,16 @@ class ClickedItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildListTile('Item Name', data["itemName"]),
-                      _buildFutureListTile('Owner\'s Brand', ownerInfo, 'brand'),
-                      _buildListTile('Price', 'GH¢ ${data["price"]?.toString() ?? "Not Set"}'),
+                      _buildFutureListTile(
+                          'Owner\'s Brand', ownerInfo, 'brand'),
+                      _buildListTile('Price',
+                          'GH¢ ${data["price"]?.toString() ?? "Not Set"}'),
                       _buildFutureListTile('Phone', ownerInfo, 'phone'),
-                      _buildFutureListTile('Social Media', ownerInfo, 'socialMedia'),
+                      _buildFutureListTile(
+                          'Social Media', ownerInfo, 'socialMedia'),
                       _buildFutureListTile('City', ownerInfo, 'city'),
-                      _buildFutureListTile('University', ownerInfo, 'university'),
+                      _buildFutureListTile(
+                          'University', ownerInfo, 'university'),
                       _buildFutureListTile('Hostel', ownerInfo, 'hostel'),
                       _buildListTile('Description', data["description"]),
                     ],
@@ -146,11 +159,20 @@ class ClickedItem extends StatelessWidget {
           '$title: ${value?.toString() ?? "Not Set"}',
           style: GoogleFonts.aclonica(fontSize: 16),
         ),
+        trailing: GestureDetector(
+          child: const Text("copy"),
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: value?.toString() ?? "Not Set"));
+            Get.snackbar("Copied to Cliipboard", value?.toString() ?? "Not Set",
+            duration: const Duration(seconds: 1,milliseconds: 500));
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildFutureListTile(String title, Future<Map<String, dynamic>?> future, String key) {
+  Widget _buildFutureListTile(
+      String title, Future<Map<String, dynamic>?> future, String key) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: FutureBuilder<Map<String, dynamic>?>(
@@ -158,22 +180,34 @@ class ClickedItem extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return ListTile(
-              title: Text('Loading $title information...', style: GoogleFonts.aclonica(fontSize: 16)),
+              title: Text('Loading $title information...',
+                  style: GoogleFonts.aclonica(fontSize: 16)),
             );
           } else if (snapshot.hasError) {
             return ListTile(
-              title: Text('Error retrieving $title information', style: GoogleFonts.aclonica(fontSize: 16)),
+              title: Text('Error retrieving $title information',
+                  style: GoogleFonts.aclonica(fontSize: 16)),
             );
           } else if (snapshot.hasData) {
             return ListTile(
               title: Text(
                 '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
+                
                 style: GoogleFonts.aclonica(fontSize: 16),
               ),
+              trailing: GestureDetector(
+          child: const Text("copy"),
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: snapshot.data?[key]?.toString() ?? "Not Set"));
+            Get.snackbar("Copied to Cliipboard", snapshot.data?[key]?.toString() ?? "Not Set",
+            duration: const Duration(seconds: 1,milliseconds: 500));
+          },
+        ),
             );
           } else {
             return ListTile(
-              title: Text('No $title information available', style: GoogleFonts.aclonica(fontSize: 16)),
+              title: Text('No $title information available',
+                  style: GoogleFonts.aclonica(fontSize: 16)),
             );
           }
         },

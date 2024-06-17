@@ -51,7 +51,7 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.person),
+            leading: const Icon(Icons.account_circle),
             title: Text(
               'Additional Info',
               style: GoogleFonts.average(),
