@@ -160,24 +160,24 @@ SingleChildScrollView(
 
             Obx(() => controller.pickedFile.value != null
                 ? Text('Picked file: ${controller.pickedFile.value!.name}')
-                : Text('No file picked')),
-            SizedBox(height: 20),
+                : const Text('No file picked')),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: controller.pickFile,
-              child: Text('Pick File'),
+              onPressed: (){controller.pickFile();},
+              child: const Text('Select an Image'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Obx(() => controller.isUploading.value
                 ? Column(
                     children: [
                       LinearProgressIndicator(value: controller.uploadProgress.value / 100),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text('${controller.uploadProgress.value.toStringAsFixed(2)}% uploaded'),
                     ],
                   )
                 : Container()),
             
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
            
                  Obx(
                       ()=> ElevatedButton(

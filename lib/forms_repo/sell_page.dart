@@ -27,7 +27,7 @@ class SellPage extends StatelessWidget {
     Get.put<ItemForSaleController>(ItemForSaleController());
       Get.put(AuthController());
     AuthController authController = Get.find<AuthController>();
-    PermissionController permissionController = Get.put(PermissionController());
+    // PermissionController permissionController = Get.put(PermissionController());
     // permissionController
 
     // permissionController.dispose();
@@ -37,7 +37,7 @@ class SellPage extends StatelessWidget {
           title:  Text('Sell',style: GoogleFonts.average(),),
           backgroundColor: Colors.transparent,
         ),
-        body: (defaultTargetPlatform == TargetPlatform.iOS)||(defaultTargetPlatform == TargetPlatform.android)? Center(
+        body: (!kIsWeb)||(!kIsWeb)? Center(
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -196,10 +196,10 @@ class SellPage extends StatelessWidget {
   }
 }
 
-void main(List<String> args) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(GetMaterialApp(
-    home: SellPage(),
-  ));
-}
+// void main(List<String> args) async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   runApp(GetMaterialApp(
+//     home: SellPage(),
+//   ));
+// }
