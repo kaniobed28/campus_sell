@@ -138,7 +138,7 @@ class ClickedItem extends StatelessWidget {
                       _buildFutureListTile('City', ownerInfo, 'city'),
                       _buildFutureListTile(
                           'University', ownerInfo, 'university'),
-                      _buildFutureListTile('Hostel', ownerInfo, 'hostel'),
+                      _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel'),
                       _buildListTile('Description', data["description"]),
                     ],
                   ),

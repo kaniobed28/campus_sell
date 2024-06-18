@@ -142,7 +142,7 @@ class SellInfoScreen extends StatelessWidget {
                   nameFormWidget(
                     _hostelNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Hostel Name",
+                    nameOfLabel: "Address/Hostel Name",
                     prefixIcon: Icons.house_outlined,
                   ),
                   SizedBox(height: 30),
@@ -156,7 +156,7 @@ class SellInfoScreen extends StatelessWidget {
                   nameFormWidget(
                     _socialMediaController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Social Media (eg.WhatsApp)",
+                    nameOfLabel: "Social Media (eg.WhatsApp No)",
                     prefixIcon: Icons.message,
                   ),
                   SizedBox(height: 30),
