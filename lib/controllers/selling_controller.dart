@@ -19,6 +19,7 @@ class ItemForSaleController extends GetxController {
       "phone": "",
       "socialMedia": "",
       "university": "",
+      "likes":[],
     });
   }
   // update with this anytime an item is added and anytime additional info is updated

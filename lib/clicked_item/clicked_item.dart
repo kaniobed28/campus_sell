@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 
 class LoveController extends GetxController {
   var isLoved = false.obs;
@@ -122,25 +123,29 @@ class ClickedItem extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildListTile('Item Name', data["itemName"]),
-                      _buildFutureListTile(
-                          'Owner\'s Brand', ownerInfo, 'brand'),
-                      _buildListTile('Price',
-                          'GH¢ ${data["price"]?.toString() ?? "Not Set"}'),
-                      _buildFutureListTile('Phone', ownerInfo, 'phone'),
-                      _buildFutureListTile(
-                          'Social Media', ownerInfo, 'socialMedia'),
-                      _buildFutureListTile('City', ownerInfo, 'city'),
-                      _buildFutureListTile(
-                          'University', ownerInfo, 'university'),
-                      _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel'),
-                      _buildListTile('Description', data["description"]),
-                    ],
+                child: Container(
+                  
+                color: Colors.blueGrey[800],
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildListTile('Item Name', data["itemName"]),
+                        _buildFutureListTile(
+                            'Owner\'s Brand', ownerInfo, 'brand'),
+                        _buildListTile('Price',
+                            'GH¢ ${data["price"]?.toString() ?? "Not Set"}'),
+                        _buildFutureListTile('Phone', ownerInfo, 'phone'),
+                        _buildFutureListTile(
+                            'Social Media', ownerInfo, 'socialMedia'),
+                        _buildFutureListTile('City', ownerInfo, 'city'),
+                        _buildFutureListTile(
+                            'University', ownerInfo, 'university'),
+                        _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel'),
+                        _buildListTile('Description', data["description"]),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -154,18 +159,24 @@ class ClickedItem extends StatelessWidget {
   Widget _buildListTile(String title, dynamic value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ListTile(
-        title: Text(
-          '$title: ${value?.toString() ?? "Not Set"}',
-          style: GoogleFonts.aclonica(fontSize: 16),
-        ),
-        trailing: GestureDetector(
-          child: const Text("copy"),
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: value?.toString() ?? "Not Set"));
-            Get.snackbar("Copied to Cliipboard", value?.toString() ?? "Not Set",
-            duration: const Duration(seconds: 1,milliseconds: 500));
-          },
+      child: Material(
+              elevation: 10,
+                color: Colors.blueGrey[300],
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(10)),
+              
+        child: ListTile(
+          title: Text(
+            '$title: ${value?.toString() ?? "Not Set"}',
+            style: GoogleFonts.aclonica(fontSize: 16,color: const Color(0xFFFFFFFF)),
+          ),
+          trailing: GestureDetector(
+            child: const Text("copy"),
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: value?.toString() ?? "Not Set"));
+              Get.snackbar("Copied to Cliipboard", value?.toString() ?? "Not Set",
+              duration: const Duration(seconds: 1,milliseconds: 500));
+            },
+          ),
         ),
       ),
     );
@@ -189,20 +200,28 @@ class ClickedItem extends StatelessWidget {
                   style: GoogleFonts.aclonica(fontSize: 16)),
             );
           } else if (snapshot.hasData) {
-            return ListTile(
-              title: Text(
-                '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
-                
-                style: GoogleFonts.aclonica(fontSize: 16),
-              ),
-              trailing: GestureDetector(
-          child: const Text("copy"),
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: snapshot.data?[key]?.toString() ?? "Not Set"));
-            Get.snackbar("Copied to Cliipboard", snapshot.data?[key]?.toString() ?? "Not Set",
-            duration: const Duration(seconds: 1,milliseconds: 500));
-          },
-        ),
+            return Material(
+              elevation: 10,
+                color: Colors.blueGrey[300],
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(10)),
+              
+                             
+                 child: ListTile(
+                  title: Text(
+                    '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
+                    
+                    style: GoogleFonts.aclonica(fontSize: 16,color: const Color(0xFFFFFFFF)),
+                  ),
+                  trailing: GestureDetector(
+                          child: const Text("copy"),
+                          onTap: () {
+                Clipboard.setData(ClipboardData(text: snapshot.data?[key]?.toString() ?? "Not Set"));
+                Get.snackbar("Copied to Cliipboard", snapshot.data?[key]?.toString() ?? "Not Set",
+                duration: const Duration(seconds: 1,milliseconds: 500));
+                          },
+                        ),
+                ),
+              
             );
           } else {
             return ListTile(

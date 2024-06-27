@@ -159,3 +159,8 @@ class TypeCard extends StatelessWidget {
     });
   }
 }
+// After one week of returnin I have forgotten the logic I used here
+// I think for the TypeCard, it has displaycard wraped with gesture detector and the display card takes the list of a particular
+// type of products and also takes in an index which will be the index of the list.
+// the displaycard is used in gridview builder which return index and the index is used to feed the displaycard index.
+// a specific typelist is passed to the clicked item page when clicked on and the index is used to filter the typelist

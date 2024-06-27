@@ -60,6 +60,7 @@ class SellInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(Get.parameters["id"]);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
