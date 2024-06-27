@@ -131,19 +131,19 @@ class ClickedItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildListTile('Item Name', data["itemName"]),
+                        _buildListTile('Item Name', data["itemName"],Icon(Icons.delivery_dining_sharp)),
                         _buildFutureListTile(
-                            'Owner\'s Brand', ownerInfo, 'brand'),
+                            'Owner\'s Brand', ownerInfo, 'brand',const Icon(Icons.branding_watermark)),
                         _buildListTile('Price',
-                            'GH¢ ${data["price"]?.toString() ?? "Not Set"}'),
-                        _buildFutureListTile('Phone', ownerInfo, 'phone'),
+                            'GH¢ ${data["price"]?.toString() ?? "Not Set"}',Icon(Icons.sell)),
+                        _buildFutureListTile('Phone', ownerInfo, 'phone',const Icon(Icons.price_change_rounded)),
                         _buildFutureListTile(
-                            'Social Media', ownerInfo, 'socialMedia'),
-                        _buildFutureListTile('City', ownerInfo, 'city'),
+                            'Social Media', ownerInfo, 'socialMedia',const Icon(Icons.message_rounded)),
+                        _buildFutureListTile('City', ownerInfo, 'city',const Icon(Icons.my_location)),
                         _buildFutureListTile(
-                            'University', ownerInfo, 'university'),
-                        _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel'),
-                        _buildListTile('Description', data["description"]),
+                            'University', ownerInfo, 'university',const Icon(Icons.school)),
+                        _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel',const Icon(Icons.location_on_outlined)),
+                        _buildListTile('Description', data["description"],Icon(Icons.note_alt_outlined)),
                       ],
                     ),
                   ),
@@ -156,7 +156,7 @@ class ClickedItem extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(String title, dynamic value) {
+  Widget _buildListTile(String title, dynamic value,Icon icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Material(
@@ -165,6 +165,7 @@ class ClickedItem extends StatelessWidget {
               borderRadius: const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(10)),
               
         child: ListTile(
+          leading: icon,
           title: Text(
             '$title: ${value?.toString() ?? "Not Set"}',
             style: GoogleFonts.aclonica(fontSize: 16,color: const Color(0xFFFFFFFF)),
@@ -183,7 +184,7 @@ class ClickedItem extends StatelessWidget {
   }
 
   Widget _buildFutureListTile(
-      String title, Future<Map<String, dynamic>?> future, String key) {
+      String title, Future<Map<String, dynamic>?> future, String key,Icon icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: FutureBuilder<Map<String, dynamic>?>(
@@ -207,6 +208,7 @@ class ClickedItem extends StatelessWidget {
               
                              
                  child: ListTile(
+                  leading: icon,
                   title: Text(
                     '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
                     
