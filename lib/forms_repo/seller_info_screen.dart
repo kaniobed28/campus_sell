@@ -1,7 +1,7 @@
+import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -60,33 +60,34 @@ class SellInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(Get.parameters["id"]);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title:  Text("Additional Profile for Sellers",style: GoogleFonts.average(),),
           centerTitle: true,
           // leading: Icon(Icons.person_4_rounded),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey, // Assign the _formKey to the Form widget
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 /*
                 Phone, whatsapp,email and other social media  links can be added here but are not required.
                 Remembrance note: Implement them.
                 */
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField<String>(
                     value: _cityNameController.text.isNotEmpty
                         ? _cityNameController.text
@@ -100,7 +101,7 @@ class SellInfoScreen extends StatelessWidget {
                     onChanged: (val) {
                       _cityNameController.text = val!;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "City Name",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.location_city),
@@ -112,7 +113,7 @@ class SellInfoScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField<String>(
                     value: _universityNameController.text.isNotEmpty
                         ? _universityNameController.text
@@ -126,7 +127,7 @@ class SellInfoScreen extends StatelessWidget {
                     onChanged: (val) {
                       _universityNameController.text = val!;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "University Name",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.school),
@@ -138,35 +139,35 @@ class SellInfoScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _hostelNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Hostel Name",
+                    nameOfLabel: "Address/Hostel Name",
                     prefixIcon: Icons.house_outlined,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _phoneController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Phone Number",
                     prefixIcon: Icons.call,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _socialMediaController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Social Media (eg.WhatsApp)",
+                    nameOfLabel: "Social Media (eg.WhatsApp No)",
                     prefixIcon: Icons.message,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Obx(
                       ()=> ElevatedButton.icon(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.amber),
+                              MaterialStateProperty.all<Color>(Colors.transparent),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
@@ -194,7 +195,7 @@ class SellInfoScreen extends StatelessWidget {
                                   .capitalizeFirst,
                             }, authController.uid.toString());
                             await additionalInfoController.updateWithAddInfo();
-                            Get.to(() => DashBoardM());
+                            Get.to(() => DashBoard());
                             // Navigator.push(
                             // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                           }
@@ -237,7 +238,7 @@ TextFormField nameFormWidget(
     obscureText: obscureText,
     decoration: InputDecoration(
       labelText: nameOfLabel,
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       prefixIcon: prefixIcon != null
           ? Icon(prefixIcon)
           : null, // Use the provided icon if not null

@@ -1,8 +1,7 @@
-import 'package:campus_sell/all_type_screen.dart';
-import 'package:campus_sell/main_board/dashboard/controllers/streamer_controller.dart';
-import 'package:campus_sell/main_board/dashboard/views/type_card.dart';
+import 'package:campus_sell/dashboard/controllers/streamer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SelectableTextRow extends StatelessWidget {
   final SelectableTextController controller = Get.put(SelectableTextController());
@@ -23,9 +22,6 @@ class SelectableTextRow extends StatelessWidget {
     Streamer streamer = Get.put(Streamer());
   @override
   Widget build(BuildContext context) {
-          double heighttOfScreen =
-        MediaQuery.of(context).size.height;
-        double widthOfScreen = MediaQuery.of(context).size.width;
 
 
     return SliverToBoxAdapter(
@@ -45,22 +41,23 @@ class SelectableTextRow extends StatelessWidget {
                       controller.setSelectedIndex(index);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('You clicked on $index'),
-                          duration: Duration(seconds: 1),
+                          content: Text('Changed to ${categories[index]}',style: GoogleFonts.aclonica(),),
+                          duration: const Duration(seconds: 1),
                         ),
                       );
+                      // Get.to(() => Fash());
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
-                        color: controller.selectedIndex == index ? Colors.blue : Colors.transparent,
+                        color: controller.selectedIndex == index ? const Color.fromARGB(255, 33, 33, 34) : Colors.transparent,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           category,
-                          style: TextStyle(
+                          style: TextStyle(fontFamily: GoogleFonts.average().fontFamily,fontWeight: FontWeight.w800 ,
                             color: controller.selectedIndex == index ? Colors.white : Colors.black,
                           ),
                         ),
@@ -71,27 +68,6 @@ class SelectableTextRow extends StatelessWidget {
               ),
             ),
           ),
-          //I dont understand but there is something wrong with the height here.
-          // whene I make it cover the uncovered space, it does not show everything.
-           SizedBox(
-            width: widthOfScreen,
-            height: heighttOfScreen-200,
-             child: PageView(
-                children: [
-                  SingleChildScrollView(child: AllTypeHome()),
-                  TypeCard(typeList: streamer.foodList),
-                  TypeCard(typeList: streamer.fashionList),
-                  TypeCard(typeList: streamer.beautyList),
-                  TypeCard(typeList: streamer.kitchenList),
-                  TypeCard(typeList: streamer.electronicList),
-                  TypeCard(typeList: streamer.sportsList),
-                  TypeCard(typeList: streamer.stationeryList),
-                  TypeCard(typeList: streamer.healthcareList),
-                  TypeCard(typeList: streamer.jewelryList),
-                  TypeCard(typeList: streamer.othersList),
-                ],
-              ),
-           ),
           
         ],
       ),
@@ -100,7 +76,7 @@ class SelectableTextRow extends StatelessWidget {
 }
 
 class SelectableTextController extends GetxController {
-  RxInt selectedIndex = (-1).obs;
+  RxInt selectedIndex = (0).obs;
 
   void setSelectedIndex(int index) {
     selectedIndex.value = index;

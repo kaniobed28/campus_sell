@@ -86,7 +86,7 @@ class SearchScreen extends StatelessWidget {
           actions: const [
             Icon(Icons.search),
           ],
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -159,7 +159,7 @@ class SearchScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.amber),
+                            MaterialStateProperty.all<Color>(Colors.transparent),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {

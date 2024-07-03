@@ -59,7 +59,7 @@ class ImageController extends GetxController {
     var result = await FlutterImageCompress.compressAndGetFile(
       file.path,
       targetPath,
-      quality: 20, // Adjust quality as needed.
+      quality: 40, // Adjust quality as needed.
     );
 
     return result != null ? XFile(result.path) : null;

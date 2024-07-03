@@ -34,7 +34,7 @@ class _SignUpFormState extends State<AppForm> {
                   // print('Signing up with Username: $username, Email: $email, Password: $password');
                 }
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
           ),
         ],
@@ -66,7 +66,7 @@ class _SignUpFormState extends State<AppForm> {
     return TextFormField(
           controller: passwordOfFormController,
           obscureText: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Password',
           ),
           validator: (value) {
@@ -82,7 +82,7 @@ class _SignUpFormState extends State<AppForm> {
     return TextFormField(
           controller: emailOfFormController,
           keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Email',
           ),
           validator: (value) {
