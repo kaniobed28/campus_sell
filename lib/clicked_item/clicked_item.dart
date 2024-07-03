@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,13 +17,18 @@ class LoveController extends GetxController {
 }
 
 class ClickedItem extends StatelessWidget {
-  const ClickedItem({Key? key}) : super(key: key);
+   ClickedItem({Key? key}) : super(key: key);
 
+    LikeItem likeItemController = Get.put(LikeItem());
   @override
   Widget build(BuildContext context) {
     final additionalInfoController = Get.put(AdditionalInfoController());
-    final loveController = Get.put(LoveController());
+    final authController = Get.put(AuthController());
+
+    // final loveController = Get.put(LoveController());
     final Map<String, dynamic> data = Get.arguments ?? {};
+    final dynamic itemId = data["id"];
+                    likeItemController.containsUID(itemId, authController.uid.value);
     final ownerInfo = additionalInfoController.getDocumentById(data["ownerId"]);
 
     final screenHeight = MediaQuery.of(context).size.height;
@@ -49,15 +56,29 @@ class ClickedItem extends StatelessWidget {
           centerTitle: true,
           actions: [
             Obx(() {
-              return IconButton(
-                icon: Icon(
-                  loveController.isLoved.value
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color:
-                      loveController.isLoved.value ? Colors.red : Colors.black,
+              return FittedBox(
+                child: Column(
+                  
+                  children: [
+                    // SizedBox(height: 1,),
+                    IconButton(
+                      icon: Icon(
+                        likeItemController.liked.value
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: likeItemController.liked.value
+                            ? Colors.red
+                            : Colors.black,
+                      ),
+                      onPressed: () {
+                        // loveController.toggleLove();
+                        likeItemController.addAndRemoveLike(itemId, authController.uid.value);
+                        // likeItemController.containsUID(itemId, authController.uid.value);
+                      },
+                    ),
+                    Text("${likeItemController.likesLength}")
+                  ],
                 ),
-                onPressed: loveController.toggleLove,
               );
             }),
           ],
@@ -124,26 +145,32 @@ class ClickedItem extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  
-                color: Colors.blueGrey[800],
+                  // color: Colors.blueGrey[800],
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildListTile('Item Name', data["itemName"],Icon(Icons.delivery_dining_sharp)),
-                        _buildFutureListTile(
-                            'Owner\'s Brand', ownerInfo, 'brand',const Icon(Icons.branding_watermark)),
-                        _buildListTile('Price',
-                            'GH¢ ${data["price"]?.toString() ?? "Not Set"}',Icon(Icons.sell)),
-                        _buildFutureListTile('Phone', ownerInfo, 'phone',const Icon(Icons.price_change_rounded)),
-                        _buildFutureListTile(
-                            'Social Media', ownerInfo, 'socialMedia',const Icon(Icons.message_rounded)),
-                        _buildFutureListTile('City', ownerInfo, 'city',const Icon(Icons.my_location)),
-                        _buildFutureListTile(
-                            'University', ownerInfo, 'university',const Icon(Icons.school)),
-                        _buildFutureListTile('Address/Hostel', ownerInfo, 'hostel',const Icon(Icons.location_on_outlined)),
-                        _buildListTile('Description', data["description"],Icon(Icons.note_alt_outlined)),
+                        _buildListTile('Item Name', data["itemName"],
+                            Icon(Icons.delivery_dining_sharp)),
+                        _buildFutureListTile('Owner\'s Brand', ownerInfo,
+                            'brand', const Icon(Icons.branding_watermark)),
+                        _buildListTile(
+                            'Price',
+                            'GH¢ ${data["price"]?.toString() ?? "Not Set"}',
+                            Icon(Icons.sell)),
+                        _buildFutureListTile('Phone', ownerInfo, 'phone',
+                            const Icon(Icons.price_change_rounded)),
+                        _buildFutureListTile('Social Media', ownerInfo,
+                            'socialMedia', const Icon(Icons.message_rounded)),
+                        _buildFutureListTile('City', ownerInfo, 'city',
+                            const Icon(Icons.my_location)),
+                        _buildFutureListTile('University', ownerInfo,
+                            'university', const Icon(Icons.school)),
+                        _buildFutureListTile('Address/Hostel', ownerInfo,
+                            'hostel', const Icon(Icons.location_on_outlined)),
+                        _buildListTile('Description', data["description"],
+                            Icon(Icons.note_alt_outlined)),
                       ],
                     ),
                   ),
@@ -156,26 +183,29 @@ class ClickedItem extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(String title, dynamic value,Icon icon) {
+  Widget _buildListTile(String title, dynamic value, Icon icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Material(
-              elevation: 10,
-                color: Colors.blueGrey[300],
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(10)),
-              
+        elevation: 10,
+        color: Colors.blueGrey[300],
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(25), bottomLeft: Radius.circular(10)),
         child: ListTile(
           leading: icon,
           title: Text(
             '$title: ${value?.toString() ?? "Not Set"}',
-            style: GoogleFonts.aclonica(fontSize: 16,color: const Color(0xFFFFFFFF)),
+            style: GoogleFonts.aclonica(
+                fontSize: 16, color: const Color(0xFFFFFFFF)),
           ),
           trailing: GestureDetector(
             child: const Text("copy"),
             onTap: () {
-              Clipboard.setData(ClipboardData(text: value?.toString() ?? "Not Set"));
-              Get.snackbar("Copied to Cliipboard", value?.toString() ?? "Not Set",
-              duration: const Duration(seconds: 1,milliseconds: 500));
+              Clipboard.setData(
+                  ClipboardData(text: value?.toString() ?? "Not Set"));
+              Get.snackbar(
+                  "Copied to Cliipboard", value?.toString() ?? "Not Set",
+                  duration: const Duration(seconds: 1, milliseconds: 500));
             },
           ),
         ),
@@ -183,8 +213,8 @@ class ClickedItem extends StatelessWidget {
     );
   }
 
-  Widget _buildFutureListTile(
-      String title, Future<Map<String, dynamic>?> future, String key,Icon icon) {
+  Widget _buildFutureListTile(String title,
+      Future<Map<String, dynamic>?> future, String key, Icon icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: FutureBuilder<Map<String, dynamic>?>(
@@ -203,27 +233,29 @@ class ClickedItem extends StatelessWidget {
           } else if (snapshot.hasData) {
             return Material(
               elevation: 10,
-                color: Colors.blueGrey[300],
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(10)),
-              
-                             
-                 child: ListTile(
-                  leading: icon,
-                  title: Text(
-                    '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
-                    
-                    style: GoogleFonts.aclonica(fontSize: 16,color: const Color(0xFFFFFFFF)),
-                  ),
-                  trailing: GestureDetector(
-                          child: const Text("copy"),
-                          onTap: () {
-                Clipboard.setData(ClipboardData(text: snapshot.data?[key]?.toString() ?? "Not Set"));
-                Get.snackbar("Copied to Cliipboard", snapshot.data?[key]?.toString() ?? "Not Set",
-                duration: const Duration(seconds: 1,milliseconds: 500));
-                          },
-                        ),
+              color: Colors.blueGrey[300],
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(10)),
+              child: ListTile(
+                leading: icon,
+                title: Text(
+                  '$title: ${snapshot.data?[key]?.toString() ?? "Not Set"}',
+                  style: GoogleFonts.aclonica(
+                      fontSize: 16, color: const Color(0xFFFFFFFF)),
                 ),
-              
+                trailing: GestureDetector(
+                  child: const Text("copy"),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(
+                        text: snapshot.data?[key]?.toString() ?? "Not Set"));
+                    Get.snackbar("Copied to Cliipboard",
+                        snapshot.data?[key]?.toString() ?? "Not Set",
+                        duration:
+                            const Duration(seconds: 1, milliseconds: 500));
+                  },
+                ),
+              ),
             );
           } else {
             return ListTile(
@@ -238,5 +270,5 @@ class ClickedItem extends StatelessWidget {
 }
 
 void main() {
-  runApp(const GetMaterialApp(home: ClickedItem()));
+  // runApp(const GetMaterialApp(home: ClickedItem()));
 }

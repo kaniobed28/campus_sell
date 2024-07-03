@@ -45,7 +45,8 @@ class CategoryBody extends StatelessWidget {
             final item = items[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => const ClickedItem(), arguments: item);
+
+                Get.to(() =>  ClickedItem(), arguments: item);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -81,7 +82,7 @@ class CategoryBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
+                      const Positioned(
                         top: 8,
                         right: 8,
                         child: Icon(
@@ -95,7 +96,7 @@ class CategoryBody extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 248, 255, 41).withOpacity(0.7),
+                            color: const Color.fromARGB(255, 248, 255, 41).withOpacity(0.7),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(

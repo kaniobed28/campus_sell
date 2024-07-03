@@ -142,13 +142,13 @@ class ClickedItemC extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Container(
-                        color: Colors.blueGrey[800],
+                        // color: Colors.blueGrey[800],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildListTile('Item Name', data["itemName"],
+                              _buildListTile('Item Name', itemData["itemName"],
                                   Icon(Icons.delivery_dining_sharp)),
                               _buildFutureListTile(
                                   'Owner\'s Brand',
@@ -157,10 +157,10 @@ class ClickedItemC extends StatelessWidget {
                                   const Icon(Icons.branding_watermark)),
                               _buildListTile(
                                   'Price',
-                                  'GH¢ ${data["price"]?.toString() ?? "Not Set"}',
+                                  'GH¢ ${itemData["price"]?.toString() ?? "Not Set"}',
                                   Icon(Icons.sell)),
                               _buildFutureListTile('Phone', ownerInfo, 'phone',
-                                  const Icon(Icons.price_change_rounded)),
+                                  const Icon(Icons.phone)),
                               _buildFutureListTile(
                                   'Social Media',
                                   ownerInfo,
@@ -175,7 +175,7 @@ class ClickedItemC extends StatelessWidget {
                                   ownerInfo,
                                   'hostel',
                                   const Icon(Icons.location_on_outlined)),
-                              _buildListTile('Description', data["description"],
+                              _buildListTile('Description', itemData["description"],
                                   Icon(Icons.note_alt_outlined)),
                             ],
                           ),

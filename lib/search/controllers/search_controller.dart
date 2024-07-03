@@ -52,12 +52,12 @@ class SearchedController extends GetxController {
     }
 
     QuerySnapshot querySnapshot = await col.get();
-    querySnapshot.docs.forEach((element) {
+    for (var element in querySnapshot.docs) {
       Map<String, dynamic> data = element.data() as Map<String, dynamic>;
       searchResults.add(data);
       // print(data.length);
       // print(data);
-    });
+    }
   }
 }
 

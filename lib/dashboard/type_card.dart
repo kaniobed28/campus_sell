@@ -15,7 +15,7 @@ class TypeCard extends StatelessWidget {
   GestureDetector displayCard(List<Map<String, dynamic>> filteredItems, int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const ClickedItem(), arguments: filteredItems[index]);
+        Get.to(() =>  ClickedItem(), arguments: filteredItems[index]);
       },
       child: Material(
         elevation: 4,
@@ -49,7 +49,7 @@ class TypeCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               top: 8,
               right: 8,
               child: Icon(

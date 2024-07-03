@@ -13,9 +13,9 @@ ThemeData lightTheme = ThemeData(
     titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
     titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     titleSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    bodyLarge: TextStyle(fontSize: 14,color: Color( 0xFFC4C4C4)),
-    bodyMedium: TextStyle(fontSize: 14,color: Color( 0xFFEEEEEE),), // this is the theme responsible for the app text by default. the default font size for the app is 14
-    bodySmall: TextStyle(fontSize: 16,color: Color( 0xFFC4C4C4)),
+    bodyLarge: TextStyle(fontSize: 14,color: Color.fromARGB(255, 7, 7, 7)),
+    bodyMedium: TextStyle(fontSize: 14,color: Color.fromARGB(255, 1, 1, 1),), // this is the theme responsible for the app text by default. the default font size for the app is 14
+    bodySmall: TextStyle(fontSize: 16,color: Color.fromARGB(255, 4, 4, 4)),
     labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
     labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
     labelSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color( 0xFFEEEEEE),),

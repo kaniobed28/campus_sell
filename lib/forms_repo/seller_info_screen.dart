@@ -73,21 +73,21 @@ class SellInfoScreen extends StatelessWidget {
           child: Form(
             key: _formKey, // Assign the _formKey to the Form widget
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 /*
                 Phone, whatsapp,email and other social media  links can be added here but are not required.
                 Remembrance note: Implement them.
                 */
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Brand Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField<String>(
                     value: _cityNameController.text.isNotEmpty
                         ? _cityNameController.text
@@ -101,7 +101,7 @@ class SellInfoScreen extends StatelessWidget {
                     onChanged: (val) {
                       _cityNameController.text = val!;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "City Name",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.location_city),
@@ -113,7 +113,7 @@ class SellInfoScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   DropdownButtonFormField<String>(
                     value: _universityNameController.text.isNotEmpty
                         ? _universityNameController.text
@@ -127,7 +127,7 @@ class SellInfoScreen extends StatelessWidget {
                     onChanged: (val) {
                       _universityNameController.text = val!;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "University Name",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.school),
@@ -139,28 +139,28 @@ class SellInfoScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _hostelNameController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Address/Hostel Name",
                     prefixIcon: Icons.house_outlined,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _phoneController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Phone Number",
                     prefixIcon: Icons.call,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   nameFormWidget(
                     _socialMediaController,
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Social Media (eg.WhatsApp No)",
                     prefixIcon: Icons.message,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Obx(
@@ -238,7 +238,7 @@ TextFormField nameFormWidget(
     obscureText: obscureText,
     decoration: InputDecoration(
       labelText: nameOfLabel,
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       prefixIcon: prefixIcon != null
           ? Icon(prefixIcon)
           : null, // Use the provided icon if not null

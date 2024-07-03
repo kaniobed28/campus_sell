@@ -1,12 +1,9 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/clicked_item/image_controller.dart';
-import 'package:campus_sell/controllers/request_controller.dart';
 import 'package:campus_sell/controllers/selling_controller.dart';
-import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/forms_repo/image_picker.dart';
 import 'package:campus_sell/web_sell_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

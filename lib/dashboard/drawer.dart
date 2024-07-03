@@ -3,7 +3,6 @@ import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/list_screen.dart';
-import 'package:campus_sell/main_board/buy_promotion.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +90,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             onTap: () {
               //
-              Get.to(() => ListScreen());
+              Get.to(() => const ListScreen());
             },
           ),
           ListTile(
