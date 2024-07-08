@@ -10,7 +10,7 @@ class CategoryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Streamer streamer = Get.put(Streamer());
+    final Streamer streamer = Get.find<Streamer>();
     final double widthOfScreen = MediaQuery.of(context).size.width;
 
     final lists = [

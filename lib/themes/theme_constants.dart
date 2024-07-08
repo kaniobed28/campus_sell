@@ -17,7 +17,7 @@ ThemeData lightTheme = ThemeData(
     bodyMedium: TextStyle(fontSize: 14,color: Color.fromARGB(255, 1, 1, 1),), // this is the theme responsible for the app text by default. the default font size for the app is 14
     bodySmall: TextStyle(fontSize: 16,color: Color.fromARGB(255, 4, 4, 4)),
     labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-    labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+    labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),//I am using this for the category lable
     labelSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color( 0xFFEEEEEE),),
     
   ),
