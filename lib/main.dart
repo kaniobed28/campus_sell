@@ -1,14 +1,12 @@
 import 'package:campus_sell/clicked_item/clicked_item%20copy.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/dashboard/new_dashboard.dart';
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'dashboard/controllers/streamer_controller.dart';
 
 void main() async{
@@ -18,6 +16,7 @@ void main() async{
   // Get.put(SearchedController());
   Get.put(AdditionalInfoController());
   Get.put(Streamer());
+  // Get.put(PagesStateController());
   runApp( const MainApp());
 }
 

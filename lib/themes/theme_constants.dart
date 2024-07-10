@@ -18,7 +18,7 @@ ThemeData lightTheme = ThemeData(
     bodySmall: TextStyle(fontSize: 16,color: Color.fromARGB(255, 4, 4, 4)),
     labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
     labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),//I am using this for the category lable
-    labelSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color( 0xFFEEEEEE),),
+    labelSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, ),//I am using this for form lable
     
   ),
   // elevatedButtonTheme: ElevatedButtonThemeData(

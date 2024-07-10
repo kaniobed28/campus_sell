@@ -1,3 +1,4 @@
+import 'package:campus_sell/dashboard/ago_tech_clicked_item.dart';
 import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
 import 'package:flutter/foundation.dart';
@@ -30,10 +31,17 @@ class CustomHorizontalProductsList extends StatelessWidget {
                       final data = lists[index];
                       return Padding(
                         padding: const EdgeInsets.all(6.0),
-                        child: SmallProductCard(
-                          imageUrl: data["imagesUrls"][0],
-                          title: data["itemName"].toString().trim(),
-                          price: 'Gh¢${data["price"].toString().trim()}',
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(const AgoTechClickedItem(),
+                            arguments: data,
+                            );
+                          },
+                          child: SmallProductCard(
+                            imageUrl: data["imagesUrls"][0],
+                            title: data["itemName"].toString().trim(),
+                            price: 'Gh¢${data["price"].toString().trim()}',
+                          ),
                         ),
                       );
                       //  Text("${data["price"]}");

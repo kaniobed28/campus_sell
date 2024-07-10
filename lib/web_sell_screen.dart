@@ -159,7 +159,7 @@ SingleChildScrollView(
 
 
             Obx(() => controller.pickedFile.value != null
-                ? Text('Picked file: ${controller.pickedFile.value!.name}')
+                ? Text('Picked file: ${controller.pickFilesNameList}')
                 : const Text('No file picked')),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -194,7 +194,7 @@ SingleChildScrollView(
                                 itemTypeController.text.trim().capitalizeFirst!,
                                 itemDescriptionController.text.trim().capitalizeFirst!,
                                 double.parse(itemPriceController.text.trim().capitalizeFirst!),
-                                <String>[webFilePickerController.downloadUrl.value],
+                                webFilePickerController.downloadUrlList,
                                 authController.uid.value);
                             Get.to(() => DashBoard())?.then((value) {
                               uploading.value = false;

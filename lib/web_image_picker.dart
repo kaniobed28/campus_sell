@@ -13,7 +13,11 @@ class WebFilePickerController extends GetxController {
   var isUploading = false.obs;
   var uploadProgress = 0.0.obs;
   var downloadUrl = ''.obs;
+  RxList pickFilesList = [].obs;
+  RxList pickFilesNameList = [].obs;
+  RxList downloadUrlList = [].obs;
 
+  
   Future<void> pickFile() async {
   final result = await FilePicker.platform.pickFiles(
     allowMultiple: false,
@@ -23,6 +27,9 @@ class WebFilePickerController extends GetxController {
 
   if (result != null) {
     pickedFile.value = result.files.single;
+    pickFilesList.add(result.files.single);
+    print(pickFilesList);
+    pickFilesNameList.add(pickedFile.value!.name);
   }
 }
 
@@ -30,10 +37,12 @@ class WebFilePickerController extends GetxController {
   Future<void> uploadFile() async {
     if (pickedFile.value == null) return;
 
+    for (var element in pickFilesList) {
     isUploading.value = true;
+      
     try {
-      final storageRef = FirebaseStorage.instance.ref().child('uploads/${pickedFile.value!.name}');
-      final uploadTask = storageRef.putData(pickedFile.value!.bytes!);
+      final storageRef = FirebaseStorage.instance.ref().child('uploads/${element.name}');
+      final uploadTask = storageRef.putData(element.bytes!);
 
       uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
         uploadProgress.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -42,10 +51,12 @@ class WebFilePickerController extends GetxController {
       await uploadTask.whenComplete(() => null);
       final url = await storageRef.getDownloadURL();
       downloadUrl.value = url;
+      downloadUrlList.add(url);
       isUploading.value = false;
     } catch (e) {
       isUploading.value = false;
       print("Error uploading file: $e");
+    }
     }
   }
 }
