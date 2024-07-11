@@ -1,9 +1,6 @@
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
-import 'package:campus_sell/dashboard/controllers/page_state_controller.dart';
-import 'package:campus_sell/dashboard/main.dart';
-import 'package:campus_sell/forms_repo/sell_page.dart';
-import 'package:campus_sell/web_sell_screen.dart';
+import 'package:campus_sell/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +23,7 @@ class CustomBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           NavBarItem(
-            icon: Icons.home,
+            icon: Icons.location_on_outlined,
             label: 'Home',
             onTap: () {
               // Handle Home tap
@@ -34,7 +31,7 @@ class CustomBottomNavBar extends StatelessWidget {
             },
           ),
           NavBarItem(
-            icon: Icons.attach_money,
+            icon: Icons.sell_outlined,
             label: 'Sell Item',
             onTap: () {
               Get.off(const AgoTechSellScreen());
@@ -42,10 +39,10 @@ class CustomBottomNavBar extends StatelessWidget {
             },
           ),
           NavBarItem(
-            icon: Icons.category,
-            label: 'Categories',
+            icon: Icons.tv,
+            label: 'My Items',
             onTap: () {
-              Get.off( WebFilePickerUI());
+              Get.off( const ListScreen());
               // Handle Categories tap
             },
           ),

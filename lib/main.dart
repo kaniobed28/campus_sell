@@ -1,7 +1,7 @@
-import 'package:campus_sell/clicked_item/clicked_item%20copy.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
+import 'package:campus_sell/dashboard/ago_tech_url_open.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const NewDashboard()),
-        GetPage(name: '/:id', page: () =>  const ClickedItemC()),
+        GetPage(name: '/:id', page: () =>  const AgoTechUrlOpen()),
       ],
       navigatorKey: Get.key, 
     );

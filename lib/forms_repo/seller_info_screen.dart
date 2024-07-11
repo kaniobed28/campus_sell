@@ -1,3 +1,4 @@
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
@@ -195,7 +196,7 @@ class SellInfoScreen extends StatelessWidget {
                                   .capitalizeFirst,
                             }, authController.uid.toString());
                             await additionalInfoController.updateWithAddInfo();
-                            Get.to(() => DashBoard());
+                            Get.to(() => const NewDashboard());
                             // Navigator.push(
                             // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                           }

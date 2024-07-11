@@ -118,7 +118,7 @@ class _AgoTechClickedItemState extends State<AgoTechClickedItem> {
                 height:10,
               ),
  
-                 AgoTechProductDetailsCard(title: data["itemName"], description: data["description"], price: data['price'].toString(), brandName: data["brand"], phone:data["phone"],),
+                 AgoTechProductDetailsCard(title: data["itemName"], description: data["description"], price: data['price'].toString(), brandName: data["brand"], phone:data["phone"], hostel: data["hostel"], city: data["city"], university: data["university"], itemType: data["itemType"], socialMedia: data["socialMedia"],),
               
             ],
           ),

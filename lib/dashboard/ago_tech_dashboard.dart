@@ -1,9 +1,10 @@
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/dashboard/custom_horizontal_products_list.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
-import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_search_bar.dart';
-import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +19,7 @@ class NewDashboard extends StatefulWidget {
 
 class _NewDashboardState extends State<NewDashboard> {
   Streamer streamer = Get.find<Streamer>();
+  AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +35,10 @@ class _NewDashboardState extends State<NewDashboard> {
       streamer.kitchenList,
       streamer.othersList,
     ];
+    
     return SafeArea(
-      child: Scaffold(
+      child:(!authController.isAuthenticated.value)?SignIn(): Scaffold(
+        endDrawer: DrawerWidget(authController: authController,),
         appBar: const CustomAppBar(),
         body: SingleChildScrollView(
           child: Column(

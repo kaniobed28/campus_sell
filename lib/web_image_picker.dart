@@ -1,10 +1,7 @@
-import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/web_sell_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+
 
 
 
@@ -28,7 +25,6 @@ class WebFilePickerController extends GetxController {
   if (result != null) {
     pickedFile.value = result.files.single;
     pickFilesList.add(result.files.single);
-    print(pickFilesList);
     pickFilesNameList.add(pickedFile.value!.name);
   }
 }
@@ -63,11 +59,11 @@ class WebFilePickerController extends GetxController {
 
 
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(GetMaterialApp(
-    home: WebFilePickerUI(),
-  ));
-}
+//   runApp(GetMaterialApp(
+//     home: WebFilePickerUI(),
+//   ));
+// }

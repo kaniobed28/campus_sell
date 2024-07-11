@@ -1,4 +1,4 @@
-import 'package:campus_sell/dashboard/main.dart';
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/auth/views/signin.dart';
@@ -25,7 +25,7 @@ class Signup extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? DashBoard()
+          ? NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -81,7 +81,7 @@ class Signup extends StatelessWidget {
                                         .addDataToFirestore(
                                             {}, authController.uid.value);
                                     // authController.dispose();
-                                    Get.to(() => DashBoard());
+                                    Get.to(() => NewDashboard());
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',

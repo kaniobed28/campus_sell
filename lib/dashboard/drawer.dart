@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/auth/views/signin.dart';
+import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
 import 'package:campus_sell/forms_repo/sell_page.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/list_screen.dart';
@@ -53,7 +54,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.account_circle),
             title: Text(
-              'Additional Info',
+              'My Profile',
               style: GoogleFonts.average(),
             ),
             onTap: () => Get.to(() => SellInfoScreen()),
@@ -72,7 +73,7 @@ class DrawerWidget extends StatelessWidget {
               'Sell Item',
               style: GoogleFonts.average(),
             ),
-            onTap: () => Get.to(() => SellPage()),
+            onTap: () => Get.to(() => const AgoTechSellScreen()),
           ),
           ListTile(
             leading: const Icon(Icons.delete_sweep),
