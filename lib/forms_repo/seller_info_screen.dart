@@ -15,16 +15,18 @@ class SellInfoScreen extends StatelessWidget {
 
   List<String> universityList = [
     "Select University",
-    "University of Ghana",
+    "AAMUSTED",
+    "Ashesi University",
+    "Central University",
+    "GIMPA",
     "KNUST",
     "UCC",
-    "UEW",
     "UDS",
-    "Ashesi University",
-    "GIMPA",
-    "Central University",
+    "UEW",
+    "University of Ghana",
     "UPSA",
-    "Valley View University"
+    "Valley View University",
+
   ];
 
   List<String> cityList = [
@@ -96,7 +98,7 @@ class SellInfoScreen extends StatelessWidget {
                     items: cityList.map((String city) {
                       return DropdownMenuItem<String>(
                         value: city,
-                        child: Text(city),
+                        child: Text(city,style: Theme.of(context).textTheme.labelSmall,),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -122,7 +124,7 @@ class SellInfoScreen extends StatelessWidget {
                     items: universityList.map((String university) {
                       return DropdownMenuItem<String>(
                         value: university,
-                        child: Text(university),
+                        child: Text(university,style: Theme.of(context).textTheme.labelSmall,),
                       );
                     }).toList(),
                     onChanged: (val) {

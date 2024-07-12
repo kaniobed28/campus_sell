@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: EdgeInsets.all(2.0),
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage('https://your-image-url.com/profile.jpg'),
+                  backgroundImage:AssetImage("assets/img/campus-sell-favicon-color.png"), //NetworkImage('https://your-image-url.com/profile.jpg'),
                 ),
               ),
             ),

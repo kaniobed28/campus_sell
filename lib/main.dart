@@ -3,6 +3,7 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_url_open.dart';
 import 'package:campus_sell/firebase_options.dart';
+import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ void main() async{
   // Get.put(SearchedController());
   Get.put(AdditionalInfoController());
   Get.put(Streamer());
+  // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
 }

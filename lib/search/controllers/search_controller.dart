@@ -61,14 +61,14 @@ class SearchedController extends GetxController {
   }
 }
 
-void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SearchedController().search(
-    "Oceanic",
-    "electronic",
-    "obed",
-    "",
-    "KNUST",
-    "new hostel",
-  );
-}
+// void main() async {
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   SearchedController().search(
+//     "Oceanic",
+//     "electronic",
+//     "obed",
+//     "",
+//     "KNUST",
+//     "new hostel",
+//   );
+// }

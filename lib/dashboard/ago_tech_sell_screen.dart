@@ -48,7 +48,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: const Color(0xFFF2F2F2),
+        // backgroundColor: const Color(0xFFF2F2F2),
         body: SingleChildScrollView(
           child: Obx(
             () => Stack(

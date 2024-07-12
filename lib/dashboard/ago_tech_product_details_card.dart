@@ -76,7 +76,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                 Icon(Icons.sell, color: Colors.grey[600]),
                 const SizedBox(width: 5.0),
                 Text(
-                  price,
+                  "Gh¢ $price",
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.grey[600],
@@ -153,7 +153,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Price: $price",overflow: TextOverflow.ellipsis,),
+                                  Text("Price: Gh¢ $price",overflow: TextOverflow.ellipsis,),
                                   SizedBox(width: 20,),
                                   GestureDetector(
                                     onTap: () {

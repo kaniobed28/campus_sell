@@ -23,16 +23,17 @@ class _AgoTechClickedItemState extends State<AgoTechClickedItem> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    final additionalInfoController = Get.put(AdditionalInfoController());
+    // final additionalInfoController = Get.put(AdditionalInfoController());
     final authController = Get.put(AuthController());
 
     final Map<String, dynamic> data = Get.arguments ?? {};
     List imageList = data["imagesUrls"];
     final dynamic itemId = data["id"];
     likeItemController.containsUID(itemId, authController.uid.value);
-    final ownerInfo = additionalInfoController.getDocumentById(data["ownerId"]);
+    // final ownerInfo = additionalInfoController.getDocumentById(data["ownerId"]);
 
     return Scaffold(
+      // backgroundColor: const Color(0xFFF2F2F2 ),
       bottomNavigationBar: CustomBottomNavBar(
         height: 50,
       ),
