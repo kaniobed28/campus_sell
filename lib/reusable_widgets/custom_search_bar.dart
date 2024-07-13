@@ -1,10 +1,15 @@
+import 'package:campus_sell/search/controllers/search_controller.dart';
+import 'package:campus_sell/search/views/search_results_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
+   const CustomSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+  TextEditingController searchTextEditingController= TextEditingController();
+  SearchedController searchedController = Get.put(SearchedController());
     return Container(
       height: 50.0,
       margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -20,19 +25,27 @@ class CustomSearchBar extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(Icons.search, color: Colors.grey),
-          SizedBox(width: 10.0),
-          Expanded(
+           const Icon(Icons.search, color: Colors.grey),
+           const SizedBox(width: 10.0),
+           Expanded(
             child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search',
+              controller: searchTextEditingController,
+              decoration:  const InputDecoration(
+                hintText: 'Search...',
                 border: InputBorder.none,
               ),
             ),
           ),
-          Icon(Icons.mic, color: Colors.grey),
+          GestureDetector(
+            onTap: () async {
+              await searchedController.searchItemsName(searchTextEditingController.text);
+              Get.to(() => SearchResultPage());
+            },
+              child: const Icon(Icons.send, color: Colors.grey)),
+
+              
         ],
       ),
     );

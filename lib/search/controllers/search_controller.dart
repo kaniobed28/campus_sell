@@ -1,8 +1,11 @@
 import 'package:campus_sell/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+
+// I used capitalized first because that is how I stored them.
 class SearchedController extends GetxController {
   RxList<dynamic> searchResults = [].obs;
 
@@ -59,16 +62,46 @@ class SearchedController extends GetxController {
       // print(data);
     }
   }
+
+
+  Future<void> searchItemsName(String query) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  if (query.isEmpty) {
+    searchResults.clear();
+    return;
+  }
+
+  try {
+    QuerySnapshot snapshot = await firebaseFirestore
+        .collection('items')
+        .where('itemName', isGreaterThanOrEqualTo: query.capitalizeFirst)
+        .where('itemName', isLessThanOrEqualTo: '${query.capitalizeFirst}\uf8ff')
+        .get();
+
+    searchResults.value =
+        snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  } catch (e) {
+    Get.snackbar('Error', e.toString());
+  }
 }
 
-// void main() async {
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-//   SearchedController().search(
-//     "Oceanic",
-//     "electronic",
-//     "obed",
-//     "",
-//     "KNUST",
-//     "new hostel",
-//   );
-// }
+}
+
+
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // SearchedController().search(
+  //   "",
+  //   "",
+  //   "",
+  //   "",
+  //   "KNUST",
+  //   "",
+  // );
+  SearchedController controller = SearchedController();
+  await controller.searchItemsName("miL");
+  print(controller.searchResults); // Debugging print statement
+}

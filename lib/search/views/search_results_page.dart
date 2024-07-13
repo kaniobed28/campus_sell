@@ -1,7 +1,6 @@
 import 'package:campus_sell/dashboard/ago_tech_clicked_item.dart';
 import 'package:campus_sell/search/controllers/search_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
-import 'package:campus_sell/clicked_item/clicked_item.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,8 +17,7 @@ class SearchResultPage extends StatelessWidget {
         // backgroundColor: const Color(0xFFF2F2F2 ),
         appBar: AppBar(
           title: Text(
-              "${searchedController.searchResults.length} results found" ??
-                  "Nothing found"),
+              "${searchedController.searchResults.length} results found"),
           backgroundColor: Colors.transparent,
         ),
         body: Column(
