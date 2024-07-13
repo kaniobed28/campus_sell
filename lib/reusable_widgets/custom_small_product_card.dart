@@ -7,8 +7,9 @@ class SmallProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final String totalLikes;
 
-  const SmallProductCard({super.key, required this.imageUrl, required this.title, required this.price});
+  const SmallProductCard({super.key, required this.imageUrl, required this.title, required this.price, required this.totalLikes});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class SmallProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          
           SizedBox(
             height: 148.35,
             width: 154.43,
@@ -74,9 +76,17 @@ class SmallProductCard extends StatelessWidget {
                         color: Colors.grey[700],
                       ),
                     ),
-                    Icon(
-                      Icons.favorite_border,
-                      color: Colors.grey[700],
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.favorite_border,
+                          color: Colors.grey[700],
+                          
+                        ),
+                        //I have used overflow here and must be changed in the future
+                        Text(totalLikes,
+                        overflow: TextOverflow.fade,),
+                      ],
                     ),
                   ],
                 ),

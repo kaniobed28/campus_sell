@@ -41,6 +41,7 @@ class CustomHorizontalProductsList extends StatelessWidget {
                             imageUrl: data["imagesUrls"][0],
                             title: data["itemName"].toString().trim(),
                             price: 'Gh¢${data["price"].toString().trim()}',
+                            totalLikes: data["likes"].length.toString() ,
                           ),
                         ),
                       );
