@@ -10,9 +10,11 @@ class LikeItem extends GetxController {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   void containsUID(dynamic itemId, dynamic uid) async {
+    print(itemId);
     DocumentSnapshot data =
-        await firebaseFirestore.collection("items").doc(itemId).get();
+        await firebaseFirestore.collection("items").doc(itemId).get() ;
     // DocumentReference   dataRef = await firebaseFirestore.collection("items").doc(itemId);
+    print(data["likes"]);
     List listdata = data["likes"];
     if (listdata.contains(uid)) {
       liked.value = true;

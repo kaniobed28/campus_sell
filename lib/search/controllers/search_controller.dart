@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 
 
 // I used capitalized first because that is how I stored them.
+
+// when i search, the like system was not working and I forgot I added the item id programmatically not to the database so I have now added it also to the search results.
 class SearchedController extends GetxController {
   RxList<dynamic> searchResults = [].obs;
 
@@ -57,6 +59,7 @@ class SearchedController extends GetxController {
     QuerySnapshot querySnapshot = await col.get();
     for (var element in querySnapshot.docs) {
       Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+      data['id'] = element.id; // Add the element.id to the data map
       searchResults.add(data);
       // print(data.length);
       // print(data);
@@ -78,8 +81,11 @@ class SearchedController extends GetxController {
         .where('itemName', isLessThanOrEqualTo: '${query.capitalizeFirst}\uf8ff')
         .get();
 
-    searchResults.value =
-        snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    searchResults.value = snapshot.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      data['id'] = doc.id; // Add the doc.id to the data map
+      return data;
+    }).toList();
   } catch (e) {
     Get.snackbar('Error', e.toString());
   }

@@ -17,6 +17,7 @@ class AgoTechClickedItem extends StatefulWidget {
 
 class _AgoTechClickedItemState extends State<AgoTechClickedItem> {
   LikeItem likeItemController = Get.put(LikeItem());
+    final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,6 @@ class _AgoTechClickedItemState extends State<AgoTechClickedItem> {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     // final additionalInfoController = Get.put(AdditionalInfoController());
-    final authController = Get.put(AuthController());
 
     final Map<String, dynamic> data = Get.arguments ?? {};
     List imageList = data["imagesUrls"];

@@ -27,11 +27,12 @@ class SearchResultPage extends StatelessWidget {
                 () => ListView.builder(
                   itemCount: searchedController.searchResults.length,
                   itemBuilder: (context, index) {
+                    final data = searchedController.searchResults[index];
                     return ListTile(
                       title: Text(searchedController.searchResults[index]["itemName"].toString()),
                       subtitle: Text(searchedController.searchResults[index]["itemType"].toString()),
                       trailing: Text("Gh¢ ${searchedController.searchResults[index]["price"]}"),
-                      onTap: () => Get.to(()=>  const AgoTechClickedItem(),arguments: searchedController.searchResults[index]),
+                      onTap: () => Get.to(()=>  const AgoTechClickedItem(),arguments: data),
                       // () => Get.to(const searchedController.searchResults[index]),
                     );
                   },
