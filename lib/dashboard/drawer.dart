@@ -69,9 +69,9 @@ class DrawerWidget extends StatelessWidget {
             onTap: () => Get.to(() => SearchScreen()),
           ),
           ListTile(
-            leading: const Icon(Icons.sell),
+            leading: const Icon(Icons.local_shipping_outlined),
             title: Text(
-              'Sell Item',
+              'Add to My Shop',
               style: GoogleFonts.average(),
             ),
             onTap: () => Get.to(() => const AgoTechSellScreen()),
@@ -79,15 +79,15 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.delete_sweep),
             title: Text(
-              'Remove Item',
+              'Remove from My Shop',
               style: GoogleFonts.average(),
             ),
             onTap: () => Get.to(() => const DeleteScreen()),
           ),
           ListTile(
-            leading: const Icon(Icons.tv),
+            leading: const Icon(Icons.add_business_sharp),
             title: Text(
-              'My Items',
+              'My Shop',
               style: GoogleFonts.average(),
             ),
             onTap: () {

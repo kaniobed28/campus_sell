@@ -23,7 +23,7 @@ class SignIn extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? NewDashboard()
+          ? const NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -31,7 +31,7 @@ class SignIn extends StatelessWidget {
                   child: Container(
                     width: widtht_of_screen,
                     height: height_of_screen,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     color: Colors.blueGrey[50],
                     child: Column(
                       children: [
@@ -45,10 +45,19 @@ class SignIn extends StatelessWidget {
                             // Add functionality to the IconButton if needed
                           },
                         ),
-                        Text(
+                        const Text(
                           "Campus Sell",
                         ),
-                        const SizedBox(height: 128),
+                        const SizedBox(
+                          height: 20,
+                          ),
+                          // I have left empty height here
+                         SizedBox(
+                          height: 40,
+                          child: Text("Enter your Shop Now",style: Theme.of(context).textTheme.displayMedium,),
+                        ),
+
+                        const SizedBox(height: 92),
                         emailFormWidget(emailOfFormController),
                         const SizedBox(height: 60),
                         passWrdFormWidget(passwordOfFormController),
@@ -74,13 +83,13 @@ class SignIn extends StatelessWidget {
                                   if (authController.uid.isNotEmpty) {
                                     // authController.dispose();
                                     // print("wrong"); //do some message to user here
-                                    Get.to(() => NewDashboard());
+                                    Get.to(() => const NewDashboard());
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',
-                                      'Check your credentials or Internet connection',
+                                      'Check your shop credentials or Create a shop if you dont have else Internet connection!',
                                       snackPosition: SnackPosition.BOTTOM,
-                                      duration: Duration(seconds: 3),
+                                      duration: const Duration(seconds: 6),
                                     );
                                   }
                                 } catch (e) {
@@ -88,7 +97,7 @@ class SignIn extends StatelessWidget {
                                     'Somethng went wrong',
                                     'Check your Internet connection',
                                     snackPosition: SnackPosition.BOTTOM,
-                                    duration: Duration(seconds: 3),
+                                    duration: const Duration(seconds: 3),
                                   );
                                 }
                                 // Navigator.push(
@@ -106,13 +115,13 @@ class SignIn extends StatelessWidget {
                         ),
                         Row(children: [
                           const Text(
-                            "Don't have an account? ",
+                            "Don't have a Shop? ",
                           ),
                           GestureDetector(
                             onTap: () => Get.to(() => Signup()),
                             child: const Text(
                               "Sign Up",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),
                             ),
                           )
                         ]),

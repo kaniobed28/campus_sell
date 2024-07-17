@@ -40,7 +40,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           NavBarItem(
             icon: Icons.tv,
-            label: 'My Items',
+            label: 'My Shop',
             onTap: () {
               Get.off( const ListScreen());
               // Handle Categories tap

@@ -3,7 +3,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class AdditionalInfoController extends GetxController {
+  final authController = Get.find<AuthController>();
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  String brandName = "";
+  String cityName = "";
+  late String universityName;
+  late String addressName;
+  late String phoneNumber;
+  late String socialMedia;
+
+
+  Future<Map<String, dynamic>> getAllDataFromProfile(String uid) async {
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await firebaseFirestore.collection('add_info').doc(uid).get();
+     
+    Map<String, dynamic> data = querySnapshot.data() as Map<String, dynamic>;
+    brandName = data['brand'];
+    cityName = data['city'];
+    universityName = data["university"];
+    addressName = data['hostel'];
+    phoneNumber = data['phone'];
+    socialMedia = data['socialMedia'];
+  
+    return data;
+  }
+
+
+
+
 
   Future<void> addDataToFirestore(
       Map<String, dynamic>? data, String uid) async {
@@ -32,6 +60,7 @@ class AdditionalInfoController extends GetxController {
       // print('Error updating data: $e');
     }
   }
+
 // this function updates both the additional info and the items collection together
   Future<void> updateWithAddInfo() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -91,4 +120,10 @@ class AdditionalInfoController extends GetxController {
       throw e;
     }
   }
+
+  // @override
+  // void onInit() async {
+  //   super.onInit();
+  //  await getAllDataFromProfile(authController.uid.value);
+  // }
 }

@@ -108,7 +108,7 @@ class SearchScreen extends StatelessWidget {
                   nameFormWidget(
                     brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Brand Name",
+                    nameOfLabel: "Shop's Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
                   const SizedBox(height: 30),

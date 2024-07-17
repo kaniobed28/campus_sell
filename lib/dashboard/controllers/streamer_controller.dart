@@ -28,91 +28,100 @@ class Streamer extends GetxController {
         .collection("items")
         .snapshots()
         .listen((QuerySnapshot snapshot) {
-      kitchenList.value = snapshot.docs
+      kitchenList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Kitchen')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      fashionList.value = snapshot.docs
+      fashionList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Fashion')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      jewelryList.value = snapshot.docs
+      jewelryList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Jewelry')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      foodList.value = snapshot.docs
+      foodList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Food')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      sportsList.value = snapshot.docs
+      sportsList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Sports')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      beautyList.value = snapshot.docs
+      beautyList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Beauty')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      electronicList.value = snapshot.docs
+      electronicList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Electronic')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      othersList.value = snapshot.docs
+      othersList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Others')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      stationeryList.value = snapshot.docs
+      stationeryList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Stationery')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
 
-      healthcareList.value = snapshot.docs
+      healthcareList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Healthcare')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
-          .toList();
+          .toList());
     });
+  }
+// this function sorts the list from highest to lowest based on the number of likes
+  List<Map<String, dynamic>> _sortByArrayLength(List<Map<String, dynamic>> list) {
+    list.sort((a, b) {
+      int aLength = (a['likes'] as List<dynamic>).length;
+      int bLength = (b['likes'] as List<dynamic>).length;
+      return bLength.compareTo(aLength);
+    });
+    return list;
   }
 
   void unsubscribe() {
     subscription?.pause();
-    print("canceled");
+    // print("canceled");
   }
 
   @override

@@ -23,7 +23,7 @@ class ListScreen extends StatelessWidget {
         bottomNavigationBar: CustomBottomNavBar(height: 50,),
         appBar: AppBar(
           title: Text(
-            ' My Items',
+            ' My Shop Items',
             style: GoogleFonts.aclonica(color: Colors.black),
           ),
           backgroundColor: Colors.transparent,
