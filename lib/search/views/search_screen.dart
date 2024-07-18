@@ -33,6 +33,7 @@ class SearchScreen extends StatelessWidget {
     "Healthcare Products",
     "Jewelry",
     "Kitchen Appliances",
+    "Services",
     "Others"
   ];
 

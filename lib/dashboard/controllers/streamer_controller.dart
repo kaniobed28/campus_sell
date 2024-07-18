@@ -16,6 +16,7 @@ class Streamer extends GetxController {
   RxList<Map<String, dynamic>> othersList = <Map<String, dynamic>>[].obs;
   RxList<Map<String, dynamic>> stationeryList = <Map<String, dynamic>>[].obs;
   RxList<Map<String, dynamic>> healthcareList = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> servicesList = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
@@ -102,6 +103,13 @@ class Streamer extends GetxController {
 
       healthcareList.value = _sortByArrayLength(snapshot.docs
           .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Healthcare')
+          .map((doc) => {
+                ...doc.data() as Map<String, dynamic>,
+                'id': doc.id,
+              })
+          .toList());
+      servicesList.value = _sortByArrayLength(snapshot.docs
+          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Services')
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,

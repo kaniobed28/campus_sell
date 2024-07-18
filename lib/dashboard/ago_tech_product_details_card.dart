@@ -59,7 +59,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
             const SizedBox(height: 10.0),
             Row(
               children: <Widget>[
-                Icon(Icons.person, color: Colors.grey[600]),
+                Icon(Icons.add_business_sharp, color: Colors.grey[600]),
                 const SizedBox(width: 5.0),
                 Text(
                   brandName,
@@ -133,7 +133,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Owner's Brand: $brandName",overflow: TextOverflow.ellipsis,),
+                                  Text("Owner's Shop: $brandName",overflow: TextOverflow.ellipsis,),
                                   SizedBox(width: 20,),
                                   GestureDetector(
                                     onTap: () {

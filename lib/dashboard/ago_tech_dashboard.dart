@@ -34,6 +34,7 @@ class _NewDashboardState extends State<NewDashboard> {
       streamer.stationeryList,
       streamer.kitchenList,
       streamer.othersList,
+      streamer.servicesList
     ];
     
     return SafeArea(
@@ -117,6 +118,7 @@ class _NewDashboardState extends State<NewDashboard> {
               CustomHorizontalProductsList(lists: lists[6], categoryLable: 'Sports Products',),
               CustomHorizontalProductsList(lists: lists[7], categoryLable: 'Stationary',),
               CustomHorizontalProductsList(lists: lists[8], categoryLable: 'Kitchen Products',),
+              CustomHorizontalProductsList(lists: lists[10], categoryLable: 'Services',),
               CustomHorizontalProductsList(lists: lists[9], categoryLable: 'Other Products',),
             ],
           ),

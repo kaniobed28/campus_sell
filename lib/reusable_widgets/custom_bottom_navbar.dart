@@ -31,15 +31,15 @@ class CustomBottomNavBar extends StatelessWidget {
             },
           ),
           NavBarItem(
-            icon: Icons.sell_outlined,
-            label: 'Sell Item',
+            icon: Icons.local_shipping_outlined,
+            label: 'Add to my Shop',
             onTap: () {
               Get.off(const AgoTechSellScreen());
               // Handle Sell Item tap
             },
           ),
           NavBarItem(
-            icon: Icons.tv,
+            icon: Icons.add_business_sharp,
             label: 'My Shop',
             onTap: () {
               Get.off( const ListScreen());

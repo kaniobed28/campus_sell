@@ -129,6 +129,10 @@ class CustomDropdownButtonFormField extends StatelessWidget {
           child: Text("Kitchen Appliances"),
         ),
         DropdownMenuItem<String>(
+          value: "services",
+          child: Text("Services"),
+        ),
+        DropdownMenuItem<String>(
           value: "others",
           child: Text("Others"),
         ),
