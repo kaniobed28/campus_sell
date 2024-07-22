@@ -29,8 +29,8 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final WebFilePickerController imageController =
       Get.put(WebFilePickerController());
   final ImageController imageController2 = Get.put(ImageController());
-    RxInt totalImages = 0.obs;
-    RxBool uploading = false.obs;
+  RxInt totalImages = 0.obs;
+  RxBool uploading = false.obs;
 
   @override
   void dispose() {
@@ -77,8 +77,18 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                   imageController2.images.length;
                             }
                           },
-                          child: const AgoTechAssetImageCard(
-                              imagePath: "assets/img/add-image.jpg"),
+                          //add image camera is here
+                          child: const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 10,
+                                child: AgoTechAssetImageCard(
+                                    imagePath: "assets/img/add-image-w.png"),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -118,7 +128,18 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 // Add spacing between form fields and button
+
+                                //Here is the upload button
                                 ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xFFFBD300),
+                                    ),
+                                    foregroundColor:
+                                        WidgetStateProperty.all<Color>(Colors
+                                            .black), // this is responsible for making the text black
+                                  ),
                                   onPressed: () async {
                                     List imagesUrls = [];
                                     if (formKey.currentState!.validate()) {
@@ -155,27 +176,34 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                       // print(itemTypeController.text);
                                       // print(itemPriceController.text);
 
-
-                                      AdditionalInfoController additionalInfoController = Get.put(AdditionalInfoController());
+                                      AdditionalInfoController
+                                          additionalInfoController =
+                                          Get.put(AdditionalInfoController());
 
                                       //some list are not used but I am clearing all for safty sake.
                                       // also the items here are supposed to be in the then but I dont know why they dont work when I place them there
-                                      additionalInfoController.updateAnItemWithAddInfo(itemNameController.text
-                                              .trim()
-                                              .capitalizeFirst!);
+                                      additionalInfoController
+                                          .updateAnItemWithAddInfo(
+                                              itemNameController.text
+                                                  .trim()
+                                                  .capitalizeFirst!);
                                       imageController.pickFilesList = [].obs;
                                       imageController.downloadUrlList = [].obs;
-                                      imageController.pickFilesNameList = [].obs;
-                                      imageController2.imagesUrls = <String>[].obs;
+                                      imageController.pickFilesNameList =
+                                          [].obs;
+                                      imageController2.imagesUrls =
+                                          <String>[].obs;
                                       imageController2.images = <XFile>[].obs;
                                       totalImages.value = 0;
-                              uploading.value = false;
-                                    Get.to(() => const NewDashboard())?.then((value) {
-                                          
-                            },);
+                                      uploading.value = false;
+                                      Get.to(() => const NewDashboard())?.then(
+                                        (value) {},
+                                      );
                                     }
                                   },
-                                  child: (uploading.value)?const CircularProgressIndicator():const Text("UPLOAD"),
+                                  child: (uploading.value)
+                                      ? const CircularProgressIndicator()
+                                      : const Text("UPLOAD"),
                                 ),
                               ],
                             ),
@@ -211,13 +239,13 @@ class TotalImagesLable extends StatelessWidget {
           child: Container(
             color: Colors.black,
             padding: const EdgeInsets.all(10.0),
-            child:  Text(
-                  "$totalImages",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                ),
+            child: Text(
+              "$totalImages",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
           ),
         ),
         const Text("Selected"),

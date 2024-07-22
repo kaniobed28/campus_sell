@@ -3,6 +3,7 @@ import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -76,6 +77,23 @@ class SellInfoScreen extends StatelessWidget {
           centerTitle: true,
           // leading: Icon(Icons.person_4_rounded),
           backgroundColor: Colors.transparent,
+        actions: [
+          FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.cameraswitch),
+                  onPressed: () {
+                  }
+                  ),
+                  //  const Text("change photo",
+                  // style:  TextStyle(fontSize: 10),
+                  // ),
+              ],
+            ),
+          ),
+        ],
         ),
         body: SingleChildScrollView(
           child: Form(

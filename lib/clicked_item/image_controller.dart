@@ -25,6 +25,7 @@ class ImageController extends GetxController {
   Future<void> uploadImagesToFirebase() async {
     for (XFile image in images) {
       try {
+        
         // Compress the image
         XFile? compressedImage = await compressImage(image);
 

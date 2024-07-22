@@ -27,22 +27,22 @@ class CustomBottomNavBar extends StatelessWidget {
             label: 'Home',
             onTap: () {
               // Handle Home tap
-              Get.off(const NewDashboard());
+              Get.offNamed('/');
             },
           ),
           NavBarItem(
             icon: Icons.local_shipping_outlined,
             label: 'Add to my Shop',
-            onTap: () {
-              Get.off(const AgoTechSellScreen());
+            onTap: () async {
+              await Get.offNamed('/shopitems/addtostore');
               // Handle Sell Item tap
             },
           ),
           NavBarItem(
             icon: Icons.add_business_sharp,
             label: 'My Shop',
-            onTap: () {
-              Get.off( const ListScreen());
+            onTap: () async{
+             await Get.offNamed('/shopitems/myitems');
               // Handle Categories tap
             },
           ),

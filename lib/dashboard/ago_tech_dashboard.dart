@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'controllers/streamer_controller.dart';
-
+//this is the new dashboard I used in replacement to the old one.
 class NewDashboard extends StatefulWidget {
   const NewDashboard({super.key});
 

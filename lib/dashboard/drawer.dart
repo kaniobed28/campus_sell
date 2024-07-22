@@ -58,7 +58,7 @@ class DrawerWidget extends StatelessWidget {
               'My Profile',
               style: GoogleFonts.average(),
             ),
-            onTap: () => Get.to(() => SellInfoScreen()),
+            onTap: () => Get.toNamed('shopitems/profile'),
           ),
           ListTile(
             leading: const Icon(Icons.search),
@@ -66,7 +66,7 @@ class DrawerWidget extends StatelessWidget {
               'Search Item',
               style: GoogleFonts.average(),
             ),
-            onTap: () => Get.to(() => SearchScreen()),
+            onTap: () => Get.toNamed('/shopitems/multisearch'),
           ),
           ListTile(
             leading: const Icon(Icons.local_shipping_outlined),
@@ -74,7 +74,8 @@ class DrawerWidget extends StatelessWidget {
               'Add to My Shop',
               style: GoogleFonts.average(),
             ),
-            onTap: () => Get.to(() => const AgoTechSellScreen()),
+            onTap: () => Get.toNamed('/shopitems/addtostore'),
+            //I have not changed 
           ),
           ListTile(
             leading: const Icon(Icons.delete_sweep),
@@ -82,7 +83,7 @@ class DrawerWidget extends StatelessWidget {
               'Remove from My Shop',
               style: GoogleFonts.average(),
             ),
-            onTap: () => Get.to(() => const DeleteScreen()),
+            onTap: () => Get.toNamed('/shopitems/removeitems'),
           ),
           ListTile(
             leading: const Icon(Icons.add_business_sharp),
@@ -92,7 +93,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             onTap: () {
               //
-              Get.to(() => const ListScreen());
+              Get.toNamed('/shopitems/myitems');
             },
           ),
           ListTile(
@@ -101,12 +102,12 @@ class DrawerWidget extends StatelessWidget {
               'SignOut',
               style: GoogleFonts.average(),
             ),
-            onTap: () {
+            onTap: ()async {
               // AuthController authController = Get.find<AuthController>();
               // AuthController authController = Get.put(AuthController());
-              authController.signOut();
-              // authController.dispose();
-              Get.offAll(() => SignIn());
+              await authController.signOut();
+             await Get.offAllNamed('/auth/signin');
+            
             },
           ),
         ],

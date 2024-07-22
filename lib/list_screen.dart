@@ -55,9 +55,10 @@ class ListScreen extends StatelessWidget {
                             icon: const Icon(Icons.copy),
                             onPressed: () {
                               Clipboard.setData(ClipboardData(
-                                  text: "https://campussell.github.io/#/$id"));
+                                //changes must be changed here if the hosting platform is changed from github.io
+                                  text: "https://campussell.github.io/#/shopitems/itemcode/$id"));
                               Get.snackbar("Copied to Cliipboard",
-                                 "https://campussell.github.io/#/$id" ,
+                                 "https://campussell.github.io/#/shopitems/itemcode/$id" ,
                                   duration: const Duration(
                                       seconds: 1, milliseconds: 500));
                             },

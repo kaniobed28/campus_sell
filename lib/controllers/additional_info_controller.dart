@@ -98,9 +98,9 @@ class AdditionalInfoController extends GetxController {
           .where("ownerId", isEqualTo: authController.uid.string)
           .where("itemName", isEqualTo: itemName)
           .get();
-      snapshot.docs.forEach((element) {
+      for (var element in snapshot.docs) {
         firebaseFirestore.collection("items").doc(element.id).update(data);
-      });
+      }
     } else {}
   }
 
