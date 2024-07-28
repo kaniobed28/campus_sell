@@ -6,21 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignIn extends StatelessWidget {
-  SignIn({Key? key})
+  SignIn({super.key})
       : emailOfFormController = TextEditingController(),
-        passwordOfFormController = TextEditingController(),
-        super(key: key);
+        passwordOfFormController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
-  AuthController authController = Get.put(AuthController());
+   AuthController authController = Get.put(AuthController());
   // AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
-    double widtht_of_screen = MediaQuery.of(context).size.width;
-    double height_of_screen = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
           ? const NewDashboard()
@@ -29,11 +28,12 @@ class SignIn extends StatelessWidget {
                 child: Form(
                   key: _formKey,
                   child: Container(
-                    width: widtht_of_screen,
-                    height: height_of_screen,
+                    width: screenWidth,
+                    height: screenHeight,
                     padding: const EdgeInsets.all(10),
                     color: Colors.blueGrey[50],
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
                           icon: const Icon(
@@ -50,11 +50,14 @@ class SignIn extends StatelessWidget {
                         ),
                         const SizedBox(
                           height: 20,
-                          ),
-                          // I have left empty height here
-                         SizedBox(
+                        ),
+                        // I have left empty height here
+                        SizedBox(
                           height: 40,
-                          child: Text("Enter your Shop Now",style: Theme.of(context).textTheme.displayMedium,),
+                          child: Text(
+                            "Enter your Shop Now",
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
                         ),
 
                         const SizedBox(height: 92),
@@ -121,7 +124,9 @@ class SignIn extends StatelessWidget {
                             onTap: () => Get.to(() => Signup()),
                             child: const Text(
                               "Sign Up",
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800),
                             ),
                           )
                         ]),
