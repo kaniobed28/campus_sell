@@ -2,14 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 // I just used asset for trial in future I will use network image
 
-
 class SmallProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
   final String totalLikes;
 
-  const SmallProductCard({super.key, required this.imageUrl, required this.title, required this.price, required this.totalLikes});
+  const SmallProductCard({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.price,
+    required this.totalLikes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,6 @@ class SmallProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           SizedBox(
             height: 148.35,
             width: 154.43,
@@ -41,13 +45,14 @@ class SmallProductCard extends StatelessWidget {
               ),
               // child: Image.asset("assets/img/watch.jpg")
               child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          placeholder: (context, url) => const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          height: 280,
-                          width: 200,
-                        ),
+                imageUrl: imageUrl,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
+                height: 280,
+                width: 200,
+              ),
             ),
           ),
           Padding(
@@ -60,7 +65,6 @@ class SmallProductCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12.0,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -81,11 +85,12 @@ class SmallProductCard extends StatelessWidget {
                         Icon(
                           Icons.favorite_border,
                           color: Colors.grey[700],
-                          
                         ),
                         //I have used overflow here and must be changed in the future
-                        Text(totalLikes,
-                        overflow: TextOverflow.fade,),
+                        Text(
+                          totalLikes,
+                          overflow: TextOverflow.fade,
+                        ),
                       ],
                     ),
                   ],

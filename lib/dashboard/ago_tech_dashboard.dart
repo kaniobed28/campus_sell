@@ -50,11 +50,11 @@ class _NewDashboardState extends State<NewDashboard> {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     const CustomSearchBar(),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     // const Align(
                     //   alignment: Alignment.topLeft,

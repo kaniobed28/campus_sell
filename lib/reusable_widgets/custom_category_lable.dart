@@ -7,11 +7,17 @@ class CustomCategoryLable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Align(
+    return Align(
       alignment: Alignment.topLeft,
-      child: Text(textLable,style: GoogleFonts.poppins(textStyle: Theme.of(context).textTheme.labelMedium,
-        
-      )),
+      child: Container(
+        margin: const EdgeInsets.only(left: 6, top: 10),
+        child: Text(
+          textLable,
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
+      ),
     );
   }
 }

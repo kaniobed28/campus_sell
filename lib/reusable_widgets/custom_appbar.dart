@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // this is  where I made the custom appbar. we can use it or work on it seperately so that any changes we dont have to read the whole code but only here
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -23,6 +24,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: height,
         color: const Color(0xFFFBD300),
         child: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent.withOpacity(0.4),
+              statusBarBrightness: Brightness.light),
           backgroundColor: Colors.transparent,
           elevation: 0, // Remove shadow
           leading: const Padding(
