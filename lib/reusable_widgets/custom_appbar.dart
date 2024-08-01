@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+
 // this is  where I made the custom appbar. we can use it or work on it seperately so that any changes we dont have to read the whole code but only here
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
-  const CustomAppBar({super.key, this.height = kToolbarHeight});
+  const CustomAppBar({
+    super.key,
+    this.height = kToolbarHeight + 15,
+  });
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -28,7 +32,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: EdgeInsets.all(2.0),
                 child: CircleAvatar(
-                  backgroundImage:AssetImage("assets/img/campus-sell-favicon-color.png"), //NetworkImage('https://your-image-url.com/profile.jpg'),
+                  backgroundImage: AssetImage(
+                      "assets/img/campus-sell-favicon-color.png"), //NetworkImage('https://your-image-url.com/profile.jpg'),
                 ),
               ),
             ),
@@ -41,7 +46,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
           ],
-        
         ),
       ),
     );
