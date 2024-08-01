@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 // I just used asset for trial in future I will use network image
 
 class SmallProductCard extends StatelessWidget {
@@ -24,13 +25,13 @@ class SmallProductCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 5,
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.1),
+        //     spreadRadius: 2,
+        //     blurRadius: 5,
+        //   ),
+        // ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +47,12 @@ class SmallProductCard extends StatelessWidget {
               // child: Image.asset("assets/img/watch.jpg")
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
+                placeholder: (context, url) {
+                  return const SpinKitFadingCircle(
+                    color: Colors.black,
+                    size: 50.0,
+                  );
+                },
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 fit: BoxFit.cover,
                 height: 280,
