@@ -8,10 +8,12 @@ import 'custom_navbar_item.dart';
 
 // the height of this is controllerable and  I am using 70 for testing purpose
 class CustomBottomNavBar extends StatelessWidget {
-
   final double? height;
 
-  CustomBottomNavBar({ this.height});
+  const CustomBottomNavBar({
+    super.key,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,10 @@ class CustomBottomNavBar extends StatelessWidget {
     return Container(
       height: height,
       color: const Color(0xFFFBD300),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 7,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -41,8 +47,8 @@ class CustomBottomNavBar extends StatelessWidget {
           NavBarItem(
             icon: Icons.add_business_sharp,
             label: 'My Shop',
-            onTap: () async{
-             await Get.offNamed('/shopitems/myitems');
+            onTap: () async {
+              await Get.offNamed('/shopitems/myitems');
               // Handle Categories tap
             },
           ),

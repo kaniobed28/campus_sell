@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomSearchBar extends StatelessWidget {
-   const CustomSearchBar({super.key});
+  const CustomSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-  TextEditingController searchTextEditingController= TextEditingController();
-  SearchedController searchedController = Get.put(SearchedController());
+    TextEditingController searchTextEditingController = TextEditingController();
+    SearchedController searchedController = Get.put(SearchedController());
     return Container(
       height: 50.0,
-      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -27,12 +27,12 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-           const Icon(Icons.search, color: Colors.grey),
-           const SizedBox(width: 10.0),
-           Expanded(
+          const Icon(Icons.search, color: Colors.grey),
+          const SizedBox(width: 10.0),
+          Expanded(
             child: TextField(
               controller: searchTextEditingController,
-              decoration:  const InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search...',
                 border: InputBorder.none,
               ),
@@ -40,12 +40,15 @@ class CustomSearchBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () async {
-              await searchedController.searchItemsName(searchTextEditingController.text);
+              await searchedController
+                  .searchItemsName(searchTextEditingController.text);
               Get.to(() => SearchResultPage());
             },
-              child: const Icon(Icons.send, color: Colors.grey)),
-
-              
+            child: const Icon(
+              Icons.send,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );

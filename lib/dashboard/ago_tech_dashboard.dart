@@ -162,8 +162,8 @@ class _NewDashboardState extends State<NewDashboard> {
                 ),
               ),
               backgroundColor: const Color(0xFFF2F2F2),
-              bottomNavigationBar: CustomBottomNavBar(
-                height: 50,
+              bottomNavigationBar: const CustomBottomNavBar(
+                height: 60,
               ),
               // for the navigation bar down, I have to use smaller font size to reduce the size and the Icons too.
               // when I reduce the size, I can change the height of the navbar from here.

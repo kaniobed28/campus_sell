@@ -217,7 +217,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(height: 50),
+        bottomNavigationBar: const CustomBottomNavBar(height: 60),
       ),
     );
   }
