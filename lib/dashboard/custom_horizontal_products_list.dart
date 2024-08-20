@@ -1,7 +1,6 @@
 import 'package:campus_sell/dashboard/ago_tech_clicked_item.dart';
 import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -49,24 +49,29 @@ class ListScreen extends StatelessWidget {
                       style: GoogleFonts.average(color: Colors.black),
                     ),
                     trailing: FittedBox(
-                      child: Column(
+                      child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.copy),
-                            onPressed: () {
-                              Clipboard.setData(ClipboardData(
-                                //changes must be changed here if the hosting platform is changed from github.io
-                                  text: "https://campussell.github.io/#/shopitems/itemcode/$id"));
-                              Get.snackbar("Copied to Cliipboard",
-                                 "https://campussell.github.io/#/shopitems/itemcode/$id" ,
-                                  duration: const Duration(
-                                      seconds: 1, milliseconds: 500));
-                            },
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.copy),
+                                onPressed: () {
+                                  Clipboard.setData(ClipboardData(
+                                    //changes must be changed here if the hosting platform is changed from github.io
+                                      text: "https://campussell.github.io/#/shopitems/itemcode/$id"));
+                                  Get.snackbar("Copied to Cliipboard",
+                                     "https://campussell.github.io/#/shopitems/itemcode/$id" ,
+                                      duration: const Duration(
+                                          seconds: 1, milliseconds: 500));
+                                },
+                              ),
+                              Text(
+                                "Copy Url",
+                                style: GoogleFonts.average(color: Colors.black),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Copy Url",
-                            style: GoogleFonts.average(color: Colors.black),
-                          ),
+                          const Icon(Icons.edit)
                         ],
                       ),
                     ),

@@ -1,5 +1,4 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_clicked_item_small_image.dart';
 import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
 import 'package:campus_sell/likes/controller/likes.dart';
@@ -119,7 +118,7 @@ class _AgoTechClickedItemState extends State<AgoTechClickedItem> {
                 height:10,
               ),
  
-                 AgoTechProductDetailsCard(title: data["itemName"], description: data["description"], price: data['price'].toString(), brandName: data["brand"], phone:data["phone"], hostel: data["hostel"], city: data["city"], university: data["university"], itemType: data["itemType"], socialMedia: data["socialMedia"],),
+                 AgoTechProductDetailsCard(title: data["itemName"], description: data["description"], price: data['price'].toString(), brandName: data["brand"], phone:data["phone"], hostel: data["hostel"], city: data["city"], university: data["university"], itemType: data["itemType"], socialMedia: data["socialMedia"], ownerId: data["ownerId"],itemId: itemId,),
               
             ],
           ),

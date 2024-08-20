@@ -30,7 +30,8 @@ class AdditionalInfoController extends GetxController {
   }
 
 
-
+// the additional info of the user or the seller's id is gotten from the uid. it is not automatically generated.
+// and also that same uid is given to the products that user post in the items collection as ownerId.
 
 
   Future<void> addDataToFirestore(

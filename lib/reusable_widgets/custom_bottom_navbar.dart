@@ -1,6 +1,3 @@
-import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
-import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
-import 'package:campus_sell/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

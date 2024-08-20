@@ -149,13 +149,13 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                         hostel: itemData["hostel"],
                         university: itemData["university"],
                         itemType: itemData["itemType"],
-                        socialMedia: itemData["socialMedia"],
+                        socialMedia: itemData["socialMedia"], ownerId: '', itemId: '',
                       ),
                     ],
                   ),
                 );
               } else {
-                return Center(child: Text('No data available'));
+                return const Center(child: Text('No data available'));
               }
             }),
       ),
