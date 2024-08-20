@@ -25,6 +25,7 @@ class ImageController extends GetxController {
   Future<void> uploadImagesToFirebase() async {
     for (XFile image in images) {
       try {
+        
         // Compress the image
         XFile? compressedImage = await compressImage(image);
 
@@ -59,7 +60,7 @@ class ImageController extends GetxController {
     var result = await FlutterImageCompress.compressAndGetFile(
       file.path,
       targetPath,
-      quality: 40, // Adjust quality as needed.
+      quality: 90, // Adjust quality as needed.
     );
 
     return result != null ? XFile(result.path) : null;

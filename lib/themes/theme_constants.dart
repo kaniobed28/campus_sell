@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: const Color(0xFFC4C4C4),
+  scaffoldBackgroundColor:const Color(0xFFF2F2F2 ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
     displayMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
@@ -17,8 +18,8 @@ ThemeData lightTheme = ThemeData(
     bodyMedium: TextStyle(fontSize: 14,color: Color.fromARGB(255, 1, 1, 1),), // this is the theme responsible for the app text by default. the default font size for the app is 14
     bodySmall: TextStyle(fontSize: 16,color: Color.fromARGB(255, 4, 4, 4)),
     labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-    labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-    labelSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color( 0xFFEEEEEE),),
+    labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),//I am using this for the category lable
+    labelSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, ),//I am using this for form lable
     
   ),
   // elevatedButtonTheme: ElevatedButtonThemeData(

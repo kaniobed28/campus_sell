@@ -33,21 +33,23 @@ class SearchScreen extends StatelessWidget {
     "Healthcare Products",
     "Jewelry",
     "Kitchen Appliances",
+    "Services",
     "Others"
   ];
 
   List<String> universityList = [
     "Select University",
-    "University of Ghana",
+    "AAMUSTED",
+    "Ashesi University",
+    "Central University",
+    "GIMPA",
     "KNUST",
     "UCC",
-    "UEW",
     "UDS",
-    "Ashesi University",
-    "GIMPA",
-    "Central University",
+    "UEW",
+    "University of Ghana",
     "UPSA",
-    "Valley View University"
+    "Valley View University",
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -80,6 +82,7 @@ class SearchScreen extends StatelessWidget {
     universityNameController.text = "";
     return SafeArea(
       child: Scaffold(
+        // backgroundColor: const Color(0xFFF2F2F2 ),
         appBar: AppBar(
           title: const Text("Search Here"),
           centerTitle: true,
@@ -106,7 +109,7 @@ class SearchScreen extends StatelessWidget {
                   nameFormWidget(
                     brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Brand Name",
+                    nameOfLabel: "Shop's Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
                   const SizedBox(height: 30),
@@ -122,7 +125,7 @@ class SearchScreen extends StatelessWidget {
                       items: cityList
                           .map((e) => DropdownMenuItem(
                                 value: e,
-                                child: Text(e),
+                                child: Text(e,style: Theme.of(context).textTheme.labelSmall,),
                               ))
                           .toList(),
                       onChanged: (val) {
@@ -134,7 +137,7 @@ class SearchScreen extends StatelessWidget {
                       items: universityList
                           .map((e) => DropdownMenuItem(
                                 value: e,
-                                child: Text(e),
+                                child: Text(e,style: Theme.of(context).textTheme.labelSmall,),
                               ))
                           .toList(),
                       onChanged: (val) {
@@ -146,7 +149,7 @@ class SearchScreen extends StatelessWidget {
                     items: itemypeList
                         .map((e) => DropdownMenuItem(
                               value: e,
-                              child: Text(e),
+                              child: Text(e,style: Theme.of(context).textTheme.labelSmall,),
                             ))
                         .toList(),
                     onChanged: (val) {

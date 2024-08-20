@@ -1,11 +1,16 @@
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SellInfoScreen extends StatelessWidget {
+  AuthController authController = Get.find<AuthController>();
+  AdditionalInfoController additionalInfoController =
+      Get.find<AdditionalInfoController>();
   SellInfoScreen({Key? key}) : super(key: key);
 
   RxBool update_info = false.obs;
@@ -14,16 +19,17 @@ class SellInfoScreen extends StatelessWidget {
 
   List<String> universityList = [
     "Select University",
-    "University of Ghana",
+    "AAMUSTED",
+    "Ashesi University",
+    "Central University",
+    "GIMPA",
     "KNUST",
     "UCC",
-    "UEW",
     "UDS",
-    "Ashesi University",
-    "GIMPA",
-    "Central University",
+    "UEW",
+    "University of Ghana",
     "UPSA",
-    "Valley View University"
+    "Valley View University",
   ];
 
   List<String> cityList = [
@@ -64,10 +70,30 @@ class SellInfoScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title:  Text("Additional Profile for Sellers",style: GoogleFonts.average(),),
+          title: Text(
+            "Additional Profile for Sellers",
+            style: GoogleFonts.average(),
+          ),
           centerTitle: true,
           // leading: Icon(Icons.person_4_rounded),
           backgroundColor: Colors.transparent,
+        actions: [
+          FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.cameraswitch),
+                  onPressed: () {
+                  }
+                  ),
+                  //  const Text("change photo",
+                  // style:  TextStyle(fontSize: 10),
+                  // ),
+              ],
+            ),
+          ),
+        ],
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -84,7 +110,7 @@ class SellInfoScreen extends StatelessWidget {
                   nameFormWidget(
                     _brandNameController,
                     RegExp(r'^[a-zA-Z]+$'),
-                    nameOfLabel: "Brand Name",
+                    nameOfLabel: "Shop's Name",
                     prefixIcon: Icons.branding_watermark,
                   ),
                   const SizedBox(height: 30),
@@ -95,7 +121,10 @@ class SellInfoScreen extends StatelessWidget {
                     items: cityList.map((String city) {
                       return DropdownMenuItem<String>(
                         value: city,
-                        child: Text(city),
+                        child: Text(
+                          city,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -121,7 +150,10 @@ class SellInfoScreen extends StatelessWidget {
                     items: universityList.map((String university) {
                       return DropdownMenuItem<String>(
                         value: university,
-                        child: Text(university),
+                        child: Text(
+                          university,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -164,27 +196,26 @@ class SellInfoScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Obx(
-                      ()=> ElevatedButton.icon(
+                      () => ElevatedButton.icon(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.transparent),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             update_info.value = true;
-                            AuthController authController =
-                                Get.find<AuthController>();
-                            AdditionalInfoController additionalInfoController =
-                                Get.find<AdditionalInfoController>();
-                      
-                            await additionalInfoController.updateDataInFirestore({
+
+                            await additionalInfoController
+                                .updateDataInFirestore({
                               // data for addition info goes in here
                               "brand": _brandNameController.text
                                   .trim()
                                   .capitalizeFirst,
-                              "city":
-                                  _cityNameController.text.trim().capitalizeFirst,
-                              "university": _universityNameController.text.trim(),
+                              "city": _cityNameController.text
+                                  .trim()
+                                  .capitalizeFirst,
+                              "university":
+                                  _universityNameController.text.trim(),
                               'hostel': _hostelNameController.text
                                   .trim()
                                   .capitalizeFirst,
@@ -195,23 +226,27 @@ class SellInfoScreen extends StatelessWidget {
                                   .capitalizeFirst,
                             }, authController.uid.toString());
                             await additionalInfoController.updateWithAddInfo();
-                            Get.to(() => DashBoard());
+                            Get.to(() => const NewDashboard());
                             // Navigator.push(
                             // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                           }
                         },
                         icon: const Icon(
-                            Icons.person_4_rounded,color: Color.fromARGB(255, 56, 54, 54),), // Add your desired icon here
+                          Icons.person_4_rounded,
+                          color: Color.fromARGB(255, 56, 54, 54),
+                        ), // Add your desired icon here
                         label: update_info.value
                             ? const CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 56, 54, 54)),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color.fromARGB(255, 56, 54, 54)),
                                 strokeWidth: 4.0,
                               )
-                            :  Text(
+                            : Text(
                                 'Update',
-                                style: GoogleFonts.average(color:const Color.fromARGB(255, 56, 54, 54)),),
-                              
+                                style: GoogleFonts.average(
+                                    color:
+                                        const Color.fromARGB(255, 56, 54, 54)),
+                              ),
                       ),
                     ),
                   ),

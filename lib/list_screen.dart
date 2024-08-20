@@ -1,6 +1,7 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
+import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,60 +18,69 @@ class ListScreen extends StatelessWidget {
     DeleteController deleteController = Get.put(DeleteController());
     AuthController authController = Get.find<AuthController>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          ' your Items',
-          style: GoogleFonts.aclonica(color: Colors.black),
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: CustomBottomNavBar(height: 50,),
+        appBar: AppBar(
+          title: Text(
+            ' My Shop Items',
+            style: GoogleFonts.aclonica(color: Colors.black),
+          ),
+          backgroundColor: Colors.transparent,
         ),
-        backgroundColor: Colors.transparent,
-      ),
-      body: StreamBuilder(
-        stream: deleteController.listForDelete(authController.uid.value),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> data = snapshot.data!.docs[index].data();
-                String id = snapshot.data!.docs[index].id;
-                return ListTile(
-                  title: Text(
-                    data["itemName"],
-                    style: GoogleFonts.average(color: Colors.black),
-                  ),
-                  subtitle: Text(
-                    "GH¢ ${data["price"].toString()}",
-                    style: GoogleFonts.average(color: Colors.black),
-                  ),
-                  trailing: FittedBox(
-                    child: Column(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.copy),
-                          onPressed: () {
-                            Clipboard.setData(ClipboardData(
-                                text: "https://campussell.github.io/#/$id"));
-                            Get.snackbar("Copied to Cliipboard",
-                               "https://campussell.github.io/#/$id" ,
-                                duration: const Duration(
-                                    seconds: 1, milliseconds: 500));
-                          },
-                        ),
-                        Text(
-                          "Copy Url",
-                          style: GoogleFonts.average(color: Colors.black),
-                        ),
-                      ],
+        body: StreamBuilder(
+          stream: deleteController.listForDelete(authController.uid.value),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator();
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> data = snapshot.data!.docs[index].data();
+                  String id = snapshot.data!.docs[index].id;
+                  return ListTile(
+                    title: Text(
+                      data["itemName"],
+                      style: GoogleFonts.average(color: Colors.black),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        },
+                    subtitle: Text(
+                      "GH¢ ${data["price"].toString()}",
+                      style: GoogleFonts.average(color: Colors.black),
+                    ),
+                    trailing: FittedBox(
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.copy),
+                                onPressed: () {
+                                  Clipboard.setData(ClipboardData(
+                                    //changes must be changed here if the hosting platform is changed from github.io
+                                      text: "https://campussell.github.io/#/shopitems/itemcode/$id"));
+                                  Get.snackbar("Copied to Cliipboard",
+                                     "https://campussell.github.io/#/shopitems/itemcode/$id" ,
+                                      duration: const Duration(
+                                          seconds: 1, milliseconds: 500));
+                                },
+                              ),
+                              Text(
+                                "Copy Url",
+                                style: GoogleFonts.average(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          // const Icon(Icons.edit)
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

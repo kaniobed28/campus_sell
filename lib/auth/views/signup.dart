@@ -1,4 +1,4 @@
-import 'package:campus_sell/dashboard/main.dart';
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/auth/views/signin.dart';
@@ -25,7 +25,7 @@ class Signup extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? DashBoard()
+          ? const NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -47,10 +47,19 @@ class Signup extends StatelessWidget {
                             // Add functionality to the IconButton if needed
                           },
                         ),
-                        Text(
+                        const Text(
                           "Campus Sell",
                         ),
-                        const SizedBox(height: 128),
+                        const SizedBox(
+                          height: 20,
+                          ),
+                          // I have left empty height here
+                         SizedBox(
+                          height: 40,
+                          child: Text("Create your online Shop Now",style: Theme.of(context).textTheme.displayMedium,),
+                        ),
+
+                        const SizedBox(height: 92),
                         emailFormWidget(emailOfFormController),
                         const SizedBox(height: 60),
                         passWrdFormWidget(passwordOfFormController),
@@ -81,13 +90,13 @@ class Signup extends StatelessWidget {
                                         .addDataToFirestore(
                                             {}, authController.uid.value);
                                     // authController.dispose();
-                                    Get.to(() => DashBoard());
+                                    Get.to(() => const NewDashboard());
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',
                                       'Check your Internet connection. Password must be minimum of length 6,',
                                       snackPosition: SnackPosition.BOTTOM,
-                                      duration: Duration(seconds: 3),
+                                      duration: const Duration(seconds: 3),
                                     ); //I have to work here
                                   }
                                 } catch (e) {
@@ -95,7 +104,7 @@ class Signup extends StatelessWidget {
                                     'Somethng went wrong',
                                     'Check your Internet connection. Password must be minimum of length 6',
                                     snackPosition: SnackPosition.BOTTOM,
-                                    duration: Duration(seconds: 3),
+                                    duration: const Duration(seconds: 3),
                                   );
                                 }
                                 // Navigator.push(
@@ -107,19 +116,19 @@ class Signup extends StatelessWidget {
                             },
                             child: const Text(
                               'Sign Up',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,),
                             ),
                           ),
                         ),
                         Row(children: [
                           const Text(
-                            "Already have an account? ",
+                            "Already have a Shop? ",
                           ),
                           GestureDetector(
                             onTap: () => Get.to(() => SignIn()),
                             child: const Text(
                               "Sign in",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),
                             ),
                           )
                         ]),
