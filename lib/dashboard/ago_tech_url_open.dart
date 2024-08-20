@@ -149,7 +149,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                         hostel: itemData["hostel"],
                         university: itemData["university"],
                         itemType: itemData["itemType"],
-                        socialMedia: itemData["socialMedia"], ownerId: '', itemId: '',
+                        socialMedia: itemData["socialMedia"], ownerId: itemData["ownerId"], itemId: itemId,
                       ),
                     ],
                   ),

@@ -71,7 +71,7 @@ class ListScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Icon(Icons.edit)
+                          // const Icon(Icons.edit)
                         ],
                       ),
                     ),
