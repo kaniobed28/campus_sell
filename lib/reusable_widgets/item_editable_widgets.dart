@@ -11,7 +11,7 @@ class ItemEditForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form key for validation
 
   // Constructor to accept itemId, TextEditingController, RegExp, and validation message
-  ItemEditForm({
+  ItemEditForm({super.key, 
     required this.itemId,
     required this.textController,
     required this.validationPattern,
@@ -28,7 +28,7 @@ class ItemEditForm extends StatelessWidget {
         children: [
           TextFormField(
             controller: textController, // Use the passed TextEditingController
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Enter new information',
             ),
             validator: (value) {
@@ -40,7 +40,7 @@ class ItemEditForm extends StatelessWidget {
               return null; // Return null if the input is valid
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async{
               if (_formKey.currentState!.validate()) {
@@ -52,7 +52,7 @@ class ItemEditForm extends StatelessWidget {
                 Get.snackbar("Success", "Information updated for item $itemId to: $editedText");
               }
             },
-            child: Text('Save'),
+            child: const Text('Save'),
           ),
         ],
       ),
