@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-// I just used asset for trial in future I will use network image
+
+import 'custom_fullscreen_image.dart';
+
+
 
 
 class SmallProductCard extends StatelessWidget {
@@ -9,7 +12,13 @@ class SmallProductCard extends StatelessWidget {
   final String price;
   final String totalLikes;
 
-  const SmallProductCard({super.key, required this.imageUrl, required this.title, required this.price, required this.totalLikes});
+  const SmallProductCard({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.price,
+    required this.totalLikes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +39,38 @@ class SmallProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
-          SizedBox(
-            height: 148.35,
-            width: 154.43,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
+          Stack(
+            children: [
+              SizedBox(
+                height: 148.35,
+                width: 154.43,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              // child: Image.asset("assets/img/watch.jpg")
-              child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          placeholder: (context, url) => const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          height: 280,
-                          width: 200,
-                        ),
-            ),
+              Positioned(
+                left: 8.0,
+                top: 8.0,
+                child: GestureDetector(
+                  onTap: () {
+                    FullScreenImage.show(context, imageUrl);
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(imageUrl),
+                    radius: 12.0,
+                  ),
+                ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -60,7 +82,6 @@ class SmallProductCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12.0,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -81,11 +102,11 @@ class SmallProductCard extends StatelessWidget {
                         Icon(
                           Icons.favorite_border,
                           color: Colors.grey[700],
-                          
                         ),
-                        //I have used overflow here and must be changed in the future
-                        Text(totalLikes,
-                        overflow: TextOverflow.fade,),
+                        Text(
+                          totalLikes,
+                          overflow: TextOverflow.fade,
+                        ),
                       ],
                     ),
                   ],
