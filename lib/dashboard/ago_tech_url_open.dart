@@ -4,10 +4,12 @@ import 'package:campus_sell/controllers/get_item_by_id_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_clicked_item_small_image.dart';
 import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
 import 'package:campus_sell/likes/controller/likes.dart';
+import 'package:campus_sell/reusable_widgets/custom_add_to_basket.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 class AgoTechUrlOpen extends StatefulWidget {
   const AgoTechUrlOpen({super.key});
@@ -28,13 +30,8 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
     final additionalInfoController = Get.put(AdditionalInfoController());
     final authController = Get.put(AuthController());
 
-    // final Map<String, dynamic> data = Get.arguments ?? {};
     final String? itemId = Get.parameters["id"];
-    // final Map<String, dynamic> data =
-    // List imageList = data["imagesUrls"];
-    // final dynamic itemId = data["id"];
     likeItemController.containsUID(itemId, authController.uid.value);
-    // final ownerInfo = additionalInfoController.getDocumentById(data["ownerId"]);
 
     return Scaffold(
       bottomNavigationBar: CustomBottomNavBar(
@@ -46,7 +43,6 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
             return FittedBox(
               child: Column(
                 children: [
-                  // SizedBox(height: 1,),
                   IconButton(
                     icon: Icon(
                       likeItemController.liked.value
@@ -57,14 +53,12 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                           : Colors.black,
                     ),
                     onPressed: () {
-                      (!authController.isAuthenticated.value)
-                          ? Get.snackbar("LogIn First",
-                              "Tab on Home to move to the Login Screen")
-                          : likeItemController.addAndRemoveLike(
-                              itemId, authController.uid.value);
-                      // loveController.toggleLove();
-
-                      // likeItemController.containsUID(itemId, authController.uid.value);
+                      if (!authController.isAuthenticated.value) {
+                        Get.snackbar("LogIn First", "Tab on Home to move to the Login Screen");
+                      } else {
+                        likeItemController.addAndRemoveLike(
+                            itemId, authController.uid.value);
+                      }
                     },
                   ),
                   Text("${likeItemController.likesLength}")
@@ -90,51 +84,45 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                 return SizedBox(
                   width: screenWidth,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceBetween, //I have left space between the image and the details card
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Center(
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: (screenHeight < 450)
-                                ? screenHeight * 0.4
-                                : screenHeight * 0.65,
-                            // aspectRatio: 2.0,
-                            autoPlayInterval: const Duration(
-                                seconds:
-                                    8), // I am changing the images 8 sec if they are more than 1
-                            enlargeCenterPage: true,
-                            autoPlay: (imageList.length >= 2) ? true : false,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: (screenHeight < 450)
+                                  ? screenHeight * 0.4
+                                  : screenHeight * 0.65,
+                              autoPlayInterval: const Duration(seconds: 8),
+                              enlargeCenterPage: true,
+                              autoPlay: (imageList.length >= 2) ? true : false,
+                            ),
+                            items: imageList.map((i) {
+                              return Material(
+                                elevation: 20,
+                                borderRadius: BorderRadius.circular(20),
+                                child: SizedBox(
+                                  height: (screenHeight < 450)
+                                      ? screenHeight * 0.4
+                                      : screenHeight * 0.65,
+                                  width: screenWidth * .8,
+                                  child: AgoTechClickedItemSmallImage(
+                                    imageUrl: i,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          items: imageList.map((i) {
-                            return Material(
-                              elevation: 20,
-                              borderRadius: BorderRadius.circular(20),
-                              child: SizedBox(
-                                height: (screenHeight < 450)
-                                    ? screenHeight * 0.4
-                                    : screenHeight * 0.65,
-                                width: screenWidth * .8,
-                                // color: Colors.transparent,
-                                child: AgoTechClickedItemSmallImage(
-                                  imageUrl: i,
-                                ), // I am taking the image url as arg from the carousel and use it to display it.
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                        // child: Material(
-                        //   elevation: 20,
-                        //   borderRadius: BorderRadius.circular(20),
-                        //   child: SizedBox(
-                        //     height: screenHeight * 0.4,
-                        //     width: screenWidth * .8,
-                        //     // color: Colors.transparent,
-                        //     child: CarouselSlider(
-                        //       items: data["imagesUrls"],
-                        //       child: const AgoTechClickedItemSmallImage(imageUrl: ,)),
-                        //   ),
-                        // ),
+                          Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: AddToBasketButton(
+                              itemId: itemId,
+                              isAuthenticated: authController.isAuthenticated,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
@@ -149,7 +137,9 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                         hostel: itemData["hostel"],
                         university: itemData["university"],
                         itemType: itemData["itemType"],
-                        socialMedia: itemData["socialMedia"], ownerId: itemData["ownerId"], itemId: itemId,
+                        socialMedia: itemData["socialMedia"],
+                        ownerId: itemData["ownerId"],
+                        itemId: itemId,
                       ),
                     ],
                   ),

@@ -3,7 +3,6 @@ import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
 import 'package:campus_sell/reusable_widgets/more_details_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AgoTechProductDetailsCard extends StatelessWidget {
@@ -38,9 +37,6 @@ class AgoTechProductDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     final TextEditingController itemNameController = TextEditingController();
     final TextEditingController itemPriceController = TextEditingController();
     final TextEditingController itemDescriptionController = TextEditingController();
@@ -207,38 +203,36 @@ class AgoTechProductDetailsCard extends StatelessWidget {
             const SizedBox(height: 10.0),
             
             // More Details Button
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Get.defaultDialog(
-                    title: "More Details",
-                    content: SizedBox(
-                      width: screenWidth,
-                      height: 500,
-                      child: MoreDetailsDialog(
-                        title: title,
-                        brandName: brandName,
-                        price: price,
-                        phone: phone,
-                        city: city,
-                        hostel: hostel,
-                        university: university,
-                        itemType: itemType,
-                        socialMedia: socialMedia,
-                      ),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'More Details',
-                  style: TextStyle(
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
+            _buildMoreDetailsButton(context),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMoreDetailsButton(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () {
+          // Correctly instantiate MoreDetailsDialog as a widget
+          Get.dialog(
+            MoreDetailsDialog(
+              title: title,
+              brandName: brandName,
+              price: price,
+              phone: phone,
+              city: city,
+              hostel: hostel,
+              university: university,
+              itemType: itemType,
+              socialMedia: socialMedia,
+            ),
+          );
+        },
+        child: Text(
+          'More Details',
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );

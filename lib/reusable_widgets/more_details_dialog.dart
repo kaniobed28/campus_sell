@@ -30,113 +30,96 @@ class MoreDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Container(
-            constraints: BoxConstraints(
-              maxHeight: constraints.maxHeight,
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+            const SizedBox(height: 20),
+            _buildDetailsGrid(),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => Get.back(),
+                child: Text(
+                  'Close',
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
-              ],
+              ),
             ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        _buildDetailRow("Item Name:", title),
-                        _buildDetailRow("Owner's Shop:", brandName),
-                        _buildDetailRow("Price:", "Gh¢ $price"),
-                        _buildDetailRow("Phone:", phone),
-                        _buildDetailRow("City:", city),
-                        _buildDetailRow("Hostel/Address:", hostel),
-                        _buildDetailRow("University:", university),
-                        _buildDetailRow("Category:", itemType),
-                        _buildDetailRow("Social Media:", socialMedia),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () => Get.back(),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+  Widget _buildDetailsGrid() {
+    final details = {
+      "Owner's Shop": brandName,
+      "Price": "Gh¢ $price",
+      "Phone": phone,
+      "City": city,
+      "Hostel/Address": hostel,
+      "University": university,
+      "Category": itemType,
+      "Social Media": socialMedia,
+    };
+
+    return GridView.builder(
+      shrinkWrap: true,
+      itemCount: details.length,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        childAspectRatio: 3,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemBuilder: (context, index) {
+        final key = details.keys.elementAt(index);
+        final value = details[key]!;
+        return _buildDetailItem(key, value);
+      },
+    );
+  }
+
+  Widget _buildDetailItem(String label, String value) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            "$label:",
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 3,
+        ),
+        Expanded(
+          flex: 3,
+          child: GestureDetector(
+            
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: value));
+              Get.snackbar("Copied", "$label copied to clipboard");
+            },
             child: Text(
               value,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
+              style: const TextStyle(color: Colors.blueAccent),
               overflow: TextOverflow.ellipsis,
-              maxLines: 2, // Allow up to 2 lines before ellipsis
+              maxLines: 2,
             ),
+            
           ),
-          IconButton(
-            icon: const Icon(Icons.copy),
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: value));
-              Get.snackbar(
-                "Copied to Clipboard",
-                value,
-                duration: const Duration(seconds: 1, milliseconds: 500),
-              );
-            },
-          ),
-        ],
-      ),
+        ),
+        // const Icon(Icons.copy, size: 18),
+        // close
+      ],
     );
   }
 }

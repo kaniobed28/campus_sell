@@ -32,7 +32,7 @@ class SearchResultPage extends StatelessWidget {
                       title: Text(searchedController.searchResults[index]["itemName"].toString()),
                       subtitle: Text(searchedController.searchResults[index]["itemType"].toString()),
                       trailing: Text("Gh¢ ${searchedController.searchResults[index]["price"]}"),
-                      onTap: () => Get.to(()=>  const AgoTechClickedItem(),arguments: data),
+                      onTap: () => Get.toNamed("/shopitems/itemcode/${data['id']}")
                       // () => Get.to(const searchedController.searchResults[index]),
                     );
                   },
