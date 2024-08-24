@@ -119,7 +119,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                             right: 10,
                             child: AddToBasketButton(
                               itemId: itemId,
-                              isAuthenticated: authController.isAuthenticated,
+                              isAuthenticated: authController.isAuthenticated, userId: authController.uid.value,
                             ),
                           ),
                         ],

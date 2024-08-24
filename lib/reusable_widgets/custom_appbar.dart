@@ -1,47 +1,53 @@
 import 'package:flutter/material.dart';
-// this is  where I made the custom appbar. we can use it or work on it seperately so that any changes we dont have to read the whole code but only here
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final double height;
 
+// This is where I made the custom app bar. We can use it or work on it separately so that any changes we make 
+// can be focused on here without needing to go through the entire codebase.
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final double height; // Height of the AppBar, defaulting to the standard toolbar height.
+
+  // Constructor for CustomAppBar. The height parameter is optional, with a default value of kToolbarHeight.
   const CustomAppBar({super.key, this.height = kToolbarHeight});
 
+  // This defines the size of the AppBar, which is required by the PreferredSizeWidget interface.
   @override
   Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
+      // Clips the AppBar with rounded corners at the bottom.
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(20.0),
         bottomRight: Radius.circular(20.0),
       ),
       child: Container(
-        height: height,
-        color: const Color(0xFFFBD300),
+        height: height, // Sets the height of the AppBar container.
+        color: const Color(0xFFFBD300), // Custom background color for the AppBar.
         child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0, // Remove shadow
+          backgroundColor: Colors.transparent, // Makes the AppBar background transparent so that the container color is visible.
+          elevation: 0, // Removes the default AppBar shadow.
           leading: const Padding(
             padding: EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white, // Outer circle's background color.
               child: Padding(
                 padding: EdgeInsets.all(2.0),
                 child: CircleAvatar(
-                  backgroundImage:AssetImage("assets/img/campus-sell-favicon-color.png"), //NetworkImage('https://your-image-url.com/profile.jpg'),
+                  // Inner circle image. Replace with an appropriate image for your app.
+                  backgroundImage: AssetImage("assets/img/campus-sell-favicon-color.png"),
                 ),
               ),
             ),
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.menu),
+              icon: const Icon(Icons.menu), // Menu icon at the right side of the AppBar.
               onPressed: () {
-                Scaffold.of(context).openEndDrawer();
+                Scaffold.of(context).openEndDrawer(); // Opens the end drawer when the menu icon is tapped.
               },
             ),
           ],
-        
         ),
       ),
     );

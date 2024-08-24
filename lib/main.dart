@@ -5,6 +5,7 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
 import 'package:campus_sell/dashboard/ago_tech_url_open.dart';
+import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
@@ -25,6 +26,7 @@ void main() async{
   Get.put(AdditionalInfoController());
   Get.put(Streamer());
   Get.put(IsOwnerController());
+  Get.put(BasketController());
   // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
