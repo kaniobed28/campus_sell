@@ -104,7 +104,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                       fontSize: 16.0,
                       color: Colors.grey[600],
                     ),
-                    overflow: TextOverflow.ellipsis,
+                    
                   ),
                 ),
                 if (isOwnerController.isOwner)

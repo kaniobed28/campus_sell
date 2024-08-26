@@ -9,7 +9,7 @@ class BasketScreen extends StatelessWidget {
   final String userId; // User ID is passed to this screen to identify the user's basket.
 
   // Constructor that requires the userId parameter to be provided when the screen is created.
-  BasketScreen({required this.userId});
+  BasketScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +163,7 @@ class BasketScreen extends StatelessWidget {
         children: [
           Text(
             // Display the total price of all items in the basket.
-            'Total: \$${totalPrice.toStringAsFixed(2)}',
+            'Total: Gh¢${totalPrice.toStringAsFixed(2)}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -172,7 +172,7 @@ class BasketScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              // Handle the checkout process here.
+              Get.offAllNamed("/");
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepPurple,
@@ -182,7 +182,7 @@ class BasketScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
             ),
             child: const Text(
-              'Checkout',
+              'Go Home',
               style: TextStyle(fontSize: 16,color: Colors.white),
             ),
           ),

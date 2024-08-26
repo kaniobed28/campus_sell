@@ -1,4 +1,5 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/mediator_registration_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,6 +97,17 @@ class DrawerWidget extends StatelessWidget {
             onTap: () {
               //
               Get.toNamed('/shopitems/myitems');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_business_sharp),
+            title: Text(
+              'Register a mediator',
+              style: GoogleFonts.average(),
+            ),
+            onTap: () {
+              //
+              Get.to(const RegisterMediatorScreen());
             },
           ),
             ],),

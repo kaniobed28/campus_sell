@@ -47,8 +47,8 @@ class CustomBottomNavBar extends StatelessWidget {
             },
           ),
           NavBarItem(
-            icon: Icons.shopping_basket_sharp,
-            label: 'basket',
+            icon: Icons.add_shopping_cart,
+            label: 'Basket',
             onTap: () async{
              await Get.to(BasketScreen(userId: authController.uid.value));
               // Handle Categories tap

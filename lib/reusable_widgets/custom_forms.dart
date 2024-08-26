@@ -78,10 +78,10 @@ class CustomDropdownButtonFormField extends StatelessWidget {
   final String labelText;
 
   const CustomDropdownButtonFormField({
-    Key? key,
+    super.key,
     required this.itemTypeController,
     this.labelText = "Product Type",
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
