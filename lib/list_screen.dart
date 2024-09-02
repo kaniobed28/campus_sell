@@ -86,26 +86,5 @@ class ListScreen extends StatelessWidget {
   }
 }
 
-class MainApp extends StatelessWidget {
-  MainApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: const Color.fromARGB(255, 255, 255, 255)),
-      home: const SafeArea(
-        child: ListScreen(),
-      ),
-    );
-  }
-}
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  Get.put(AuthController());
-  // Get.put(SearchedController());
-  Get.put(AdditionalInfoController());
-  runApp(MainApp());
-}

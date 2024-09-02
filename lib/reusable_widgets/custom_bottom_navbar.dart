@@ -1,3 +1,5 @@
+import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/basket_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Get.find<AuthController>();
     //  PagesStateController pageStateController = Get.find<PagesStateController>();
     return Container(
       height: height,
@@ -40,6 +43,14 @@ class CustomBottomNavBar extends StatelessWidget {
             label: 'My Shop',
             onTap: () async{
              await Get.offNamed('/shopitems/myitems');
+              // Handle Categories tap
+            },
+          ),
+          NavBarItem(
+            icon: Icons.add_shopping_cart,
+            label: 'Basket',
+            onTap: () async{
+             await Get.to(BasketScreen(userId: authController.uid.value));
               // Handle Categories tap
             },
           ),

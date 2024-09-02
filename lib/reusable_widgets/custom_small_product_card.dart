@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'custom_fullscreen_image.dart';
 
-
-
-
 class SmallProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
@@ -51,8 +48,10 @@ class SmallProductCard extends StatelessWidget {
                   ),
                   child: CachedNetworkImage(
                     imageUrl: imageUrl,
-                    placeholder: (context, url) => const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -64,9 +63,11 @@ class SmallProductCard extends StatelessWidget {
                   onTap: () {
                     FullScreenImage.show(context, imageUrl);
                   },
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(imageUrl),
+                  child: const CircleAvatar(
+                    backgroundColor:
+                        Colors.transparent, // Makes the background transparent
                     radius: 12.0,
+                    child: Icon(Icons.image_outlined),
                   ),
                 ),
               ),
