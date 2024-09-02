@@ -1,8 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/forms_repo/seller_info_screen.dart';
-import 'package:campus_sell/main_board/dashboard/views/dashboard.dart';
 import 'package:campus_sell/auth/views/signup.dart';
-
+import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +14,6 @@ class SignIn extends StatelessWidget {
   final TextEditingController passwordOfFormController;
   final TextEditingController emailOfFormController;
   AuthController authController = Get.put(AuthController());
-  // AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,7 @@ class SignIn extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? DashBoardM()
+          ? const NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -32,7 +29,7 @@ class SignIn extends StatelessWidget {
                   child: Container(
                     width: widtht_of_screen,
                     height: height_of_screen,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     color: Colors.blueGrey[50],
                     child: Column(
                       children: [
@@ -40,63 +37,86 @@ class SignIn extends StatelessWidget {
                           icon: const Icon(
                             Icons.shopify_rounded,
                             size: 80,
-                            color: Colors.amber,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             // Add functionality to the IconButton if needed
                           },
                         ),
-                        Text(
+                        const Text(
                           "Campus Sell",
                         ),
-                        const SizedBox(height: 128),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: Text(
+                            "Enter your Shop Now",
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                        ),
+                        const SizedBox(height: 92),
                         emailFormWidget(emailOfFormController),
                         const SizedBox(height: 60),
                         passWrdFormWidget(passwordOfFormController),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (emailOfFormController.text.isNotEmpty) {
+                                await authController.resetPassword(
+                                    emailOfFormController.text.trim());
+                              } else {
+                                Get.snackbar(
+                                  'Error',
+                                  'Please enter your email to reset the password',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: const Duration(seconds: 3),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.amber),
+                                  Colors.transparent),
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // Add functionality for form submission here
-                                // For example, you can access the form data using:
-                                // emailOfFormController.text and passwordOfFormController.text
                                 AuthController authController =
                                     Get.find<AuthController>();
                                 try {
-                                  await authController
-                                      .signInWithEmailAndPassword(
-                                          emailOfFormController.text.trim(),
-                                          passwordOfFormController.text.trim());
+                                  await authController.signInWithEmailAndPassword(
+                                      emailOfFormController.text.trim(),
+                                      passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
-                                    // authController.dispose();
-                                    // print("wrong"); //do some message to user here
-                                    Get.to(() => DashBoardM());
+                                    Get.to(() => const NewDashboard());
                                   } else {
                                     Get.snackbar(
-                                      'Somethng went wrong',
-                                      'Check your credentials or Internet connection',
+                                      'Something went wrong',
+                                      'Check your shop credentials or Create a shop if you don\'t have one. Also, ensure you have an active internet connection!',
                                       snackPosition: SnackPosition.BOTTOM,
-                                      duration: Duration(seconds: 3),
+                                      duration: const Duration(seconds: 6),
                                     );
                                   }
                                 } catch (e) {
                                   Get.snackbar(
-                                    'Somethng went wrong',
+                                    'Something went wrong',
                                     'Check your Internet connection',
                                     snackPosition: SnackPosition.BOTTOM,
-                                    duration: Duration(seconds: 3),
+                                    duration: const Duration(seconds: 3),
                                   );
                                 }
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => SellInfoScreen()),
-                                // );
                               }
                             },
                             child: const Text(
@@ -105,18 +125,20 @@ class SignIn extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Row(children: [
-                          const Text(
-                            "Don't have an account? ",
-                          ),
-                          GestureDetector(
-                            onTap: () => Get.to(() => Signup()),
-                            child: const Text(
-                              "Sign Up",
-                              style: TextStyle(color: Colors.amber),
+                        Row(
+                          children: [
+                            const Text("Don't have a Shop? "),
+                            GestureDetector(
+                              onTap: () => Get.to(() => Signup()),
+                              child: const Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800),
+                              ),
                             ),
-                          )
-                        ]),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -126,7 +148,6 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  // Form methods
   TextFormField passWrdFormWidget(
       TextEditingController passwordOfFormController) {
     return TextFormField(
@@ -163,36 +184,4 @@ class SignIn extends StatelessWidget {
       },
     );
   }
-}
-
-// class SellInfoScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Sell Info'),
-//       ),
-//       body: Center(
-//         child: Text('Sell Info Screen with some'),
-//       ),
-//     );
-//   }
-// }
-
-// class Try extends StatelessWidget {
-//   const Try({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return  GetMaterialApp(
-//       home: SignIn() ,
-//     );
-//   }
-// }
-
-// the main is for trials only
-void main() {
-  runApp(GetMaterialApp(
-    home: SignIn(),
-  ));
 }

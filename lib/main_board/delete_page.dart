@@ -18,7 +18,7 @@ class DeleteScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:  Text('Delete your Items',style: GoogleFonts.aclonica(color: Colors.black),),
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.transparent,
         ),
       body: StreamBuilder(
         stream: deleteController.listForDelete(authController.uid.value),
@@ -55,7 +55,7 @@ class DeleteScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        Text("GHS ${data["price"].toString()}",style: GoogleFonts.average(color: Colors.black),),
+                        Text("GH¢ ${data["price"].toString()}",style: GoogleFonts.average(color: Colors.black),),
                       ],
                     ),
                   ),

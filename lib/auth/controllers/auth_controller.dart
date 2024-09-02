@@ -56,4 +56,24 @@ class AuthController extends GetxController {
       // print("Sign-out error: $e");
     }
   }
+
+  Future<void> resetPassword(String email) async {
+  try {
+    await _auth.sendPasswordResetEmail(email: email);
+    Get.snackbar(
+      'Password Reset',
+      'A password reset link has been sent to $email',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 5),
+    );
+  } catch (e) {
+    Get.snackbar(
+      'Error',
+      'Failed to send password reset email',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 5),
+    );
+  }
+}
+
 }
