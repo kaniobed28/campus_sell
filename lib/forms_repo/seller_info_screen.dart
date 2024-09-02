@@ -3,22 +3,46 @@ import 'package:campus_sell/dashboard/main.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SellInfoScreen extends StatelessWidget {
+class SellInfoScreen extends StatefulWidget {
+  @override
+  _SellInfoScreenState createState() => _SellInfoScreenState();
+}
+
+class _SellInfoScreenState extends State<SellInfoScreen> {
   AuthController authController = Get.find<AuthController>();
   AdditionalInfoController additionalInfoController =
       Get.find<AdditionalInfoController>();
-  SellInfoScreen({Key? key}) : super(key: key);
 
   RxBool update_info = false.obs;
+  RxBool isGhanaSelected = false.obs; // Track if Ghana is selected
 
-  List<String> searchResults = ["Select", "2", "3"];
+  List<String> countryList = [
+    "Austria",
+    "Belgium",
+    "Canada",
+    "Denmark",
+    "Finland",
+    "France",
+    "Germany",
+    "Ghana",
+    "Italy",
+    "Kenya",
+    "Netherlands",
+    "Nigeria",
+    "Norway",
+    "Portugal",
+    "South Africa",
+    "Spain",
+    "Sweden",
+    "Switzerland",
+    "UK",
+    "USA",
+  ];
 
   List<String> universityList = [
-    "Select University",
     "AAMUSTED",
     "Ashesi University",
     "Central University",
@@ -32,79 +56,138 @@ class SellInfoScreen extends StatelessWidget {
     "Valley View University",
   ];
 
-  List<String> cityList = [
-    "Select City",
-    "Accra",
-    "Kumasi",
-    "Sunyani",
-    "Techiman",
-    "Kintampo",
-    "Tamale",
-    "Takoradi",
-    "Ho",
-    "Cape Coast",
-    "Bolgatanga",
-    "Wa"
-  ];
+  Map<String, List<String>> countryCityMapping = {
+    "Austria": ["Graz", "Innsbruck", "Linz", "Salzburg", "Vienna"],
+    "Belgium": ["Antwerp", "Brussels", "Charleroi", "Ghent", "Liège"],
+    "Canada": ["Calgary", "Montreal", "Ottawa", "Toronto", "Vancouver"],
+    "Denmark": ["Aalborg", "Aarhus", "Copenhagen", "Esbjerg", "Odense"],
+    "Finland": ["Espoo", "Helsinki", "Oulu", "Tampere", "Vantaa"],
+    "France": [
+      "Bordeaux",
+      "Lille",
+      "Lyon",
+      "Marseille",
+      "Nantes",
+      "Nice",
+      "Paris",
+      "Strasbourg",
+      "Toulouse"
+    ],
+    "Germany": [
+      "Berlin",
+      "Cologne",
+      "Düsseldorf",
+      "Frankfurt",
+      "Hamburg",
+      "Munich",
+      "Stuttgart"
+    ],
+    "Ghana": [
+      "Accra",
+      "Bolgatanga",
+      "Cape Coast",
+      "Ho",
+      "Kintampo",
+      "Kumasi",
+      "Sunyani",
+      "Tamale",
+      "Takoradi",
+      "Techiman",
+      "Wa"
+    ],
+    "Italy": [
+      "Bologna",
+      "Florence",
+      "Genoa",
+      "Milan",
+      "Naples",
+      "Palermo",
+      "Rome",
+      "Turin"
+    ],
+    "Kenya": ["Eldoret", "Kisumu", "Mombasa", "Nairobi", "Nakuru"],
+    "Netherlands": ["Amsterdam", "Eindhoven", "Rotterdam", "The Hague", "Utrecht"],
+    "Nigeria": [
+      "Abuja",
+      "Benin City",
+      "Enugu",
+      "Ibadan",
+      "Kaduna",
+      "Kano",
+      "Lagos",
+      "Port Harcourt"
+    ],
+    "Norway": ["Bergen", "Drammen", "Oslo", "Stavanger", "Trondheim"],
+    "Portugal": ["Amadora", "Braga", "Coimbra", "Lisbon", "Porto"],
+    "South Africa": [
+      "Cape Town",
+      "Durban",
+      "Johannesburg",
+      "Port Elizabeth",
+      "Pretoria"
+    ],
+    "Spain": [
+      "Barcelona",
+      "Madrid",
+      "Málaga",
+      "Murcia",
+      "Seville",
+      "Valencia",
+      "Zaragoza"
+    ],
+    "Sweden": ["Gothenburg", "Malmö", "Stockholm", "Uppsala", "Västerås"],
+    "Switzerland": ["Basel", "Bern", "Geneva", "Lausanne", "Zurich"],
+    "UK": ["Birmingham", "Leeds", "Liverpool", "London", "Manchester"],
+    "USA": ["Chicago", "Houston", "Los Angeles", "New York", "Phoenix"],
+  };
+
+  List<String> cityList = ["Select City"]; // Default city list
 
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _itemNameController = TextEditingController();
-
   final TextEditingController _brandNameController = TextEditingController();
-
   final TextEditingController _cityNameController = TextEditingController();
-
   final TextEditingController _universityNameController =
       TextEditingController();
-
   final TextEditingController _hostelNameController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
-
   final TextEditingController _socialMediaController = TextEditingController();
+  final TextEditingController _countryNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // print(Get.parameters["id"]);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Additional Profile for Sellers",
+            "User Profile",
             style: GoogleFonts.average(),
           ),
           centerTitle: true,
-          // leading: Icon(Icons.person_4_rounded),
           backgroundColor: Colors.transparent,
-        actions: [
-          FittedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.cameraswitch),
-                  onPressed: () {
-                  }
+          actions: [
+            FittedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.cameraswitch),
+                    onPressed: () {
+                      // Handle icon button press
+                    },
                   ),
-                  //  const Text("change photo",
-                  // style:  TextStyle(fontSize: 10),
-                  // ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
         ),
         body: SingleChildScrollView(
           child: Form(
-            key: _formKey, // Assign the _formKey to the Form widget
+            key: _formKey,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
-                /*
-                Phone, whatsapp,email and other social media  links can be added here but are not required.
-                Remembrance note: Implement them.
-                */
                 children: [
                   const SizedBox(height: 30),
                   nameFormWidget(
@@ -112,6 +195,44 @@ class SellInfoScreen extends StatelessWidget {
                     RegExp(r'^[a-zA-Z]+$'),
                     nameOfLabel: "Shop's Name",
                     prefixIcon: Icons.branding_watermark,
+                  ),
+                  const SizedBox(height: 30),
+                  DropdownButtonFormField<String>(
+                    value: _countryNameController.text.isNotEmpty
+                        ? _countryNameController.text
+                        : null,
+                    items: countryList.map((String country) {
+                      return DropdownMenuItem<String>(
+                        value: country,
+                        child: Text(
+                          country,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _countryNameController.text = val!;
+                        cityList = countryCityMapping[val] ?? ["Select City"];
+                        _cityNameController.text = ""; // Reset city selection
+
+                        // Check if Ghana is selected and update the state
+                        if (val == "Ghana") {
+                          isGhanaSelected.value = true;
+                        } else {
+                          isGhanaSelected.value = false;
+                          _universityNameController.clear(); // Clear university field if not Ghana
+                        }
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: "Country",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.flag),
+                    ),
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 30),
                   DropdownButtonFormField<String>(
@@ -136,14 +257,11 @@ class SellInfoScreen extends StatelessWidget {
                       prefixIcon: Icon(Icons.location_city),
                     ),
                     validator: (value) {
-                      // if (value == null || value.isEmpty) {
-                      //   return 'This field is required';
-                      // }
                       return null;
                     },
                   ),
                   const SizedBox(height: 30),
-                  DropdownButtonFormField<String>(
+                  Obx(() => DropdownButtonFormField<String>(
                     value: _universityNameController.text.isNotEmpty
                         ? _universityNameController.text
                         : null,
@@ -156,21 +274,19 @@ class SellInfoScreen extends StatelessWidget {
                         ),
                       );
                     }).toList(),
-                    onChanged: (val) {
+                    onChanged: isGhanaSelected.value ? (val) {
                       _universityNameController.text = val!;
-                    },
+                    } : null,
                     decoration: const InputDecoration(
-                      labelText: "University Name",
+                      labelText: "University Name (Ghana only)",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.school),
                     ),
                     validator: (value) {
-                      // if (value == null || value.isEmpty) {
-                      //   return 'This field is required';
-                      // }
                       return null;
                     },
-                  ),
+                    disabledHint: const Text("",overflow: TextOverflow.ellipsis,),
+                  )),
                   const SizedBox(height: 30),
                   nameFormWidget(
                     _hostelNameController,
@@ -207,8 +323,10 @@ class SellInfoScreen extends StatelessWidget {
 
                             await additionalInfoController
                                 .updateDataInFirestore({
-                              // data for addition info goes in here
                               "brand": _brandNameController.text
+                                  .trim()
+                                  .capitalizeFirst,
+                              "country": _countryNameController.text
                                   .trim()
                                   .capitalizeFirst,
                               "city": _cityNameController.text
@@ -227,14 +345,12 @@ class SellInfoScreen extends StatelessWidget {
                             }, authController.uid.toString());
                             await additionalInfoController.updateWithAddInfo();
                             Get.to(() => const NewDashboard());
-                            // Navigator.push(
-                            // context,MaterialPageRoute(builder: (context) => DashBoard()), );
                           }
                         },
                         icon: const Icon(
                           Icons.person_4_rounded,
                           color: Color.fromARGB(255, 56, 54, 54),
-                        ), // Add your desired icon here
+                        ),
                         label: update_info.value
                             ? const CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
@@ -265,8 +381,7 @@ TextFormField nameFormWidget(
   RegExp regExp, {
   bool obscureText = false,
   String nameOfLabel = '',
-  IconData?
-      prefixIcon, // Accepts an optional IconData parameter for the prefix icon
+  IconData? prefixIcon,
 }) {
   return TextFormField(
     controller: nameOfFormController,
@@ -274,17 +389,9 @@ TextFormField nameFormWidget(
     decoration: InputDecoration(
       labelText: nameOfLabel,
       border: const OutlineInputBorder(),
-      prefixIcon: prefixIcon != null
-          ? Icon(prefixIcon)
-          : null, // Use the provided icon if not null
+      prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
     ),
     validator: (value) {
-      // if (value == null || value.isEmpty) {
-      //   return 'Please enter your $nameOfLabel';
-      // }
-      // if (!regExp.hasMatch(value)) {
-      //   return 'Invalid $nameOfLabel';
-      // }
       return null;
     },
   );

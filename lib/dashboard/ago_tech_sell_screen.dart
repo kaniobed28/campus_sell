@@ -1,17 +1,20 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/clicked_item/image_controller.dart';
-import 'package:campus_sell/controllers/additional_info_controller.dart';
-import 'package:campus_sell/controllers/selling_controller.dart';
-import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
-import 'package:campus_sell/dashboard/ago_tech_image_card.dart';
-import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
-import 'package:campus_sell/reusable_widgets/custom_form_lable.dart';
-import 'package:campus_sell/reusable_widgets/custom_forms.dart';
-import 'package:campus_sell/web_image_picker.dart';
+import 'package:campus_sell/dashboard/data_lists.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../reusable_widgets/custom_bottom_navbar.dart';
+import '../reusable_widgets/custom_form_lable.dart';
+import '../reusable_widgets/custom_forms.dart';
+import '../reusable_widgets/multi_select_dialog.dart';
+import '../controllers/additional_info_controller.dart';
+import '../controllers/selling_controller.dart';
+import '../dashboard/ago_tech_dashboard.dart';
+import '../dashboard/ago_tech_image_card.dart';
+import '../web_image_picker.dart';
 
 class AgoTechSellScreen extends StatefulWidget {
   const AgoTechSellScreen({super.key});
@@ -26,11 +29,16 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final WebFilePickerController imageController =
-      Get.put(WebFilePickerController());
+  final WebFilePickerController imageController = Get.put(WebFilePickerController());
   final ImageController imageController2 = Get.put(ImageController());
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
+
+  List<String> selectedCountries = [];
+  List<String> selectedUniversities = [];
+  List<String> selectedCities = [];
+
+  bool get isGhanaSelected => selectedCountries.contains("Ghana");
 
   @override
   void dispose() {
@@ -48,7 +56,6 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        // backgroundColor: const Color(0xFFF2F2F2),
         body: SingleChildScrollView(
           child: Obx(
             () => Stack(
@@ -68,16 +75,12 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                           onTap: () async {
                             if (kIsWeb) {
                               await imageController.pickFile();
-                              totalImages.value =
-                                  imageController.pickFilesList.length;
+                              totalImages.value = imageController.pickFilesList.length;
                             } else {
-                              await imageController2
-                                  .pickImage(ImageSource.gallery);
-                              totalImages.value =
-                                  imageController2.images.length;
+                              await imageController2.pickImage(ImageSource.gallery);
+                              totalImages.value = imageController2.images.length;
                             }
                           },
-                          //add image camera is here
                           child: const Center(
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
@@ -107,92 +110,106 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                const CustomFormLable(
-                                    textLable: "Product Name*:"),
-                                NameForm(
-                                  nameController: itemNameController,
-                                ),
-                                const CustomFormLable(
-                                    textLable: "Product Description*:"),
-                                DescriptionForm(
-                                  nameController: itemDescriptionController,
-                                ),
-                                const CustomFormLable(
-                                    textLable: "Product Type*:"),
+                                const CustomFormLable(textLable: "Product Name*:"),
+                                NameForm(nameController: itemNameController),
+                                const CustomFormLable(textLable: "Product Description*:"),
+                                DescriptionForm(nameController: itemDescriptionController),
+                                const CustomFormLable(textLable: "Product Type*:"),
                                 CustomDropdownButtonFormField(
                                     itemTypeController: itemTypeController),
-                                const CustomFormLable(
-                                    textLable: "Product Price*:"),
-                                PriceForm(
-                                  nameController: itemPriceController,
-                                ),
-                                const SizedBox(height: 20),
-                                // Add spacing between form fields and button
+                                const CustomFormLable(textLable: "Product Price*:"),
+                                PriceForm(nameController: itemPriceController),
 
-                                //Here is the upload button
+                                const CustomFormLable(textLable: "Select Countries*:"),
+                                MultiSelectField(
+                                  title: "Countries",
+                                  selectedItems: selectedCountries,
+                                  itemList: countryList,
+                                  onSelectionChanged: (List<String> selected) {
+                                    setState(() {
+                                      selectedCountries = selected;
+                                      selectedCities.clear();
+                                      if (!isGhanaSelected) {
+                                        selectedUniversities.clear();
+                                      }
+                                    });
+                                  },
+                                ),
+
+                                const CustomFormLable(textLable: "Select Universities*:"),
+                                MultiSelectField(
+                                  title: "Universities",
+                                  selectedItems: selectedUniversities,
+                                  itemList: isGhanaSelected ? universityList : [],
+                                  onSelectionChanged: (List<String> selected) {
+                                    setState(() {
+                                      selectedUniversities = selected;
+                                    });
+                                  },
+                                  enabled: isGhanaSelected,
+                                ),
+
+                                const CustomFormLable(textLable: "Select Cities*:"),
+                                if (selectedCountries.isNotEmpty)
+                                  MultiSelectField(
+                                    title: "Cities",
+                                    selectedItems: selectedCities,
+                                    itemList: selectedCountries
+                                        .expand((country) => countryCityMapping[country] ?? [])
+                                        .toList(),
+                                    onSelectionChanged: (List<String> selected) {
+                                      setState(() {
+                                        selectedCities = selected;
+                                      });
+                                    },
+                                  ),
+
+                                const SizedBox(height: 20),
+
                                 ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor:
-                                        WidgetStateProperty.all<Color>(
+                                    backgroundColor: MaterialStateProperty.all<Color>(
                                       const Color(0xFFFBD300),
                                     ),
-                                    foregroundColor:
-                                        WidgetStateProperty.all<Color>(Colors
-                                            .black), // this is responsible for making the text black
+                                    foregroundColor: MaterialStateProperty.all<Color>(
+                                        Colors.black),
                                   ),
                                   onPressed: () async {
-                                    List imagesUrls = [];
                                     if (formKey.currentState!.validate()) {
                                       uploading.value = true;
+                                      List imagesUrls = [];
                                       if (kIsWeb) {
                                         await imageController.uploadFile();
-                                        imagesUrls =
-                                            imageController.downloadUrlList;
+                                        imagesUrls = imageController.downloadUrlList;
                                       } else {
-                                        await imageController2
-                                            .uploadImagesToFirebase();
-                                        imagesUrls =
-                                            imageController2.imagesUrls;
+                                        await imageController2.uploadImagesToFirebase();
+                                        imagesUrls = imageController2.imagesUrls;
                                       }
 
-                                      ItemForSaleController
-                                          itemForSaleController =
+                                      ItemForSaleController itemForSaleController =
                                           Get.put(ItemForSaleController());
                                       itemForSaleController.addItem(
-                                          itemNameController.text
-                                              .trim()
-                                              .capitalizeFirst!,
-                                          itemTypeController.text
-                                              .trim()
-                                              .capitalizeFirst!,
-                                          itemDescriptionController.text
-                                              .trim()
-                                              .capitalizeFirst!,
-                                          double.parse(itemPriceController.text
-                                              .trim()
-                                              .capitalizeFirst!),
+                                          itemNameController.text.trim().capitalizeFirst!,
+                                          itemTypeController.text.trim().capitalizeFirst!,
+                                          itemDescriptionController.text.trim().capitalizeFirst!,
+                                          double.parse(itemPriceController.text.trim()),
                                           imagesUrls,
-                                          authController.uid.value);
-                                      // print(itemTypeController.text);
-                                      // print(itemPriceController.text);
+                                          authController.uid.value,
+                                          selectedCountries+selectedUniversities+selectedCities,
+                                          
+                                          
+                                          );
 
-                                      AdditionalInfoController
-                                          additionalInfoController =
+                                      AdditionalInfoController additionalInfoController =
                                           Get.put(AdditionalInfoController());
+                                      additionalInfoController.updateAnItemWithAddInfo(
+                                          itemNameController.text.trim().capitalizeFirst!);
 
-                                      //some list are not used but I am clearing all for safty sake.
-                                      // also the items here are supposed to be in the then but I dont know why they dont work when I place them there
-                                      additionalInfoController
-                                          .updateAnItemWithAddInfo(
-                                              itemNameController.text
-                                                  .trim()
-                                                  .capitalizeFirst!);
+                                      // Clear all states after upload
                                       imageController.pickFilesList = [].obs;
                                       imageController.downloadUrlList = [].obs;
-                                      imageController.pickFilesNameList =
-                                          [].obs;
-                                      imageController2.imagesUrls =
-                                          <String>[].obs;
+                                      imageController.pickFilesNameList = [].obs;
+                                      imageController2.imagesUrls = <String>[].obs;
                                       imageController2.images = <XFile>[].obs;
                                       totalImages.value = 0;
                                       uploading.value = false;
@@ -250,6 +267,64 @@ class TotalImagesLable extends StatelessWidget {
         ),
         const Text("Selected"),
       ],
+    );
+  }
+}
+
+class MultiSelectField extends StatelessWidget {
+  final String title;
+  final List<String> selectedItems;
+  final List<dynamic> itemList;
+  final ValueChanged<List<String>> onSelectionChanged;
+  final bool enabled;
+
+  const MultiSelectField({
+    Key? key,
+    required this.title,
+    required this.selectedItems,
+    required this.itemList,
+    required this.onSelectionChanged,
+    this.enabled = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: enabled ? () async {
+        final List<String>? results = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return MultiSelectDialog(
+              items: itemList,
+              initialSelectedItems: selectedItems,
+            );
+          },
+        );
+        if (results != null) {
+          onSelectionChanged(results);
+        }
+      } : null,
+      child: AbsorbPointer(
+        absorbing: !enabled,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5),
+            color: enabled ? Colors.transparent : Colors.grey[200],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                selectedItems.isNotEmpty ? selectedItems.join(', ') : "Select $title",
+                style: TextStyle(color: enabled ? Colors.black54 : Colors.grey),
+              ),
+              const Icon(Icons.arrow_drop_down, color: Colors.black54),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

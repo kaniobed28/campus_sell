@@ -21,103 +21,78 @@ class Streamer extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    streamData();
+    streamData();  // You can pass these as needed
   }
 
-  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> streamData() {
-    return subscription = firebaseFirestore
-        .collection("items")
-        .snapshots()
-        .listen((QuerySnapshot snapshot) {
-      kitchenList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Kitchen')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> streamData({
+  String? country,
+  String? city,
+  String? university,
+}) {
+  Query<Map<String, dynamic>> query = firebaseFirestore.collection("items");
 
-      fashionList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Fashion')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      jewelryList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Jewelry')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      foodList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Food')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      sportsList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Sports')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      beautyList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Beauty')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      electronicList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Electronic')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      othersList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Others')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      stationeryList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Stationery')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-
-      healthcareList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Healthcare')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-      servicesList.value = _sortByArrayLength(snapshot.docs
-          .where((doc) => (doc.data() as Map<String, dynamic>)['itemType'] == 'Services')
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
-          .toList());
-    });
+  // Apply country filter if provided
+  if ((country != null && country.isNotEmpty)||(city != null && city.isNotEmpty)||(university != null && university.isNotEmpty)) {
+    query = query.where('availablePlaces', arrayContainsAny: ["","KNUST",]);
   }
-// this function sorts the list from highest to lowest based on the number of likes
+
+
+  // Listen to the filtered query
+  return subscription = query.snapshots().listen((QuerySnapshot snapshot) {
+    List<Map<String, dynamic>> filteredDocs = snapshot.docs.map((doc) => {
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id,
+        }).toList();
+
+    // Now you can categorize and sort these documents into your lists as before
+    kitchenList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Kitchen')
+        .toList());
+
+    fashionList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Fashion')
+        .toList());
+
+    jewelryList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Jewelry')
+        .toList());
+
+    foodList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Food')
+        .toList());
+
+    sportsList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Sports')
+        .toList());
+
+    beautyList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Beauty')
+        .toList());
+
+    electronicList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Electronic')
+        .toList());
+
+    othersList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Others')
+        .toList());
+
+    stationeryList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Stationery')
+        .toList());
+
+    healthcareList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Healthcare')
+        .toList());
+
+    servicesList.value = _sortByArrayLength(filteredDocs
+        .where((doc) => doc['itemType'] == 'Services')
+        .toList());
+  });
+}
+
+
+  // Sort the list from highest to lowest based on the number of likes
   List<Map<String, dynamic>> _sortByArrayLength(List<Map<String, dynamic>> list) {
     list.sort((a, b) {
       int aLength = (a['likes'] as List<dynamic>).length;
@@ -129,7 +104,6 @@ class Streamer extends GetxController {
 
   void unsubscribe() {
     subscription?.pause();
-    // print("canceled");
   }
 
   @override

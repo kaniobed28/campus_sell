@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:campus_sell/reusable_widgets/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_fullscreen_image.dart';
@@ -47,6 +48,8 @@ class SmallProductCard extends StatelessWidget {
                     topRight: Radius.circular(20.0),
                   ),
                   child: CachedNetworkImage(
+                    memCacheHeight: imageHeightForDashBoard,
+                    memCacheWidth: imageWidthForDashBoard,
                     imageUrl: imageUrl,
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
@@ -67,7 +70,7 @@ class SmallProductCard extends StatelessWidget {
                     backgroundColor:
                         Colors.transparent, // Makes the background transparent
                     radius: 12.0,
-                    child: Icon(Icons.image_outlined),
+                    child: Icon(Icons.remove_red_eye),
                   ),
                 ),
               ),

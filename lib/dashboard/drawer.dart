@@ -99,16 +99,20 @@ class DrawerWidget extends StatelessWidget {
               Get.toNamed('/shopitems/myitems');
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.add_business_sharp),
-            title: Text(
-              'Register a mediator',
-              style: GoogleFonts.average(),
+          Visibility(
+            visible: false, 
+            // I am putting visible here because I am still working on it
+            child: ListTile(
+              leading: const Icon(Icons.add_business_sharp),
+              title: Text(
+                'Register a mediator',
+                style: GoogleFonts.average(),
+              ),
+              onTap: () {
+                //
+                Get.to(const RegisterMediatorScreen());
+              },
             ),
-            onTap: () {
-              //
-              Get.to(const RegisterMediatorScreen());
-            },
           ),
             ],),
              ],

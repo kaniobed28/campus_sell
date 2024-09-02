@@ -64,7 +64,12 @@ class BasketController extends GetxController {
             final itemName = itemDoc['itemName'] as String; // Get the item name.
             // Convert the price from String to double. Default to 0.0 if conversion fails.
             final itemPrice = double.tryParse(itemDoc['price'].toString()) ?? 0.0;
+
+            // Find the document ID for this item in the basket.
+            final documentId = snapshot.docs.firstWhere((doc) => doc['itemId'] == itemId).id;
+
             return BasketItemCount(
+              documentId: documentId, // Include the document ID here
               itemId: itemId,
               itemName: itemName,
               count: itemCounts[itemId]!, // Get the count for the item.
@@ -78,27 +83,16 @@ class BasketController extends GetxController {
   }
 }
 
-// Model for representing an individual basket item.
-class BasketItem {
-  final String id;
-  final String userId;
-  final String itemId;
-
-  BasketItem({
-    required this.id,
-    required this.userId,
-    required this.itemId,
-  });
-}
-
-// Model for representing an item in the basket, including its name, count, and price.
+// Model for representing an item in the basket, including its name, count, price, and documentId.
 class BasketItemCount {
+  final String documentId; // The ID of the Firestore document.
   final String itemId; // The ID of the item.
   final String itemName; // The name of the item.
   final double count; // The number of times this item appears in the basket.
   final double price; // The price of a single item.
 
   BasketItemCount({
+    required this.documentId, // Add documentId to constructor
     required this.itemId,
     required this.itemName,
     required this.count,

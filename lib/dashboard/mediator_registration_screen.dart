@@ -158,6 +158,8 @@ class _RegisterMediatorScreenState extends State<RegisterMediatorScreen> {
 
                                       // Add your registration logic here
 
+                                      
+
                                       // Clear the forms and reset states
                                       companyNameController.clear();
                                       companyDescriptionController.clear();
@@ -300,10 +302,10 @@ class MultiSelectDialog extends StatefulWidget {
   final List<String> initialSelectedValues;
 
   const MultiSelectDialog({
-    Key? key,
+    super.key,
     required this.items,
     required this.initialSelectedValues,
-  }) : super(key: key);
+  });
 
   @override
   _MultiSelectDialogState createState() => _MultiSelectDialogState();

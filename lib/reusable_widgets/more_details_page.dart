@@ -1,8 +1,10 @@
+import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class MoreDetailsDialog extends StatelessWidget {
+
+
+class MoreDetailsPage extends StatelessWidget {
   final String title;
   final String brandName;
   final String price;
@@ -13,7 +15,7 @@ class MoreDetailsDialog extends StatelessWidget {
   final String itemType;
   final String socialMedia;
 
-  const MoreDetailsDialog({
+  const MoreDetailsPage({
     Key? key,
     required this.title,
     required this.brandName,
@@ -28,33 +30,26 @@ class MoreDetailsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('More Details'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Get.back(),
+          ),
+        ],
       ),
-      backgroundColor: Colors.white,
-      child: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               title,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            _buildDetailsGrid(),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => Get.back(),
-                child: Text(
-                  'Close',
-                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
-            ),
+            Expanded(child: _buildDetailsGrid()),
           ],
         ),
       ),
@@ -73,15 +68,8 @@ class MoreDetailsDialog extends StatelessWidget {
       "Social Media": socialMedia,
     };
 
-    return GridView.builder(
-      shrinkWrap: true,
+    return ListView.builder(
       itemCount: details.length,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
       itemBuilder: (context, index) {
         final key = details.keys.elementAt(index);
         final value = details[key]!;
@@ -102,23 +90,20 @@ class MoreDetailsDialog extends StatelessWidget {
         ),
         Expanded(
           flex: 3,
-          child: GestureDetector(
-            
-            onTap: () {
-              Clipboard.setData(ClipboardData(text: value));
-              Get.snackbar("Copied", "$label copied to clipboard");
-            },
-            child: Text(
-              value,
-              style: const TextStyle(color: Colors.blueAccent),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-            
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  value,
+                  style: const TextStyle(color: Colors.blueAccent),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+              CopyIconButton(value: value, label: label),
+            ],
           ),
         ),
-        // const Icon(Icons.copy, size: 18),
-        // close
       ],
     );
   }
