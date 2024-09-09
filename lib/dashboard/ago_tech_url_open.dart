@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/controllers/get_item_by_id_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_clicked_item_small_image.dart';
 import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
@@ -21,6 +22,7 @@ class AgoTechUrlOpen extends StatefulWidget {
 class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
   LikeItem likeItemController = Get.put(LikeItem());
   final getItemByIdController = Get.put(GetItemByIdController());
+  final DeviceController deviceController = Get.find<DeviceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,9 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
           final String contentToShare = "$description\n\n$url";
 
           return Scaffold(
-            bottomNavigationBar: CustomBottomNavBar(height: 50),
+            bottomNavigationBar:Visibility(
+        visible: !deviceController.isWeb.value,
+        child: CustomBottomNavBar(height: 50)),
             appBar: AppBar(
               actions: [
                 Obx(() {

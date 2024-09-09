@@ -21,7 +21,7 @@ class SignIn extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? const NewDashboard()
+          ?  NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -100,7 +100,7 @@ class SignIn extends StatelessWidget {
                                       emailOfFormController.text.trim(),
                                       passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
-                                    Get.to(() => const NewDashboard());
+                                    Get.to(() =>  NewDashboard());
                                   } else {
                                     Get.snackbar(
                                       'Something went wrong',

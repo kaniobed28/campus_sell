@@ -1,7 +1,10 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/clicked_item/image_controller.dart';
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/data_lists.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/constants.dart';
+import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +35,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final WebFilePickerController imageController = Get.put(WebFilePickerController());
   final ImageController imageController2 = Get.put(ImageController());
+  final DeviceController deviceController = Get.find<DeviceController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 
@@ -59,6 +63,8 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
 
     return SafeArea(
       child: Scaffold(
+        endDrawer: DrawerWidget(authController: authController,),
+        appBar: const CustomAppBar(),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Obx(
@@ -217,7 +223,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                       imageController2.images = <XFile>[].obs;
                                       totalImages.value = 0;
                                       uploading.value = false;
-                                      Get.to(() => const NewDashboard())?.then(
+                                      Get.to(() =>  NewDashboard())?.then(
                                         (value) {},
                                       );
                                     }
@@ -238,7 +244,9 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(height: 50),
+        bottomNavigationBar: Visibility(
+        visible: !deviceController.isWeb.value,
+        child: CustomBottomNavBar(height: 50)),
       ),
     );
   }

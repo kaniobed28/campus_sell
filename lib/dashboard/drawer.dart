@@ -56,6 +56,14 @@ class DrawerWidget extends StatelessWidget {
             children: [
           
           ListTile(
+            leading: const Icon(Icons.location_on_outlined),
+            title: Text(
+              'Home',
+              style: GoogleFonts.average(),
+            ),
+            onTap: () => Get.toNamed('/'),
+          ),
+          ListTile(
             leading: const Icon(Icons.account_circle),
             title: Text(
               'My Profile',

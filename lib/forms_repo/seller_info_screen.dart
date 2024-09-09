@@ -344,7 +344,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
                                   .capitalizeFirst,
                             }, authController.uid.toString());
                             await additionalInfoController.updateWithAddInfo();
-                            Get.to(() => const NewDashboard());
+                            Get.to(() =>  NewDashboard());
                           }
                         },
                         icon: const Icon(

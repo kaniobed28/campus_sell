@@ -2,6 +2,7 @@ import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/auth/views/signup.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
 import 'package:campus_sell/dashboard/ago_tech_url_open.dart';
@@ -27,6 +28,7 @@ void main() async{
   Get.put(Streamer());
   Get.put(IsOwnerController());
   Get.put(BasketController());
+  Get.put(DeviceController());
   // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
@@ -42,14 +44,14 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       
       theme: lightTheme,
-      home: const SafeArea(
+      home: SafeArea(
         
         child:  NewDashboard (),
         ),
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const NewDashboard()),
-        GetPage(name: '/shopitems', page: () => const NewDashboard()),// I am doing this because when on web moving back goes to the removal of one slash
+        GetPage(name: '/', page: () =>  NewDashboard()),
+        GetPage(name: '/shopitems', page: () =>  NewDashboard()),// I am doing this because when on web moving back goes to the removal of one slash
         GetPage(name: '/shopitems/itemcode/:id', page: () =>  const AgoTechUrlOpen(),),
         GetPage(name: '/shop/shopitems/:id', page: () =>   ListScreen(),),
         GetPage(name: '/shopitems/myitems', page: () =>   ListScreen()),

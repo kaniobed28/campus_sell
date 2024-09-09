@@ -1,3 +1,4 @@
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import for QuerySnapshot
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
@@ -12,6 +13,7 @@ class ListScreen extends StatelessWidget {
   final DeleteController deleteController = Get.put(DeleteController());
   final RxString shopName = "".obs;
   final AuthController authController = Get.find<AuthController>();
+  final DeviceController deviceController = Get.find<DeviceController>();
 
   ListScreen({super.key});
 
@@ -43,7 +45,9 @@ class ListScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(height: 50),
+      bottomNavigationBar: Visibility(
+        visible: !deviceController.isWeb.value,
+        child: CustomBottomNavBar(height: 50)),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
