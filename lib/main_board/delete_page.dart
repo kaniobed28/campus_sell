@@ -24,7 +24,7 @@ class DeleteScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: deleteController.listForDelete(authController.uid.value),
+        stream: deleteController.listForShopItems(authController.uid.value),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

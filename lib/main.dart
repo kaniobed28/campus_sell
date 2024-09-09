@@ -51,7 +51,8 @@ class MainApp extends StatelessWidget {
         GetPage(name: '/', page: () => const NewDashboard()),
         GetPage(name: '/shopitems', page: () => const NewDashboard()),// I am doing this because when on web moving back goes to the removal of one slash
         GetPage(name: '/shopitems/itemcode/:id', page: () =>  const AgoTechUrlOpen(),),
-        GetPage(name: '/shopitems/myitems', page: () =>  const ListScreen()),
+        GetPage(name: '/shop/shopitems/:id', page: () =>   ListScreen(),),
+        GetPage(name: '/shopitems/myitems', page: () =>   ListScreen()),
         GetPage(name: '/shopitems/removeitems', page: () =>  const DeleteScreen()),
         GetPage(name: '/shopitems/addtoshop', page: () =>  const AgoTechSellScreen()),
         GetPage(name: '/shopitems/profile', page: () =>   SellInfoScreen()),

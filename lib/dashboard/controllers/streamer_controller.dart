@@ -2,6 +2,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
+
+
+//This is where I fetch the items from firebase and I feed it to the app as a stream.
+//the items are fetch based on the category from firebase and added to a rxlist of map.
+//Each list contains maps of items. 
 class Streamer extends GetxController {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   StreamSubscription<QuerySnapshot>? subscription;
@@ -31,10 +36,14 @@ class Streamer extends GetxController {
 }) {
   Query<Map<String, dynamic>> query = firebaseFirestore.collection("items");
 
-  // Apply country filter if provided
+  // I will use this feature in the future where I will allow the app to multiple countries.
+  // Apply country or city or university is not empty or null, filter if provided.
   if ((country != null && country.isNotEmpty)||(city != null && city.isNotEmpty)||(university != null && university.isNotEmpty)) {
     query = query.where('availablePlaces', arrayContainsAny: ["","KNUST",]);
   }
+
+
+// Before the items are uploaded to firebase they are captilized first so when fetching them we must make sure the type contains capital letter first
 
 
   // Listen to the filtered query

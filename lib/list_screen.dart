@@ -9,29 +9,43 @@ import 'package:share_plus/share_plus.dart';
 import '../controllers/delete_controller.dart';
 
 class ListScreen extends StatelessWidget {
-  const ListScreen({super.key});
+  final DeleteController deleteController = Get.put(DeleteController());
+  final RxString shopName = "".obs;
+  final AuthController authController = Get.find<AuthController>();
+
+  ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    DeleteController deleteController = Get.put(DeleteController());
-    AuthController authController = Get.find<AuthController>();
+    final String? shopId = Get.parameters["id"];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'My Shop Items',
-          style: GoogleFonts.aclonica(
-            color: Colors.black,
-            fontSize: 22,
+        title: Obx(
+          () => Text(
+            shopName.value,
+            style: GoogleFonts.aclonica(
+              color: Colors.black,
+              fontSize: 22,
+            ),
           ),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFFBD300),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share, color: Colors.black),
+            onPressed: () {
+              String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
+              Share.share('Check out this shop: $shopUrl');
+            },
+          ),
+        ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(height: 50,),
+      bottomNavigationBar: CustomBottomNavBar(height: 50),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: deleteController.listForDelete(authController.uid.value),
+        stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -55,6 +69,15 @@ class ListScreen extends StatelessWidget {
               String description = data["description"] ?? "Check out this item!";
               String url = "https://campussell.github.io/#/shopitems/itemcode/$id";
               String contentToShare = "$description\n\n$url";
+              
+               // I am calling this after the tree has finish building.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (data["ownerId"] != authController.uid.value) {
+      shopName.value = data["brand"];
+    } else {
+      shopName.value = "My Shop";
+    }
+  });
 
               return Card(
                 elevation: 5,
@@ -93,10 +116,7 @@ class ListScreen extends StatelessWidget {
                     },
                   ),
                   onTap: () {
-                    Get.toNamed(
-                      '/shopitems/itemcode/$id',
-                      
-                    );
+                    Get.toNamed('/shopitems/itemcode/$id');
                   },
                 ),
               );
@@ -127,7 +147,7 @@ class ListScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Start adding items to your shop.',
+            'There are no items in this shop.',
             style: GoogleFonts.average(
               fontSize: 16,
               color: Colors.grey[500],

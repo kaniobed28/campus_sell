@@ -1,6 +1,7 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/clicked_item/image_controller.dart';
 import 'package:campus_sell/dashboard/data_lists.dart';
+import 'package:campus_sell/reusable_widgets/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,9 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     AuthController authController = Get.find<AuthController>();
+    if (authController.isAuthenticated.isFalse) {
+      Get.offNamed("/auth/signin");
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -116,7 +120,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                 DescriptionForm(nameController: itemDescriptionController),
                                 const CustomFormLable(textLable: "Product Type*:"),
                                 CustomDropdownButtonFormField(
-                                    itemTypeController: itemTypeController),
+                                    itemTypeController: itemTypeController,items: productTypes,),
                                 const CustomFormLable(textLable: "Product Price*:"),
                                 PriceForm(nameController: itemPriceController),
 

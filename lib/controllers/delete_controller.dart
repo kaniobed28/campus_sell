@@ -5,7 +5,7 @@ class DeleteController extends GetxController {
   
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   
-  Stream<QuerySnapshot<Map<String, dynamic>>> listForDelete(String ownerId) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> listForShopItems(String ownerId) {
   return FirebaseFirestore.instance
       .collection('items')
       .where('ownerId', isEqualTo: ownerId)

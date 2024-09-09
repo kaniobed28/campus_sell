@@ -96,7 +96,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             onTap: () {
               //
-              Get.toNamed('/shopitems/myitems');
+              Get.toNamed("/shop/shopitems/${authController.uid.value}");
             },
           ),
           Visibility(

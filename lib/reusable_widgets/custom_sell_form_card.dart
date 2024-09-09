@@ -1,3 +1,4 @@
+import 'package:campus_sell/reusable_widgets/constants.dart';
 import 'package:campus_sell/reusable_widgets/custom_form_lable.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,8 @@ class CustomSellFormCard extends StatelessWidget {
               const CustomFormLable(textLable: "Product Description*:"),
                  DescriptionForm(),
               const CustomFormLable(textLable: "Product Type*:"),
-                  CustomDropdownButtonFormField(itemTypeController: itemTypeController,),
+                  CustomDropdownButtonFormField(itemTypeController: itemTypeController,
+                  items: productTypes,),
               const CustomFormLable(textLable: "Product Price*:"),
                  PriceForm(),
                   

@@ -287,7 +287,7 @@ void main() async {
     home: const ClickedItemC(),
     initialRoute: '/',
     getPages: [
-      GetPage(name: '/listscreen', page: () => const ListScreen()),
+      GetPage(name: '/listscreen', page: () =>  ListScreen()),
       GetPage(name: '/:id', page: () => const ClickedItemC()),
     ],
     navigatorKey: Get.key,

@@ -158,13 +158,18 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text(
-                          brandName,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey[600],
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/shop/shopitems/$ownerId");
+                          },
+                          child: Text(
+                            brandName,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey[600],
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       CopyIconButton(value: brandName, label: 'Brand Name'),
