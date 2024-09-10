@@ -1,4 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
+import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,15 +16,8 @@ class DeleteScreen extends StatelessWidget {
     AuthController authController = Get.find<AuthController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Delete Your Items',
-          style: GoogleFonts.aclonica(color: Colors.black),
-        ),
-        backgroundColor:const Color(0xFFFBD300),
-        elevation: 0,
-        centerTitle: true,
-      ),
+      appBar: const CustomAppBar(),
+      endDrawer:  DrawerWidget(authController: authController,),
       body: StreamBuilder(
         stream: deleteController.listForShopItems(authController.uid.value),
         builder: (context, snapshot) {
@@ -51,7 +46,7 @@ class DeleteScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(16.0),
-                  leading: CircleAvatar(
+                  leading: const CircleAvatar(
                     backgroundColor: Colors.deepOrangeAccent,
                     child: Icon(
                       Icons.delete,

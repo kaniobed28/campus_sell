@@ -90,7 +90,7 @@ class Signup extends StatelessWidget {
                                         .addDataToFirestore(
                                             {}, authController.uid.value);
                                     // authController.dispose();
-                                    Get.to(() =>  NewDashboard());
+                                     Get.toNamed("/shop");
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',

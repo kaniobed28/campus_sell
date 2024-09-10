@@ -100,7 +100,7 @@ class SignIn extends StatelessWidget {
                                       emailOfFormController.text.trim(),
                                       passwordOfFormController.text.trim());
                                   if (authController.uid.isNotEmpty) {
-                                    Get.to(() =>  NewDashboard());
+                                    Get.toNamed("/shop");
                                   } else {
                                     Get.snackbar(
                                       'Something went wrong',

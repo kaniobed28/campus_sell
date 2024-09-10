@@ -1,4 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
+import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:campus_sell/search/controllers/search_controller.dart';
 import 'package:campus_sell/search/views/search_results_page.dart';
 import 'package:flutter/material.dart';
@@ -83,14 +85,8 @@ class SearchScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         // backgroundColor: const Color(0xFFF2F2F2 ),
-        appBar: AppBar(
-          title: const Text("Search Here"),
-          centerTitle: true,
-          actions: const [
-            Icon(Icons.search),
-          ],
-          backgroundColor: Colors.transparent,
-        ),
+        appBar:const CustomAppBar(),
+      endDrawer:  DrawerWidget(authController: authController,),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey, // Assign the _formKey to the Form widget

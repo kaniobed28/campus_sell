@@ -165,7 +165,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
             style: GoogleFonts.average(),
           ),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor:  const Color(0xFFFBD300),
           actions: [
             FittedBox(
               child: Column(

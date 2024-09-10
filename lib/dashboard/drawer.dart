@@ -1,4 +1,5 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/basket_screen.dart';
 import 'package:campus_sell/dashboard/mediator_registration_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -105,6 +106,17 @@ class DrawerWidget extends StatelessWidget {
             onTap: () {
               //
               Get.toNamed("/shop/shopitems/${authController.uid.value}");
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_shopping_cart),
+            title: Text(
+              'My Basket',
+              style: GoogleFonts.average(),
+            ),
+            onTap: () {
+              //
+              Get.toNamed('/shop/basket');
             },
           ),
           Visibility(

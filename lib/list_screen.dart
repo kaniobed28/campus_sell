@@ -23,6 +23,12 @@ class ListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.home, color: Colors.black),
+          onPressed: () {
+            Get.offAllNamed('/'); // Navigate to home and clear the stack
+          },
+        ),
         title: Obx(
           () => Text(
             shopName.value,
@@ -47,7 +53,8 @@ class ListScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Visibility(
         visible: !deviceController.isWeb.value,
-        child: CustomBottomNavBar(height: 50)),
+        child: CustomBottomNavBar(height: 50),
+      ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
@@ -74,14 +81,14 @@ class ListScreen extends StatelessWidget {
               String url = "https://campussell.github.io/#/shopitems/itemcode/$id";
               String contentToShare = "$description\n\n$url";
               
-               // I am calling this after the tree has finish building.
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (data["ownerId"] != authController.uid.value) {
-      shopName.value = data["brand"];
-    } else {
-      shopName.value = "My Shop";
-    }
-  });
+              // Call this after the tree has finished building
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (data["ownerId"] != authController.uid.value) {
+                  shopName.value = data["brand"];
+                } else {
+                  shopName.value = "My Shop";
+                }
+              });
 
               return Card(
                 elevation: 5,
