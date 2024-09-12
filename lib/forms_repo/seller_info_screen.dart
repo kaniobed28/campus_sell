@@ -155,6 +155,16 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
   final TextEditingController _socialMediaController = TextEditingController();
   final TextEditingController _countryNameController = TextEditingController();
 
+
+@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authController.checkAuthentication();
+    });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(

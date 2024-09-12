@@ -20,9 +20,7 @@ class SignIn extends StatelessWidget {
     double widtht_of_screen = MediaQuery.of(context).size.width;
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: authController.isAuthenticated.isTrue
-          ?  NewDashboard()
-          : Scaffold(
+      child:Scaffold(
               body: SingleChildScrollView(
                 child: Form(
                   key: _formKey,

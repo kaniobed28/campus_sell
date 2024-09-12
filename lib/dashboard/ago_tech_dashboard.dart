@@ -40,7 +40,7 @@ class _NewDashboardState extends State<NewDashboard> {
     ];
     
     return SafeArea(
-      child:(!authController.isAuthenticated.value)?SignIn(): Scaffold(
+      child:Scaffold(
         endDrawer: DrawerWidget(authController: authController,),
         appBar: const CustomAppBar(),
         body: SingleChildScrollView(

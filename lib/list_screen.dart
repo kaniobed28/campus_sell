@@ -9,14 +9,30 @@ import 'package:share_plus/share_plus.dart';
 
 import '../controllers/delete_controller.dart';
 
-class ListScreen extends StatelessWidget {
-  final DeleteController deleteController = Get.put(DeleteController());
-  final RxString shopName = "".obs;
-  final AuthController authController = Get.find<AuthController>();
-  final DeviceController deviceController = Get.find<DeviceController>();
+class ListScreen extends StatefulWidget {
 
   ListScreen({super.key});
 
+  @override
+  State<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
+  final DeleteController deleteController = Get.put(DeleteController());
+
+  final RxString shopName = "".obs;
+
+  final AuthController authController = Get.find<AuthController>();
+
+  final DeviceController deviceController = Get.find<DeviceController>();
+
+// @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       authController.checkAuthentication();
+//     });
+//   }
   @override
   Widget build(BuildContext context) {
     final String? shopId = Get.parameters["id"];

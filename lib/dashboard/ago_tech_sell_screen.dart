@@ -36,6 +36,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final WebFilePickerController imageController = Get.put(WebFilePickerController());
   final ImageController imageController2 = Get.put(ImageController());
   final DeviceController deviceController = Get.find<DeviceController>();
+   AuthController authController = Get.find<AuthController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 
@@ -52,14 +53,22 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authController.checkAuthentication();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    AuthController authController = Get.find<AuthController>();
-    if (authController.isAuthenticated.isFalse) {
-      Get.offNamed("/auth/signin");
-    }
+    // AuthController authController = Get.find<AuthController>();
+    // if (authController.isAuthenticated.isFalse) {
+    //   Get.offNamed("/auth/signin");
+    // }
 
     return SafeArea(
       child: Scaffold(
@@ -130,48 +139,63 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
                                 const CustomFormLable(textLable: "Product Price*:"),
                                 PriceForm(nameController: itemPriceController),
 
-                                const CustomFormLable(textLable: "Select Countries*:"),
-                                MultiSelectField(
-                                  title: "Countries",
-                                  selectedItems: selectedCountries,
-                                  itemList: countryList,
-                                  onSelectionChanged: (List<String> selected) {
-                                    setState(() {
-                                      selectedCountries = selected;
-                                      selectedCities.clear();
-                                      if (!isGhanaSelected) {
-                                        selectedUniversities.clear();
-                                      }
-                                    });
-                                  },
-                                ),
-
-                                const CustomFormLable(textLable: "Select Universities*:"),
-                                MultiSelectField(
-                                  title: "Universities",
-                                  selectedItems: selectedUniversities,
-                                  itemList: isGhanaSelected ? universityList : [],
-                                  onSelectionChanged: (List<String> selected) {
-                                    setState(() {
-                                      selectedUniversities = selected;
-                                    });
-                                  },
-                                  enabled: isGhanaSelected,
-                                ),
-
-                                const CustomFormLable(textLable: "Select Cities*:"),
-                                if (selectedCountries.isNotEmpty)
-                                  MultiSelectField(
-                                    title: "Cities",
-                                    selectedItems: selectedCities,
-                                    itemList: selectedCountries
-                                        .expand((country) => countryCityMapping[country] ?? [])
-                                        .toList(),
+                                const Visibility(
+                                  visible: false,
+                                  child: CustomFormLable(textLable: "Select Countries*:")),
+                                Visibility(
+                                  visible: false,
+                                  child: MultiSelectField(
+                                    title: "Countries",
+                                    selectedItems: selectedCountries,
+                                    itemList: countryList,
                                     onSelectionChanged: (List<String> selected) {
                                       setState(() {
-                                        selectedCities = selected;
+                                        selectedCountries = selected;
+                                        selectedCities.clear();
+                                        if (!isGhanaSelected) {
+                                          selectedUniversities.clear();
+                                        }
                                       });
                                     },
+                                  ),
+                                ),
+
+                                const Visibility(
+                                  visible: false,
+                                  child: CustomFormLable(textLable: "Select Universities*:")),
+                                Visibility(
+                                  visible: false,
+                                  child: MultiSelectField(
+                                    title: "Universities",
+                                    selectedItems: selectedUniversities,
+                                    itemList: isGhanaSelected ? universityList : [],
+                                    onSelectionChanged: (List<String> selected) {
+                                      setState(() {
+                                        selectedUniversities = selected;
+                                      });
+                                    },
+                                    enabled: isGhanaSelected,
+                                  ),
+                                ),
+
+                                const Visibility(
+                                  visible: false,
+                                  child: CustomFormLable(textLable: "Select Cities*:")),
+                                if (selectedCountries.isNotEmpty)
+                                  Visibility(
+                                    visible: false,
+                                    child: MultiSelectField(
+                                      title: "Cities",
+                                      selectedItems: selectedCities,
+                                      itemList: selectedCountries
+                                          .expand((country) => countryCityMapping[country] ?? [])
+                                          .toList(),
+                                      onSelectionChanged: (List<String> selected) {
+                                        setState(() {
+                                          selectedCities = selected;
+                                        });
+                                      },
+                                    ),
                                   ),
 
                                 const SizedBox(height: 20),

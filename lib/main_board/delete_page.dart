@@ -7,17 +7,32 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/delete_controller.dart';
 
-class DeleteScreen extends StatelessWidget {
+class DeleteScreen extends StatefulWidget {
   const DeleteScreen({super.key});
+
+  @override
+  State<DeleteScreen> createState() => _DeleteScreenState();
+}
+
+class _DeleteScreenState extends State<DeleteScreen> {
+  AuthController authController = Get.find<AuthController>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authController.checkAuthentication();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     DeleteController deleteController = Get.put(DeleteController());
-    AuthController authController = Get.find<AuthController>();
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      endDrawer:  DrawerWidget(authController: authController,),
+      endDrawer: DrawerWidget(
+        authController: authController,
+      ),
       body: StreamBuilder(
         stream: deleteController.listForShopItems(authController.uid.value),
         builder: (context, snapshot) {
@@ -35,7 +50,8 @@ class DeleteScreen extends StatelessWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(8.0),
             itemCount: items.length,
-            separatorBuilder: (context, index) => Divider(color: Colors.grey[300]),
+            separatorBuilder: (context, index) =>
+                Divider(color: Colors.grey[300]),
             itemBuilder: (context, index) {
               Map<String, dynamic> data = items[index].data();
               return Card(
@@ -77,11 +93,13 @@ class DeleteScreen extends StatelessWidget {
                       ),
                       Flexible(
                         child: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.redAccent),
+                          icon:
+                              const Icon(Icons.delete, color: Colors.redAccent),
                           onPressed: () {
                             Get.defaultDialog(
                               title: "Confirm Delete",
-                              middleText: "Are you sure you want to delete this item?",
+                              middleText:
+                                  "Are you sure you want to delete this item?",
                               textConfirm: "Yes",
                               textCancel: "No",
                               confirmTextColor: Colors.white,
