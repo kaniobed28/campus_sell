@@ -42,7 +42,13 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Icons.add_business_sharp,
             label: 'My Shop',
             onTap: () async{
+              if (authController.isAuthenticated.isFalse) {
+                
+             await Get.offNamed("/shop/shopitems/1");//if there is no authentication the client cant enter his shop
+              } else {
+                
              await Get.offNamed("/shop/shopitems/${authController.uid.value}");
+              }
               // Handle Categories tap
             },
           ),
@@ -50,6 +56,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Icons.add_shopping_cart,
             label: 'Basket',
             onTap: () async{
+
              await Get.to(BasketScreen(userId: authController.uid.value));
               // Handle Categories tap
             },
