@@ -42,7 +42,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Icons.add_business_sharp,
             label: 'My Shop',
             onTap: () async{
-             await Get.offNamed('/shopitems/myitems');
+             await Get.offNamed("/shop/shopitems/${authController.uid.value}");
               // Handle Categories tap
             },
           ),

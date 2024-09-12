@@ -1,4 +1,5 @@
 import 'package:campus_sell/clicked_item/image_controller.dart';
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_image_card.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
@@ -26,6 +27,7 @@ class _RegisterMediatorScreenState extends State<RegisterMediatorScreen> {
   final WebFilePickerController imageController =
       Get.put(WebFilePickerController());
   final ImageController imageController2 = Get.put(ImageController());
+  final DeviceController deviceController = Get.find<DeviceController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 
@@ -158,6 +160,8 @@ class _RegisterMediatorScreenState extends State<RegisterMediatorScreen> {
 
                                       // Add your registration logic here
 
+                                      
+
                                       // Clear the forms and reset states
                                       companyNameController.clear();
                                       companyDescriptionController.clear();
@@ -171,7 +175,7 @@ class _RegisterMediatorScreenState extends State<RegisterMediatorScreen> {
                                       imageController2.images = <XFile>[].obs;
                                       totalImages.value = 0;
                                       uploading.value = false;
-                                      Get.to(() => const NewDashboard())?.then(
+                                      Get.to(() =>  NewDashboard())?.then(
                                         (value) {},
                                       );
                                     }
@@ -192,7 +196,9 @@ class _RegisterMediatorScreenState extends State<RegisterMediatorScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(height: 50),
+        bottomNavigationBar: Visibility(
+        visible: !deviceController.isWeb.value,
+        child: CustomBottomNavBar(height: 50)),
       ),
     );
   }
@@ -300,10 +306,10 @@ class MultiSelectDialog extends StatefulWidget {
   final List<String> initialSelectedValues;
 
   const MultiSelectDialog({
-    Key? key,
+    super.key,
     required this.items,
     required this.initialSelectedValues,
-  }) : super(key: key);
+  });
 
   @override
   _MultiSelectDialogState createState() => _MultiSelectDialogState();

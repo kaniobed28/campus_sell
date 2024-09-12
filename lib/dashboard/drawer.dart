@@ -1,6 +1,4 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/dashboard/mediator_registration_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,16 +10,14 @@ class DrawerWidget extends StatelessWidget {
   });
 
   final AuthController authController;
-//I have putted different things in the drawer to different columns so that the signout can be moved down.
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        
         children: [
-          
           Column(
             children: [
               DrawerHeader(
@@ -30,109 +26,124 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Container(
-                    width: 120.0, // Adjust width as needed
-                    height: 120.0, // Adjust height as needed
+                    width: 100.0,
+                    height: 100.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.amber,
-                        width: 2.0, // Adjust border width as needed
+                        color: Colors.white,
+                        width: 2.0,
                       ),
                     ),
                     child: ClipOval(
                       child: Image.asset(
                         "assets/img/campus-sell-favicon-color.png",
-                        width: 100.0, // Adjust width as needed
-                        height: 100.0, // Adjust height as needed
-                        fit: BoxFit
-                            .cover, // Ensures the image fits within the given dimensions
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
               ),
-           
-          Column(
-            children: [
-          
-          ListTile(
-            leading: const Icon(Icons.account_circle),
-            title: Text(
-              'My Profile',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () => Get.toNamed('shopitems/profile'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.search),
-            title: Text(
-              'Search Item',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () => Get.toNamed('/shopitems/multisearch'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.local_shipping_outlined),
-            title: Text(
-              'Add to My Shop',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () => Get.toNamed('/shopitems/addtostore'),
-            //I have not changed 
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete_sweep),
-            title: Text(
-              'Remove from My Shop',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () => Get.toNamed('/shopitems/removeitems'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.add_business_sharp),
-            title: Text(
-              'My Shop',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () {
-              //
-              Get.toNamed('/shopitems/myitems');
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.add_business_sharp),
-            title: Text(
-              'Register a mediator',
-              style: GoogleFonts.average(),
-            ),
-            onTap: () {
-              //
-              Get.to(const RegisterMediatorScreen());
-            },
-          ),
-            ],),
-             ],
+              const Divider(),
+              Column(
+                children: [
+                  _drawerItem(
+                    context,
+                    icon: Icons.location_on_outlined,
+                    title: 'Home',
+                    route: '/',
+                    isSelected: Get.currentRoute == '/',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.account_circle,
+                    title: 'My Profile',
+                    route: '/shopitems/profile',
+                    isSelected: Get.currentRoute == '/shopitems/profile',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.search,
+                    title: 'Search Item',
+                    route: '/shopitems/multisearch',
+                    isSelected: Get.currentRoute == '/shopitems/multisearch',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.local_shipping_outlined,
+                    title: 'Add to My Shop',
+                    route: '/shopitems/addtostore',
+                    isSelected: Get.currentRoute == '/shopitems/addtostore',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.delete_sweep,
+                    title: 'Remove from My Shop',
+                    route: '/shopitems/removeitems',
+                    isSelected: Get.currentRoute == '/shopitems/removeitems',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.add_business_sharp,
+                    title: 'My Shop',
+                    route: (authController.isAuthenticated.isFalse)?"/shop/shopitems/not-authenticated":"/shop/shopitems/${authController.uid.value}",//
+                    isSelected: Get.currentRoute.contains('shop/shopitems/'),
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.add_shopping_cart,
+                    title: 'My Basket',
+                    route: '/shop/basket',
+                    isSelected: Get.currentRoute == '/shop/basket',
+                  ),
+                ],
+              ),
+            ],
           ),
           Column(
             children: [
               const Divider(),
-              ListTile(
-                leading: const Icon(Icons.outbond),
-                title: Text(
-                  'SignOut',
-                  style: GoogleFonts.average(),
-                ),
-                onTap: ()async {
-                  // AuthController authController = Get.find<AuthController>();
-                  // AuthController authController = Get.put(AuthController());
+              _drawerItem(
+                context,
+                icon: Icons.outbond,
+                title:(authController.isAuthenticated.isFalse)?"Sign In": 'Sign Out',
+                onTap: () async {
                   await authController.signOut();
-                 await Get.offAllNamed('/auth/signin');
-                
+                  await Get.offAllNamed('/auth/signin');
                 },
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _drawerItem(BuildContext context,
+      {required IconData icon,
+      required String title,
+      String? route,
+      VoidCallback? onTap,
+      bool isSelected = false}) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      color: isSelected ? Colors.amber.shade50 : Colors.transparent,
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: isSelected ? Colors.amber : Colors.black,
+        ),
+        title: Text(
+          title,
+          style: GoogleFonts.average(
+            fontWeight: FontWeight.w600,
+            color: isSelected ? Colors.amber.shade700 : Colors.black87,
+          ),
+        ),
+        onTap: onTap ?? () => Get.toNamed(route ?? ''),
+        trailing: isSelected
+            ? const Icon(Icons.check_circle, color: Colors.amber)
+            : null,
       ),
     );
   }

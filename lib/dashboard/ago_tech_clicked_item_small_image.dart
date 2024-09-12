@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/reusable_widgets/custom_fullscreen_image.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 
 class AgoTechClickedItemSmallImage extends StatelessWidget {
@@ -17,7 +18,7 @@ class AgoTechClickedItemSmallImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),
           errorWidget: (context, url, error) => const Icon(Icons.error),
           fit: BoxFit.fill,
         ),

@@ -1,4 +1,5 @@
 import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,7 @@ class BasketScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.amber[400],
+        backgroundColor: const Color(0xFFFBD300),
         elevation: 0,
       ),
       // StreamBuilder listens to the user's basket stream from the controller.
@@ -33,7 +34,7 @@ class BasketScreen extends StatelessWidget {
         builder: (context, snapshot) {
           // Display a loading indicator while the data is being fetched.
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
           }
           // Display an error message if an error occurs during data retrieval.
           if (snapshot.hasError) {
@@ -100,7 +101,7 @@ class BasketScreen extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemCount: basketItems.length,
-      separatorBuilder: (context, index) => Divider(color: Colors.grey[300]), // Separator between items.
+      separatorBuilder: (context, index) => Divider(color: Colors.grey[300]),
       itemBuilder: (context, index) {
         final item = basketItems[index];
         return Card(
@@ -111,34 +112,49 @@ class BasketScreen extends StatelessWidget {
           child: ListTile(
             contentPadding: const EdgeInsets.all(10),
             leading: CircleAvatar(
-              backgroundColor: Colors.deepPurpleAccent,
+              backgroundColor: const Color(0xFFFBD300),
               child: Text(
-                '${item.count}', // Display the count of the item in the basket.
+                '${item.count}',
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             title: Text(
-              item.itemName, // Display the name of the item.
+              item.itemName,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
             subtitle: Text(
-              // Display the quantity and price of the item.
-              'Quantity: ${item.count}\nPrice: \$${item.price.toStringAsFixed(2)}',
+              'Quantity: ${item.count}\nPrice: Gh¢${item.price.toStringAsFixed(2)}',
               style: TextStyle(
                 color: Colors.grey[600],
               ),
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent), // Delete button to remove the item from the basket.
-              onPressed: () {
-                // Handle item removal logic here.
-              },
+            trailing: IntrinsicWidth( // Automatically adjusts width based on content.
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.redAccent),
+                    onPressed: () {
+                      // Use the document ID to remove the item from the basket.
+                      _basketController.removeItemFromBasket(item.documentId);
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed("/item-management/${item.itemId}");
+                    },
+                    child: const Text(
+                      'Manage Item',
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
+                  ),
+                ],
+              ),
             ),
             onTap: () {
-              // Navigate to the item details page when the item is tapped.
               Get.toNamed("/shopitems/itemcode/${item.itemId}");
             },
           ),
@@ -147,43 +163,46 @@ class BasketScreen extends StatelessWidget {
     );
   }
 
-  // Builds the checkout bar at the bottom of the screen, showing the total price and a checkout button.
+  // Builds the checkout bar at the bottom of the screen with the total price and a checkout button.
   Widget _buildCheckoutBar(double totalPrice) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration:  BoxDecoration(
-        color: Colors.amber[400],
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            // Display the total price of all items in the basket.
             'Total: Gh¢${totalPrice.toStringAsFixed(2)}',
             style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
               fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color:  Color(0xFFFBD300),
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              Get.offAllNamed("/");
+              // Placeholder for checkout functionality.
+              Get.snackbar(
+                'Checkout',
+                'Checkout feature coming soon!',
+                // backgroundColor: Colors.green,
+                colorText: Colors.white,
+              );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              backgroundColor: const Color(0xFFFBD300),
             ),
             child: const Text(
-              'Go Home',
-              style: TextStyle(fontSize: 16,color: Colors.white),
+              'Checkout',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

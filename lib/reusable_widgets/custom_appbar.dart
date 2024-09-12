@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height; // Height of the AppBar, defaulting to the standard toolbar height.
+  final String? appBarTitle;
 
   // Constructor for CustomAppBar. The height parameter is optional, with a default value of kToolbarHeight.
-  const CustomAppBar({super.key, this.height = kToolbarHeight});
+  const CustomAppBar({super.key, this.height = kToolbarHeight, this.appBarTitle});
 
   // This defines the size of the AppBar, which is required by the PreferredSizeWidget interface.
   @override
@@ -25,6 +26,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: height, // Sets the height of the AppBar container.
         color: const Color(0xFFFBD300), // Custom background color for the AppBar.
         child: AppBar(
+          title: Text(appBarTitle ?? ''),
+
           backgroundColor: Colors.transparent, // Makes the AppBar background transparent so that the container color is visible.
           elevation: 0, // Removes the default AppBar shadow.
           leading: const Padding(

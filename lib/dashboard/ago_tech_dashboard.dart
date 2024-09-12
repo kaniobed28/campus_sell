@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/auth/views/signin.dart';
+import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/custom_horizontal_products_list.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 import 'controllers/streamer_controller.dart';
 //this is the new dashboard I used in replacement to the old one.
 class NewDashboard extends StatefulWidget {
-  const NewDashboard({super.key});
+   NewDashboard({super.key});
 
   @override
   State<NewDashboard> createState() => _NewDashboardState();
@@ -20,6 +21,7 @@ class NewDashboard extends StatefulWidget {
 class _NewDashboardState extends State<NewDashboard> {
   Streamer streamer = Get.find<Streamer>();
   AuthController authController = Get.find<AuthController>();
+  final DeviceController deviceController = Get.find<DeviceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class _NewDashboardState extends State<NewDashboard> {
     ];
     
     return SafeArea(
-      child:(!authController.isAuthenticated.value)?SignIn(): Scaffold(
+      child:Scaffold(
         endDrawer: DrawerWidget(authController: authController,),
         appBar: const CustomAppBar(),
         body: SingleChildScrollView(
@@ -109,6 +111,7 @@ class _NewDashboardState extends State<NewDashboard> {
               //     ),
               //   );
               // }),
+              CustomHorizontalProductsList(lists: lists[10], categoryLable: 'Services',),
               CustomHorizontalProductsList(lists: lists[5], categoryLable: 'Fashion',),
               CustomHorizontalProductsList(lists: lists[0], categoryLable: 'Food',),
               CustomHorizontalProductsList(lists: lists[1], categoryLable: 'Electronics',),
@@ -118,13 +121,14 @@ class _NewDashboardState extends State<NewDashboard> {
               CustomHorizontalProductsList(lists: lists[6], categoryLable: 'Sports Products',),
               CustomHorizontalProductsList(lists: lists[7], categoryLable: 'Stationary',),
               CustomHorizontalProductsList(lists: lists[8], categoryLable: 'Kitchen Products',),
-              CustomHorizontalProductsList(lists: lists[10], categoryLable: 'Services',),
               CustomHorizontalProductsList(lists: lists[9], categoryLable: 'Other Products',),
             ],
           ),
         ),
         backgroundColor: const Color(0xFFF2F2F2 ),
-      bottomNavigationBar: CustomBottomNavBar(height: 50,),
+      bottomNavigationBar: Visibility(
+        visible: !deviceController.isWeb.value,
+        child: CustomBottomNavBar(height: 50)),
       // for the navigation bar down, I have to use smaller font size to reduce the size and the Icons too.
       // when I reduce the size, I can change the height of the navbar from here.
       ),

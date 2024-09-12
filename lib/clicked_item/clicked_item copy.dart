@@ -3,6 +3,7 @@ import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/controllers/get_item_by_id_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/list_screen.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,7 +73,7 @@ class ClickedItemC extends StatelessWidget {
           future: getItemByIdController.getDocumentById(itemId!),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (snapshot.hasData) {
@@ -287,7 +288,7 @@ void main() async {
     home: const ClickedItemC(),
     initialRoute: '/',
     getPages: [
-      GetPage(name: '/listscreen', page: () => const ListScreen()),
+      GetPage(name: '/listscreen', page: () =>  ListScreen()),
       GetPage(name: '/:id', page: () => const ClickedItemC()),
     ],
     navigatorKey: Get.key,

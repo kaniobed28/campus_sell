@@ -25,7 +25,7 @@ class Signup extends StatelessWidget {
     double height_of_screen = MediaQuery.of(context).size.height;
     return SafeArea(
       child: authController.isAuthenticated.isTrue
-          ? const NewDashboard()
+          ?  NewDashboard()
           : Scaffold(
               body: SingleChildScrollView(
                 child: Form(
@@ -90,7 +90,7 @@ class Signup extends StatelessWidget {
                                         .addDataToFirestore(
                                             {}, authController.uid.value);
                                     // authController.dispose();
-                                    Get.to(() => const NewDashboard());
+                                     Get.toNamed("/shop");
                                   } else {
                                     Get.snackbar(
                                       'Somethng went wrong',

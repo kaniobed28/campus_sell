@@ -1,9 +1,32 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
-import 'package:campus_sell/reusable_widgets/more_details_dialog.dart';
+import 'package:campus_sell/reusable_widgets/more_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
+
+class CopyIconButton extends StatelessWidget {
+  final String value;
+  final String label;
+
+  const CopyIconButton({
+    Key? key,
+    required this.value,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.copy, color: Colors.blueAccent),
+      onPressed: () {
+        Clipboard.setData(ClipboardData(text: value));
+        Get.snackbar("Copied", "$label copied to clipboard");
+      },
+    );
+  }
+}
 
 class AgoTechProductDetailsCard extends StatelessWidget {
   final String title;
@@ -104,7 +127,6 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                       fontSize: 16.0,
                       color: Colors.grey[600],
                     ),
-                    
                   ),
                 ),
                 if (isOwnerController.isOwner)
@@ -127,26 +149,38 @@ class AgoTechProductDetailsCard extends StatelessWidget {
             ),
             const SizedBox(height: 10.0),
             
-            // Brand Name
+            // Brand Name and Copy Button
             Row(
               children: <Widget>[
                 Icon(Icons.add_business_sharp, color: Colors.grey[600]),
                 const SizedBox(width: 5.0),
                 Expanded(
-                  child: Text(
-                    brandName,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey[600],
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/shop/shopitems/$ownerId");
+                          },
+                          child: Text(
+                            brandName,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey[600],
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                      CopyIconButton(value: brandName, label: 'Brand Name'),
+                    ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 10.0),
             
-            // Price and Edit Button
+            // Price and Copy Button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -163,39 +197,31 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (isOwnerController.isOwner)
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      Get.defaultDialog(
-                        title: "Edit Price",
-                        content: ItemEditForm(
-                          itemId: itemId,
-                          textController: itemPriceController,
-                          validationPattern: itemPriceRegExp,
-                          fieldName: 'price',
-                        ),
-                        textCancel: "Cancel",
-                      );
-                    },
-                  ),
+                CopyIconButton(value: price, label: 'Price'),
               ],
             ),
             const SizedBox(height: 10.0),
             
-            // Phone Number
+            // Phone Number and Copy Button
             Row(
               children: <Widget>[
                 Icon(Icons.phone, color: Colors.grey[600]),
                 const SizedBox(width: 5.0),
                 Expanded(
-                  child: Text(
-                    phone,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey[600],
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          phone,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[600],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      CopyIconButton(value: phone, label: 'Phone'),
+                    ],
                   ),
                 ),
               ],
@@ -215,24 +241,21 @@ class AgoTechProductDetailsCard extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          // Correctly instantiate MoreDetailsDialog as a widget
-          Get.dialog(
-            MoreDetailsDialog(
-              title: title,
-              brandName: brandName,
-              price: price,
-              phone: phone,
-              city: city,
-              hostel: hostel,
-              university: university,
-              itemType: itemType,
-              socialMedia: socialMedia,
-            ),
-          );
+          Get.to(() => MoreDetailsPage(
+            title: title,
+            brandName: brandName,
+            price: price,
+            phone: phone,
+            city: city,
+            hostel: hostel,
+            university: university,
+            itemType: itemType,
+            socialMedia: socialMedia,
+          ));
         },
-        child: Text(
+        child: const Text(
           'More Details',
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(color: Colors.blueAccent),
         ),
       ),
     );
