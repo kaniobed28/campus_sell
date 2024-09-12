@@ -44,7 +44,7 @@ class CustomBottomNavBar extends StatelessWidget {
             onTap: () async{
               if (authController.isAuthenticated.isFalse) {
                 
-             await Get.offNamed("/shop/shopitems/1");//if there is no authentication the client cant enter his shop
+             await Get.offNamed("/shop/shopitems/not-authenticated");//if there is no authentication the client cant enter his shop
               } else {
                 
              await Get.offNamed("/shop/shopitems/${authController.uid.value}");
