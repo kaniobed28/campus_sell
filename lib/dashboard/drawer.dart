@@ -86,8 +86,8 @@ class DrawerWidget extends StatelessWidget {
                     context,
                     icon: Icons.add_business_sharp,
                     title: 'My Shop',
-                    route: "/shop/shopitems/${authController.uid.value}",
-                    isSelected: Get.currentRoute.contains('shop/shopitems'),
+                    route: (authController.isAuthenticated.isFalse)?"/shop/shopitems/not-authenticated":"/shop/shopitems/${authController.uid.value}",//
+                    isSelected: Get.currentRoute.contains('shop/shopitems/'),
                   ),
                   _drawerItem(
                     context,

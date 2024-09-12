@@ -1,4 +1,5 @@
 import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +34,7 @@ class BasketScreen extends StatelessWidget {
         builder: (context, snapshot) {
           // Display a loading indicator while the data is being fetched.
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
           }
           // Display an error message if an error occurs during data retrieval.
           if (snapshot.hasError) {

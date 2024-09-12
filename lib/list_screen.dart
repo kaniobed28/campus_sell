@@ -1,4 +1,5 @@
 import 'package:campus_sell/controllers/device_controller.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import for QuerySnapshot
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
@@ -75,7 +76,7 @@ class _ListScreenState extends State<ListScreen> {
         stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -174,7 +175,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            'There are no items in this shop.',
+            'There are no items in this shop.Consider adding to your shop!',
             style: GoogleFonts.average(
               fontSize: 16,
               color: Colors.grey[500],

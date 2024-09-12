@@ -7,6 +7,7 @@ import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
 import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:campus_sell/reusable_widgets/custom_add_to_basket.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
+import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -39,7 +40,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
       future: getItemByIdController.getDocumentById(itemId!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
