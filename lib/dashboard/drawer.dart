@@ -18,34 +18,37 @@ class DrawerWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
+          // Fixed header
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            child: Center(
+              child: Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2.0,
+                  ),
                 ),
-                child: Center(
-                  child: Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2.0,
-                      ),
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        "assets/img/campus-sell-favicon-color.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                child: ClipOval(
+                  child: Image.asset(
+                    "assets/img/campus-sell-favicon-color.png",
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              const Divider(),
-              Column(
+            ),
+          ),
+          const Divider(),
+          
+          // Scrollable content
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
                   _drawerItem(
                     context,
@@ -60,6 +63,13 @@ class DrawerWidget extends StatelessWidget {
                     title: 'My Profile',
                     route: '/shopitems/profile',
                     isSelected: Get.currentRoute == '/shopitems/profile',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.chat,
+                    title: 'My Chats',
+                    route: '/chats',
+                    isSelected: Get.currentRoute == '/chats',
                   ),
                   _drawerItem(
                     context,
@@ -86,7 +96,9 @@ class DrawerWidget extends StatelessWidget {
                     context,
                     icon: Icons.add_business_sharp,
                     title: 'My Shop',
-                    route: (authController.isAuthenticated.isFalse)?"/shop/shopitems/not-authenticated":"/shop/shopitems/${authController.uid.value}",//
+                    route: (authController.isAuthenticated.isFalse)
+                        ? "/shop/shopitems/not-authenticated"
+                        : "/shop/shopitems/${authController.uid.value}",
                     isSelected: Get.currentRoute.contains('shop/shopitems/'),
                   ),
                   _drawerItem(
@@ -98,15 +110,17 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
+            ),
           ),
+          
+          // Fixed sign-in/out button
           Column(
             children: [
               const Divider(),
               _drawerItem(
                 context,
                 icon: Icons.outbond,
-                title:(authController.isAuthenticated.isFalse)?"Sign In": 'Sign Out',
+                title: (authController.isAuthenticated.isFalse) ? "Sign In" : 'Sign Out',
                 onTap: () async {
                   await authController.signOut();
                   await Get.offAllNamed('/auth/signin');

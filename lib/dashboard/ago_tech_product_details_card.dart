@@ -1,4 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/chat/chat_list.dart';
+import 'package:campus_sell/chat/individual_chat.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
 import 'package:campus_sell/reusable_widgets/more_details_page.dart';
@@ -19,7 +21,7 @@ class CopyIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.copy, color: Colors.blueAccent),
+      icon: const Icon(Icons.copy, color: Colors.blueAccent),
       onPressed: () {
         Clipboard.setData(ClipboardData(text: value));
         Get.snackbar("Copied", "$label copied to clipboard");
@@ -111,7 +113,13 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                         textCancel: "Cancel",
                       );
                     },
-                  ),
+                  )
+                  else
+                  TextButton(onPressed: (){
+                                  Get.to(ChatScreen(receiverId: ownerId));
+
+                  }, child: const Text("Chat now",style:  TextStyle(color: Colors.blueAccent),))
+
               ],
             ),
             const SizedBox(height: 5.0),
@@ -230,7 +238,11 @@ class AgoTechProductDetailsCard extends StatelessWidget {
             
             // More Details Button
             _buildMoreDetailsButton(context),
+          
+          
+          
           ],
+          
         ),
       ),
     );

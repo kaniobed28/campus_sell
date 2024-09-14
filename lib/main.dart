@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/auth/views/signup.dart';
+import 'package:campus_sell/chat/chat_list.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/device_controller.dart';
@@ -54,6 +55,7 @@ class MainApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () =>  NewDashboard()),
         GetPage(name: '/shop', page: () =>  NewDashboard()),
+        GetPage(name: '/chats', page: () =>  ChatListScreen()),
         GetPage(name: '/shopitems', page: () =>  NewDashboard()),// I am doing this because when on web moving back goes to the removal of one slash
         GetPage(name: '/shopitems/itemcode/:id', page: () =>  const AgoTechUrlOpen(),),
         GetPage(name: '/shop/shopitems/:id', page: () =>   ListScreen(),),
