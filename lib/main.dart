@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/auth/views/signup.dart';
+import 'package:campus_sell/chat/chat_controller.dart';
 import 'package:campus_sell/chat/chat_list.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
@@ -31,6 +32,7 @@ void main() async{
   Get.put(IsOwnerController());
   Get.put(BasketController());
   Get.put(DeviceController());
+  Get.put(ChatController());
   // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
