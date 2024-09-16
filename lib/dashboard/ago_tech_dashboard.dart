@@ -131,6 +131,17 @@ class _NewDashboardState extends State<NewDashboard> {
         child: CustomBottomNavBar(height: 50)),
       // for the navigation bar down, I have to use smaller font size to reduce the size and the Icons too.
       // when I reduce the size, I can change the height of the navbar from here.
+
+      floatingActionButton: FloatingActionButton(
+      onPressed: () {
+    Get.toNamed("/chats"); // Navigate to the "/chats" route
+  },
+  backgroundColor: Colors.amber, // A complementary color for visibility
+  child: const Icon(
+    Icons.chat,
+    color: Colors.white, // Set the icon color for contrast
+  ),
+    ),
       ),
     );
   }

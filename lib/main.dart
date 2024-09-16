@@ -12,6 +12,7 @@ import 'package:campus_sell/dashboard/basket_screen.dart';
 import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
+import 'package:campus_sell/follow/controllers/follow_controller.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/list_screen.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
@@ -33,6 +34,7 @@ void main() async{
   Get.put(BasketController());
   Get.put(DeviceController());
   Get.put(ChatController());
+  Get.put(FollowController());
   // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
