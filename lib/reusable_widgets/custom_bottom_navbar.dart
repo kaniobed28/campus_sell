@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/basket_screen.dart';
+import 'package:campus_sell/follow/views/followed_shops_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'custom_navbar_item.dart';
@@ -56,6 +57,14 @@ class CustomBottomNavBar extends StatelessWidget {
             isSelected: currentRoute == '/basket', // Check if selected
             onTap: () async {
               await Get.to(BasketScreen(userId: authController.uid.value));
+            },
+          ),
+          NavBarItem(
+            icon: Icons.follow_the_signs,
+            label: 'Basket',
+            isSelected: currentRoute == '/basket', // Check if selected
+            onTap: () async {
+              await Get.to(FollowedShopsScreen());
             },
           ),
         ],

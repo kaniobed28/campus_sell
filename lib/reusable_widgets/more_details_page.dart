@@ -1,4 +1,5 @@
 import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
+import 'package:campus_sell/reusable_widgets/custom_copy_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

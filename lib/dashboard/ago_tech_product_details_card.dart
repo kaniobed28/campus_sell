@@ -2,33 +2,12 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/chat/chat_list.dart';
 import 'package:campus_sell/chat/individual_chat.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
+import 'package:campus_sell/reusable_widgets/custom_copy_icon_button.dart';
 import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
 import 'package:campus_sell/reusable_widgets/more_details_page.dart';
+import 'package:campus_sell/follow/controllers/follow_controller.dart'; // Import FollowController
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
-
-class CopyIconButton extends StatelessWidget {
-  final String value;
-  final String label;
-
-  const CopyIconButton({
-    Key? key,
-    required this.value,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.copy, color: Colors.blueAccent),
-      onPressed: () {
-        Clipboard.setData(ClipboardData(text: value));
-        Get.snackbar("Copied", "$label copied to clipboard");
-      },
-    );
-  }
-}
 
 class AgoTechProductDetailsCard extends StatelessWidget {
   final String title;
@@ -37,7 +16,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
   final String brandName;
   final String phone;
   final String city;
-  final String hostel; // hostel is the same as address. its hostel or address
+  final String hostel;
   final String university;
   final String itemType;
   final String socialMedia;
@@ -62,16 +41,16 @@ class AgoTechProductDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController itemNameController = TextEditingController();
-    final TextEditingController itemPriceController = TextEditingController();
-    final TextEditingController itemDescriptionController = TextEditingController();
-    final RegExp itemNameRegExp = RegExp(r'^[a-zA-Z0-9\s]+$');
-    final RegExp itemPriceRegExp = RegExp(r'^\d+(\.\d+)?$');
-    final RegExp itemDescriptionRegExp = RegExp(r'^[\p{L}\p{N}\p{P}\p{S}\s]+$', unicode: true);
-
+    final FollowController followController = Get.put(FollowController()); // Initialize FollowController
     final IsOwnerController isOwnerController = Get.find<IsOwnerController>();
     final AuthController authController = Get.find<AuthController>();
+
+    // Fetch the number of followers for the shop on init
+    followController.getShopFollowers(ownerId);
+
     isOwnerController.isShopItemOwner(authController.uid.value, ownerId);
+        followController.checkIfFollowing(ownerId);
+
 
     return Card(
       color: const Color(0xffffffff),
@@ -102,29 +81,24 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      Get.defaultDialog(
-                        title: "Edit Name",
-                        content: ItemEditForm(
-                          itemId: itemId,
-                          textController: itemNameController,
-                          validationPattern: itemNameRegExp,
-                          fieldName: 'itemName',
-                        ),
-                        textCancel: "Cancel",
-                      );
+                      // Edit logic
                     },
                   )
-                  else
-                  TextButton(onPressed: (){
-                                  Get.to(ChatScreen(receiverId: ownerId));
-
-                  }, child: const Text("Chat now",style:  TextStyle(color: Colors.blueAccent),))
-
+                else
+                  TextButton(
+                    onPressed: () {
+                      Get.to(ChatScreen(receiverId: ownerId));
+                    },
+                    child: const Text(
+                      "Chat now",
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 5.0),
-            
-            // Description and Edit Button
+
+            // Description
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -137,27 +111,11 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (isOwnerController.isOwner)
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      Get.defaultDialog(
-                        title: "Edit Description",
-                        content: ItemEditForm(
-                          itemId: itemId,
-                          textController: itemDescriptionController,
-                          validationPattern: itemDescriptionRegExp,
-                          fieldName: 'description',
-                        ),
-                        textCancel: "Cancel",
-                      );
-                    },
-                  ),
               ],
             ),
             const SizedBox(height: 10.0),
-            
-            // Brand Name and Copy Button
+
+            // Brand Name, Follow Button, and Follower Count
             Row(
               children: <Widget>[
                 Icon(Icons.add_business_sharp, color: Colors.grey[600]),
@@ -180,14 +138,43 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      CopyIconButton(value: brandName, label: 'Brand Name'),
+                      Obx(() {
+                        // Follow button with follower count
+                        return Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                followController.isFollowingShop.value
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: Colors.redAccent,
+                                // here is where I implemented the logic for the Icon.
+                                // I will change the Icon from favoriate to another things else.
+                              ),
+                              onPressed: () {
+                                authController.checkAuthentication(cancelRoute: "/shopitems/itemcode/$itemId");
+                                if (followController.isFollowingShop.value) {
+                                  followController.unfollowShop(ownerId);
+                                } else {
+                                  followController.followShop(ownerId);
+                                }
+                              },
+                            ),
+                            Text(
+                              // I did show followers count here
+                              '${followController.followerCount.value} followers',
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
+                        );
+                      }),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 10.0),
-            
+
             // Price and Copy Button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -209,7 +196,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10.0),
-            
+
             // Phone Number and Copy Button
             Row(
               children: <Widget>[
@@ -235,14 +222,10 @@ class AgoTechProductDetailsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10.0),
-            
+
             // More Details Button
             _buildMoreDetailsButton(context),
-          
-          
-          
           ],
-          
         ),
       ),
     );
@@ -254,16 +237,16 @@ class AgoTechProductDetailsCard extends StatelessWidget {
       child: TextButton(
         onPressed: () {
           Get.to(() => MoreDetailsPage(
-            title: title,
-            brandName: brandName,
-            price: price,
-            phone: phone,
-            city: city,
-            hostel: hostel,
-            university: university,
-            itemType: itemType,
-            socialMedia: socialMedia,
-          ));
+                title: title,
+                brandName: brandName,
+                price: price,
+                phone: phone,
+                city: city,
+                hostel: hostel,
+                university: university,
+                itemType: itemType,
+                socialMedia: socialMedia,
+              ));
         },
         child: const Text(
           'More Details',

@@ -23,8 +23,7 @@ class AuthController extends GetxController {
     });
   }
 
-  // Method to check authentication and show dialog if not authenticated
-  void checkAuthentication() {
+  void checkAuthentication({String? cancelRoute}) {
   if (isAuthenticated.isFalse) {
     Get.defaultDialog(
       title: "Authentication Required",
@@ -52,7 +51,7 @@ class AuthController extends GetxController {
           ),
         ],
       ),
-      barrierDismissible: false, // Prevent dismissal by tapping outside
+      barrierDismissible: cancelRoute != null, // Make dismissible if route is provided
       radius: 10, // Rounded corners for the dialog
       confirm: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
@@ -61,7 +60,7 @@ class AuthController extends GetxController {
           ),
         ),
         icon: const Icon(Icons.login, color: Colors.black),
-        label: const Text("Login",style:  TextStyle(color: Colors.black),),
+        label: const Text("Login", style: TextStyle(color: Colors.black)),
         onPressed: () {
           Get.to(() => SignIn()); // Redirect to login page
         },
@@ -76,12 +75,21 @@ class AuthController extends GetxController {
         icon: const Icon(Icons.cancel, color: Colors.redAccent),
         label: const Text("Cancel", style: TextStyle(color: Colors.redAccent)),
         onPressed: () {
-          Get.toNamed("/"); // Close the dialog
+          Get.back(); // Close the dialog
+          // Navigate to provided route or home if null
+          if (cancelRoute != null) {
+            Get.toNamed(cancelRoute); // Navigate to the provided route
+          } else {
+            Get.toNamed('/'); // Navigate to the home route
+          }
         },
       ),
     );
   }
 }
+
+
+
 
 
   Future<User?> signInWithEmailAndPassword(String email, String password) async {

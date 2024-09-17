@@ -7,71 +7,88 @@ class FollowController extends GetxController {
   final authController = Get.find<AuthController>();
 
   var isFollowingShop = false.obs; // Reactive variable to track follow status
-  var followedShops = <String>[].obs; // List of shops the user is following
+  var followerCount = 0.obs; // Track number of followers
 
   // Function to follow a shop
   Future<void> followShop(String shopId) async {
-    if (authController.isAuthenticated.value) {
-      String userId = authController.uid.string;
-      try {
-        await firebaseFirestore
-            .collection('followers')
-            .doc(shopId)
-            .collection('userFollowers')
-            .doc(userId)
-            .set({});
+    if (!_isUserAuthenticated()) return;
 
-        // Update the local state to reflect that the user is now following this shop
-        isFollowingShop.value = true;
-        followedShops.add(shopId);
-      } catch (e) {
-        throw e;
-      }
+    String userId = authController.uid.string;
+    try {
+      // Add the user as a follower of the shop
+      await firebaseFirestore
+          .collection('followers')
+          .doc(shopId)
+          .collection('userFollowers')
+          .doc(userId)
+          .set({});
+
+      // Add the shop to the user's followedShops
+      await firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('followedShops')
+          .doc(shopId)
+          .set({});
+
+      isFollowingShop.value = true;
+      _updateFollowerCount(shopId);
+    } catch (e) {
+      _handleError(e);
     }
   }
 
   // Function to unfollow a shop
   Future<void> unfollowShop(String shopId) async {
-    if (authController.isAuthenticated.value) {
-      String userId = authController.uid.string;
-      try {
-        await firebaseFirestore
-            .collection('followers')
-            .doc(shopId)
-            .collection('userFollowers')
-            .doc(userId)
-            .delete();
+    if (!_isUserAuthenticated()) return;
 
-        // Update the local state to reflect that the user has unfollowed this shop
-        isFollowingShop.value = false;
-        followedShops.remove(shopId);
-      } catch (e) {
-        throw e;
-      }
+    String userId = authController.uid.string;
+    try {
+      // Remove the user as a follower of the shop
+      await firebaseFirestore
+          .collection('followers')
+          .doc(shopId)
+          .collection('userFollowers')
+          .doc(userId)
+          .delete();
+
+      // Remove the shop from the user's followedShops
+      await firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('followedShops')
+          .doc(shopId)
+          .delete();
+
+      isFollowingShop.value = false;
+      _updateFollowerCount(shopId);
+    } catch (e) {
+      _handleError(e);
     }
   }
 
-  // Check if the user is following a shop
+  // Function to check if a user is following a shop
   Future<void> checkIfFollowing(String shopId) async {
-    if (authController.isAuthenticated.value) {
-      String userId = authController.uid.string;
-      try {
-        DocumentSnapshot doc = await firebaseFirestore
-            .collection('followers')
-            .doc(shopId)
-            .collection('userFollowers')
-            .doc(userId)
-            .get();
+    if (!_isUserAuthenticated()) return;
 
-        isFollowingShop.value = doc.exists; // Update reactive variable
-      } catch (e) {
-        throw e;
-      }
+    String userId = authController.uid.string;
+    try {
+      DocumentSnapshot doc = await firebaseFirestore
+          .collection('followers')
+          .doc(shopId)
+          .collection('userFollowers')
+          .doc(userId)
+          .get();
+
+      // Update the follow status based on whether the document exists
+      isFollowingShop.value = doc.exists;
+    } catch (e) {
+      _handleError(e);
     }
   }
 
-  // Function to notify followers when a new item is posted by the shop
-  Future<void> notifyFollowers(String shopId, String itemId) async {
+  // Function to update the follower count
+  Future<void> _updateFollowerCount(String shopId) async {
     try {
       QuerySnapshot followersSnapshot = await firebaseFirestore
           .collection('followers')
@@ -79,48 +96,30 @@ class FollowController extends GetxController {
           .collection('userFollowers')
           .get();
 
-      for (var follower in followersSnapshot.docs) {
-        String followerId = follower.id;
-
-        // Example: Add a new feed entry for the user
-        await firebaseFirestore
-            .collection('userFeeds')
-            .doc(followerId)
-            .collection('items')
-            .doc(itemId)
-            .set({
-          'itemId': itemId,
-          'shopId': shopId,
-          'timestamp': FieldValue.serverTimestamp(),
-        });
-      }
+      followerCount.value = followersSnapshot.docs.length; // Update follower count
     } catch (e) {
-      throw e;
+      _handleError(e);
     }
   }
 
-  // Get list of shops that the current user is following
-  Future<void> getFollowedShops() async {
-    if (authController.isAuthenticated.value) {
-      String userId = authController.uid.string;
-      try {
-        QuerySnapshot followedShopsSnapshot = await firebaseFirestore
-            .collectionGroup('userFollowers')
-            .where(FieldPath.documentId, isEqualTo: userId)
-            .get();
+  // Get the list of shops the user follows
+  Future<List<String>> getUserFollowedShops(String userId) async {
+    try {
+      QuerySnapshot followedShopsSnapshot = await firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('followedShops')
+          .get();
 
-        followedShops.clear(); // Clear the list before updating
-        for (var doc in followedShopsSnapshot.docs) {
-          followedShops.add(doc.reference.parent.parent!.id); // Get shopId
-        }
-      } catch (e) {
-        throw e;
-      }
+      return followedShopsSnapshot.docs.map((doc) => doc.id).toList();
+    } catch (e) {
+      _handleError(e);
+      return [];
     }
   }
 
-  // Get the total number of followers a shop has
-  Future<int> getShopFollowersCount(String shopId) async {
+  // Get the list of followers for a shop
+  Future<List<String>> getShopFollowers(String shopId) async {
     try {
       QuerySnapshot followersSnapshot = await firebaseFirestore
           .collection('followers')
@@ -128,15 +127,21 @@ class FollowController extends GetxController {
           .collection('userFollowers')
           .get();
 
-      return followersSnapshot.size;
+      followerCount.value = followersSnapshot.docs.length; // Set initial count
+      return followersSnapshot.docs.map((doc) => doc.id).toList();
     } catch (e) {
-      throw e;
+      _handleError(e);
+      return [];
     }
   }
 
-  // Refresh the follow status (useful when user opens the shop details page)
-  Future<void> refreshFollowStatus(String shopId) async {
-    await checkIfFollowing(shopId);
-    await getFollowedShops();
+  // Helper function to check if the user is authenticated
+  bool _isUserAuthenticated() {
+    return authController.isAuthenticated.value;
+  }
+
+  // Helper function to handle errors
+  void _handleError(dynamic error) {
+    print('An error occurred: $error');
   }
 }
