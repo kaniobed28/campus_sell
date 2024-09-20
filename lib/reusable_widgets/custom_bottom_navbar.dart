@@ -26,17 +26,17 @@ class CustomBottomNavBar extends StatelessWidget {
           NavBarItem(
             icon: Icons.location_on_outlined,
             label: 'Home',
-            isSelected: currentRoute == '/', // Check if this item is selected
+            isSelected: currentRoute == '/'||currentRoute == '/shop'||currentRoute == '/shopitems', // Check if this item is selected
             onTap: () {
               Get.offNamed('/');
             },
           ),
           NavBarItem(
-            icon: Icons.local_shipping_outlined,
-            label: 'Add to my Shop',
-            isSelected: currentRoute == '/shopitems/addtostore', // Check selection
+            icon: Icons.chat_sharp,
+            label: 'Chats',
+            isSelected: currentRoute == '/chats', // Check selection
             onTap: () async {
-              await Get.offNamed('/shopitems/addtostore');
+              await Get.offNamed('/chats');
             },
           ),
           NavBarItem(
@@ -59,13 +59,16 @@ class CustomBottomNavBar extends StatelessWidget {
               await Get.to(BasketScreen(userId: authController.uid.value));
             },
           ),
-          NavBarItem(
-            icon: Icons.follow_the_signs,
-            label: 'Basket',
-            isSelected: currentRoute == '/basket', // Check if selected
-            onTap: () async {
-              await Get.to(FollowedShopsScreen());
-            },
+          Visibility(
+            visible: false,
+            child: NavBarItem(
+              icon: Icons.follow_the_signs,
+              label: 'Followers',
+              isSelected: currentRoute == '/basket', // Check if selected
+              onTap: () async {
+                await Get.to(FollowedShopsScreen());
+              },
+            ),
           ),
         ],
       ),

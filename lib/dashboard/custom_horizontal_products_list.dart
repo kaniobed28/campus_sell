@@ -1,16 +1,19 @@
 import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
+import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomHorizontalProductsList extends StatelessWidget {
   final RxList<Map<String, dynamic>> lists;
   final String categoryLable;
+  
   const CustomHorizontalProductsList(
       {super.key, required this.lists, required this.categoryLable});
 
   @override
   Widget build(BuildContext context) {
+    ViewController viewController = Get.find<ViewController>();
     return Obx(
       //because the column was not observable it was not able to get the data because I think by the time the data base is quering the thing it
       //the widget has already initialized.
@@ -33,9 +36,11 @@ class CustomHorizontalProductsList extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async{
                         if (data['id'] != null) {
-                          Get.toNamed("/shopitems/itemcode/${data['id']}");
+                         await viewController.markItemAsViewedByUser(data['id'],);//this must come first to prevent no document to update
+                         await viewController.markItemAsViewed(data['id'], data['ownerId']);
+                         await Get.toNamed("/shopitems/itemcode/${data['id']}");
                         } else {
                           //I will handle the case when 'id' is null
                         }

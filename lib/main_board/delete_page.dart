@@ -30,7 +30,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
     DeleteController deleteController = Get.put(DeleteController());
 
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(height: 100,),
       endDrawer: DrawerWidget(
         authController: authController,
       ),

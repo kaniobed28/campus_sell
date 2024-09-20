@@ -5,6 +5,7 @@ import 'package:campus_sell/dashboard/data_lists.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/constants.dart';
 import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final ImageController imageController2 = Get.put(ImageController());
   final DeviceController deviceController = Get.find<DeviceController>();
    AuthController authController = Get.find<AuthController>();
+   ViewController viewController = Get.find<ViewController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 

@@ -18,6 +18,7 @@ import 'package:campus_sell/list_screen.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
+import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,6 +36,7 @@ void main() async{
   Get.put(DeviceController());
   Get.put(ChatController());
   Get.put(FollowController());
+  Get.put(ViewController());
   // Get.put(LikeItem());
   // Get.put(PagesStateController());
   runApp( const MainApp());
@@ -59,7 +61,7 @@ class MainApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () =>  NewDashboard()),
         GetPage(name: '/shop', page: () =>  NewDashboard()),
-        GetPage(name: '/chats', page: () =>  ChatListScreen()),
+        GetPage(name: '/chats', page: () =>  const ChatListScreen()),
         GetPage(name: '/shopitems', page: () =>  NewDashboard()),// I am doing this because when on web moving back goes to the removal of one slash
         GetPage(name: '/shopitems/itemcode/:id', page: () =>  const AgoTechUrlOpen(),),
         GetPage(name: '/shop/shopitems/:id', page: () =>   ListScreen(),),

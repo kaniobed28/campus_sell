@@ -2,6 +2,8 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/chat/chat_controller.dart';
 import 'package:campus_sell/chat/individual_chat.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
+import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,20 +54,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar:  AppBar(
-  title: GestureDetector(
-    onTap: () {
-      Get.toNamed("/");  // Navigates to the "/" route
-    },
-    child: const Text(
-      "Chats", 
-      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-    ),
-  ),
-  centerTitle: true,
-  backgroundColor: Colors.amber,
-  elevation: 5,
-),
+        endDrawer: DrawerWidget(authController: authController),
+        appBar:  const CustomAppBar(),
         body: StreamBuilder<QuerySnapshot>(
           stream: _firestore.collection('chats')
               .where('participants', arrayContains: currentUserId)
