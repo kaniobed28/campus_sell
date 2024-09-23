@@ -86,7 +86,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "GH¢ ${data["price"].toString()}",
+                        "\$ ${data["price"].toString()}",
                         style: GoogleFonts.average(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

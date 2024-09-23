@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // This is where I made the custom app bar. We can use it or work on it separately so that any changes we make 
 // can be focused on here without needing to go through the entire codebase.
@@ -30,15 +31,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
           backgroundColor: Colors.transparent, // Makes the AppBar background transparent so that the container color is visible.
           elevation: 0, // Removes the default AppBar shadow.
-          leading: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white, // Outer circle's background color.
-              child: Padding(
-                padding: EdgeInsets.all(2.0),
-                child: CircleAvatar(
-                  // Inner circle image. Replace with an appropriate image for your app.
-                  backgroundImage: AssetImage("assets/img/campus-sell-favicon-color.png"),
+          leading:  Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed("/");
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.white, // Outer circle's background color.
+                child: Padding(
+                  padding: EdgeInsets.all(2.0),
+                  child: CircleAvatar(
+                    // Inner circle image. Replace with an appropriate image for your app.
+                    backgroundImage: AssetImage("assets/img/campus-sell-favicon-color.png"),
+                  ),
                 ),
               ),
             ),

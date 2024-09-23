@@ -184,7 +184,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                     Icon(Icons.sell, color: Colors.grey[600]),
                     const SizedBox(width: 5.0),
                     Text(
-                      "Gh¢ $price",
+                      " \$$price",
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.grey[600],

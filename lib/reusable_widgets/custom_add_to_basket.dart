@@ -5,14 +5,16 @@ import 'package:get/get.dart';
 // A stateless widget that represents a button to add an item to the user's basket.
 class AddToBasketButton extends StatelessWidget {
   final String itemId; // The ID of the item that will be added to the basket.
-  final String userId; // The ID of the user who is adding the item to the basket.
-  final RxBool isAuthenticated; // An observable boolean that tracks whether the user is authenticated.
+  final String
+      userId; // The ID of the user who is adding the item to the basket.
+  final RxBool
+      isAuthenticated; // An observable boolean that tracks whether the user is authenticated.
 
   // Constructor to initialize the widget with the required parameters.
   const AddToBasketButton({
     super.key,
     required this.itemId,
-    required this.isAuthenticated, 
+    required this.isAuthenticated,
     required this.userId,
   });
 
@@ -26,15 +28,23 @@ class AddToBasketButton extends StatelessWidget {
         // Check if the user is authenticated.
         if (!isAuthenticated.value) {
           // If not authenticated, show a snackbar prompting the user to log in.
-          Get.snackbar("Log In First", "Tap on Home to move to the Login Screen");
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Login is required to add to basket.')),
+          );
         } else {
           // If authenticated, add the item to the basket.
-          Get.snackbar("Added to Basket", "Item has been added to your basket.");
-          basketController.addItemToBasket(userId, itemId); // Call to add item to the basket.
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Item has been added to your basket.')),
+          );
+          basketController.addItemToBasket(
+              userId, itemId); // Call to add item to the basket.
         }
       },
       backgroundColor: Colors.amber[400], // Set the button color.
-      child: const Icon(Icons.add_shopping_cart), // Icon indicating the action of adding to the cart.
+      child: const Icon(Icons
+          .add_shopping_cart), // Icon indicating the action of adding to the cart.
     );
   }
 }

@@ -126,7 +126,7 @@ class BasketScreen extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              'Quantity: ${item.count}\nPrice: Gh¢${item.price.toStringAsFixed(2)}',
+              'Quantity: ${item.count}\nPrice: \$${item.price.toStringAsFixed(2)}',
               style: TextStyle(
                 color: Colors.grey[600],
               ),
@@ -172,7 +172,7 @@ class BasketScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Total: Gh¢${totalPrice.toStringAsFixed(2)}',
+            'Total: \$${totalPrice.toStringAsFixed(2)}',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,

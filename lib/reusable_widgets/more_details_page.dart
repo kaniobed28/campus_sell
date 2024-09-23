@@ -60,7 +60,7 @@ class MoreDetailsPage extends StatelessWidget {
   Widget _buildDetailsGrid() {
     final details = {
       "Owner's Shop": brandName,
-      "Price": "Gh¢ $price",
+      "Price": "\$ $price",
       "Phone": phone,
       "City": city,
       "Hostel/Address": hostel,

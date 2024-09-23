@@ -21,104 +21,111 @@ class SmallProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 154.43,
-      height: 210.5,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                height: 148.35,
-                width: 154.43,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
-                  ),
-                  child: CachedNetworkImage(
-                    memCacheHeight: imageHeightForDashBoard,
-                    memCacheWidth: imageWidthForDashBoard,
-                    imageUrl: imageUrl,
-                    placeholder: (context, url) => const CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 8.0,
-                top: 8.0,
-                child: GestureDetector(
-                  onTap: () {
+    return GestureDetector(
+      onLongPress: () {
+                    // Handle long press event
                     FullScreenImage.show(context, imageUrl);
                   },
-                  child: const CircleAvatar(
-                    backgroundColor:
-                        Colors.transparent, // Makes the background transparent
-                    radius: 12.0,
-                    child: Icon(Icons.remove_red_eye),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Container(
+        width: 154.43,
+        height: 210.5,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 148.35,
+                  width: 154.43,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
+                    ),
+                    child: CachedNetworkImage(
+                      memCacheHeight: imageHeightForDashBoard,
+                      memCacheWidth: imageWidthForDashBoard,
+                      imageUrl: imageUrl,
+                      placeholder: (context, url) => const CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 5.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      price,
-                      style: TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.favorite_border,
-                          color: Colors.grey[700],
-                        ),
-                        Text(
-                          totalLikes,
-                          overflow: TextOverflow.fade,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                // Positioned(
+                //   left: 8.0,
+                //   top: 8.0,
+                //   child: GestureDetector(
+                    
+                //     onTap: () {
+                //       FullScreenImage.show(context, imageUrl);
+                //     },
+                //     child: const CircleAvatar(
+                //       backgroundColor:
+                //           Colors.transparent, // Makes the background transparent
+                //       radius: 12.0,
+                //       child: Icon(Icons.remove_red_eye),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 5.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        price,
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.favorite_border,
+                            color: Colors.grey[700],
+                          ),
+                          Text(
+                            totalLikes,
+                            overflow: TextOverflow.fade,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

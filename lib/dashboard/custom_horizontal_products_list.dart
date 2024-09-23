@@ -1,3 +1,4 @@
+import 'package:campus_sell/dashboard/category_all_product_page.dart';
 import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
 import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
@@ -6,29 +7,42 @@ import 'package:get/get.dart';
 
 class CustomHorizontalProductsList extends StatelessWidget {
   final RxList<Map<String, dynamic>> lists;
-  final String categoryLable;
-  
+  final String categoryLabel;
+
   const CustomHorizontalProductsList(
-      {super.key, required this.lists, required this.categoryLable});
+      {super.key, required this.categoryLabel, required this.lists,});
 
   @override
   Widget build(BuildContext context) {
     ViewController viewController = Get.find<ViewController>();
     return Obx(
-      //because the column was not observable it was not able to get the data because I think by the time the data base is quering the thing it
-      //the widget has already initialized.
       () => Visibility(
-        visible: lists.isNotEmpty, //I am checking if the list of the product is not empty then I will show it
+        visible: lists.isNotEmpty, // Show only if the list is not empty
         child: Column(
           children: [
-            CustomCategoryLable(textLable: categoryLable),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomCategoryLable(textLable: categoryLabel),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page showing all items in the category
+                    Get.to(CategoryAllProductsPage(productList: lists, categoryLabel: categoryLabel));
+                  },
+                  child: const Text(
+                    "See All",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
-              height:
-                  225, //I managed the sizes of the cards here and I think it can be changed but 225 makes it not overflow as at now.
+              height: 225, // Keep the card size as per your requirement
               child: ListView.builder(
-                //the idea behind this builder is, I am receiveing a stream which I have made as a controller and initialized it in the main and finding it here so that I wouldnt be fetching it all the time to reduce cost.
-                //the stream is stored in a rxlist when fetching the data and I use the list everywhere
-                //so here what I am doing is,I am targeting each list and fetching the data that is a map from them.
                 scrollDirection: Axis.horizontal,
                 itemCount: lists.length,
                 itemBuilder: (context, index) {
@@ -36,24 +50,23 @@ class CustomHorizontalProductsList extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: GestureDetector(
-                      onTap: () async{
+                      onTap: () async {
                         if (data['id'] != null) {
-                         await viewController.markItemAsViewedByUser(data['id'],);//this must come first to prevent no document to update
-                         await viewController.markItemAsViewed(data['id'], data['ownerId']);
-                         await Get.toNamed("/shopitems/itemcode/${data['id']}");
+                          await viewController.markItemAsViewedByUser(data['id']);
+                          await viewController.markItemAsViewed(data['id'], data['ownerId']);
+                          await Get.toNamed("/shopitems/itemcode/${data['id']}");
                         } else {
-                          //I will handle the case when 'id' is null
+                          // Handle the case when 'id' is null
                         }
                       },
                       child: SmallProductCard(
                         imageUrl: data["imagesUrls"][0],
                         title: data["itemName"].toString().trim(),
-                        price: 'Gh¢${data["price"].toString().trim()}',
+                        price: '\$${data["price"].toString().trim()}',
                         totalLikes: data["likes"].length.toString(),
                       ),
                     ),
                   );
-                  //  Text("${data["price"]}");
                 },
               ),
             )
