@@ -1,22 +1,29 @@
+// screens/basket_screen.dart
+
+
 import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
+import 'package:campus_sell/intermediaries/controllers/inmediaries_controller.dart';
+import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
+import 'package:campus_sell/intermediaries/views/intermediary_reponse_listener.dart';
+import 'package:campus_sell/intermediaries/views/manage_item_dialog.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// BasketScreen is a UI representation of the user's basket. It uses GetX for state management.
 class BasketScreen extends StatelessWidget {
-  // Instantiate the BasketController using GetX's dependency injection.
   final BasketController _basketController = Get.put(BasketController());
-  final String userId; // User ID is passed to this screen to identify the user's basket.
+  final IntermediaryController _intermediaryController = Get.put(IntermediaryController());
+  final TransactionController _transactionController = Get.put(TransactionController());
 
-  // Constructor that requires the userId parameter to be provided when the screen is created.
+  final String userId;
+
   BasketScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Title of the screen
         title: const Text(
           'Your Basket',
           style: TextStyle(
@@ -28,43 +35,48 @@ class BasketScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFBD300),
         elevation: 0,
       ),
-      // StreamBuilder listens to the user's basket stream from the controller.
-      body: StreamBuilder<List<BasketItemCount>>(
-        stream: _basketController.getUserBasketWithCount(userId), // Retrieve user's basket data.
-        builder: (context, snapshot) {
-          // Display a loading indicator while the data is being fetched.
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
-          }
-          // Display an error message if an error occurs during data retrieval.
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          // Display a message if the basket is empty.
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return _buildEmptyBasket();
-          }
+      body: Stack(
+        children: [
+          StreamBuilder<List<BasketItemCount>>(
+            stream: _basketController.getUserBasketWithCount(userId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),
+                );
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return _buildEmptyBasket();
+              }
 
-          // If the data is successfully retrieved, calculate the total price of items in the basket.
-          final basketItems = snapshot.data!;
-          final totalPrice = basketItems.fold<double>(0, (sum, item) => sum + item.totalPrice);
+              final basketItems = snapshot.data!;
+              final totalPrice = basketItems.fold<double>(0, (sum, item) => sum + item.totalPrice);
 
-          return Column(
-            children: [
-              // Display the list of items in the basket.
-              Expanded(
-                child: _buildBasketList(basketItems),
-              ),
-              // Display the checkout bar with the total price and checkout button.
-              _buildCheckoutBar(totalPrice),
-            ],
-          );
-        },
+              return Column(
+                children: [
+                  Expanded(
+                    child: _buildBasketList(basketItems),
+                  ),
+                  _buildCheckoutBar(totalPrice),
+                ],
+              );
+            },
+          ),
+          // Listener for intermediary responses
+          Positioned.fill(
+            child: IntermediaryResponseListener(
+              userId: userId,
+              itemId: '', // Adjust based on specific logic
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // Widget to display when the basket is empty.
   Widget _buildEmptyBasket() {
     return Center(
       child: Column(
@@ -96,7 +108,6 @@ class BasketScreen extends StatelessWidget {
     );
   }
 
-  // Builds the list of items in the basket.
   Widget _buildBasketList(List<BasketItemCount> basketItems) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -131,20 +142,27 @@ class BasketScreen extends StatelessWidget {
                 color: Colors.grey[600],
               ),
             ),
-            trailing: IntrinsicWidth( // Automatically adjusts width based on content.
+            trailing: IntrinsicWidth(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.delete, color: Colors.redAccent),
                     onPressed: () {
-                      // Use the document ID to remove the item from the basket.
                       _basketController.removeItemFromBasket(item.documentId);
                     },
                   ),
                   TextButton(
                     onPressed: () {
-                      Get.toNamed("/item-management/${item.itemId}");
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ManageItemDialog(
+                            userId: userId,
+                            itemId: item.itemId,
+                          );
+                        },
+                      );
                     },
                     child: const Text(
                       'Manage Item',
@@ -163,7 +181,6 @@ class BasketScreen extends StatelessWidget {
     );
   }
 
-  // Builds the checkout bar at the bottom of the screen with the total price and a checkout button.
   Widget _buildCheckoutBar(double totalPrice) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -176,7 +193,7 @@ class BasketScreen extends StatelessWidget {
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color:  Color(0xFFFBD300),
+              color: Color(0xFFFBD300),
             ),
           ),
           ElevatedButton(
@@ -185,7 +202,6 @@ class BasketScreen extends StatelessWidget {
               Get.snackbar(
                 'Checkout',
                 'Checkout feature coming soon!',
-                // backgroundColor: Colors.green,
                 colorText: Colors.white,
               );
             },

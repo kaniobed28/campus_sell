@@ -51,6 +51,17 @@ class CustomBottomNavBar extends StatelessWidget {
               }
             },
           ),
+          Visibility(
+            visible: true,
+            child: NavBarItem(
+              icon: Icons.follow_the_signs,
+              label: 'Follows',
+              isSelected: currentRoute == '/follows', // Check if selected
+              onTap: () async {
+                await Get.toNamed((authController.isAuthenticated.isFalse)?'/shop/followedshops/not-authenticated':'/shop/followedshops/${authController.uid.value}');
+              },
+            ),
+          ),
           NavBarItem(
             icon: Icons.add_shopping_cart,
             label: 'Basket',
@@ -58,17 +69,6 @@ class CustomBottomNavBar extends StatelessWidget {
             onTap: () async {
               await Get.to(BasketScreen(userId: authController.uid.value));
             },
-          ),
-          Visibility(
-            visible: false,
-            child: NavBarItem(
-              icon: Icons.follow_the_signs,
-              label: 'Followers',
-              isSelected: currentRoute == '/basket', // Check if selected
-              onTap: () async {
-                await Get.to(FollowedShopsScreen());
-              },
-            ),
           ),
         ],
       ),

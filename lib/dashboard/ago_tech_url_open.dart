@@ -53,101 +53,103 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
           final String url = "https://campussell.github.io/#/shopitems/itemcode/$itemId";
           final String contentToShare = "$description\n\n$url";
 
-          return Scaffold(
-            bottomNavigationBar:Visibility(
-        visible: !deviceController.isWeb.value,
-        child: CustomBottomNavBar(height: 50)),
-            appBar: AppBar(
-              backgroundColor: const Color(0xFFFBD300),
-              actions: [
-                Obx(() {
-                  return FittedBox(
-                    child: Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            likeItemController.liked.value
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: likeItemController.liked.value ? Colors.red : Colors.black,
+          return SafeArea(
+            child: Scaffold(
+              bottomNavigationBar:Visibility(
+                    visible: !deviceController.isWeb.value,
+                    child: CustomBottomNavBar(height: 50)),
+              appBar: AppBar(
+                backgroundColor: const Color(0xFFFBD300),
+                actions: [
+                  Obx(() {
+                    return FittedBox(
+                      child: Column(
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              likeItemController.liked.value
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: likeItemController.liked.value ? Colors.red : Colors.black,
+                            ),
+                            onPressed: () {
+                              if (!authController.isAuthenticated.value) {
+                                Get.snackbar("LogIn First", "Tap on Home to move to the Login Screen");
+                              } else {
+                                likeItemController.addAndRemoveLike(itemId, authController.uid.value);
+                              }
+                            },
                           ),
-                          onPressed: () {
-                            if (!authController.isAuthenticated.value) {
-                              Get.snackbar("LogIn First", "Tap on Home to move to the Login Screen");
-                            } else {
-                              likeItemController.addAndRemoveLike(itemId, authController.uid.value);
-                            }
-                          },
-                        ),
-                        Text("${likeItemController.likesLength}")
-                      ],
-                    ),
-                  );
-                }),
-                // Share Icon Button
-                IconButton(
-                  icon: Icon(Icons.share, color: Colors.black),
-                  onPressed: () {
-                    Share.share(contentToShare);
-                  },
-                ),
-              ],
-            ),
-            body: SingleChildScrollView(
-              child: SizedBox(
-                width: screenWidth,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: (screenHeight < 450) ? screenHeight * 0.4 : screenHeight * 0.65,
-                            autoPlayInterval: const Duration(seconds: 8),
-                            enlargeCenterPage: true,
-                            autoPlay: (imageList.length >= 2) ? true : false,
+                          Text("${likeItemController.likesLength}")
+                        ],
+                      ),
+                    );
+                  }),
+                  // Share Icon Button
+                  IconButton(
+                    icon: const Icon(Icons.share, color: Colors.black),
+                    onPressed: () {
+                      Share.share(contentToShare);
+                    },
+                  ),
+                ],
+              ),
+              body: SingleChildScrollView(
+                child: SizedBox(
+                  width: screenWidth,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: (screenHeight < 450) ? screenHeight * 0.4 : screenHeight * 0.65,
+                              autoPlayInterval: const Duration(seconds: 8),
+                              enlargeCenterPage: true,
+                              autoPlay: (imageList.length >= 2) ? true : false,
+                            ),
+                            items: imageList.map((i) {
+                              return Material(
+                                elevation: 20,
+                                borderRadius: BorderRadius.circular(20),
+                                child: SizedBox(
+                                  height: (screenHeight < 450) ? screenHeight * 0.4 : screenHeight * 0.65,
+                                  width: screenWidth * .8,
+                                  child: AgoTechClickedItemSmallImage(imageUrl: i),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          items: imageList.map((i) {
-                            return Material(
-                              elevation: 20,
-                              borderRadius: BorderRadius.circular(20),
-                              child: SizedBox(
-                                height: (screenHeight < 450) ? screenHeight * 0.4 : screenHeight * 0.65,
-                                width: screenWidth * .8,
-                                child: AgoTechClickedItemSmallImage(imageUrl: i),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: AddToBasketButton(
-                            itemId: itemId,
-                            isAuthenticated: authController.isAuthenticated,
-                            userId: authController.uid.value,
+                          Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: AddToBasketButton(
+                              itemId: itemId,
+                              isAuthenticated: authController.isAuthenticated,
+                              userId: authController.uid.value,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    AgoTechProductDetailsCard(
-                      title: itemData["itemName"],
-                      description: itemData["description"],
-                      price: itemData['price'].toString(),
-                      brandName: itemData["brand"],
-                      phone: itemData["phone"],
-                      city: itemData["city"],
-                      hostel: itemData["hostel"],
-                      university: itemData["university"],
-                      itemType: itemData["itemType"],
-                      socialMedia: itemData["socialMedia"],
-                      ownerId: itemData["ownerId"],
-                      itemId: itemId,
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      AgoTechProductDetailsCard(
+                        title: itemData["itemName"],
+                        description: itemData["description"],
+                        price: itemData['price'].toString(),
+                        brandName: itemData["brand"],
+                        phone: itemData["phone"],
+                        city: itemData["city"],
+                        hostel: itemData["hostel"],
+                        university: itemData["university"],
+                        itemType: itemData["itemType"],
+                        socialMedia: itemData["socialMedia"],
+                        ownerId: itemData["ownerId"],
+                        itemId: itemId,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

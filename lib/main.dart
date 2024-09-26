@@ -13,6 +13,7 @@ import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
 import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/follow/controllers/follow_controller.dart';
+import 'package:campus_sell/follow/views/followed_shops_screen.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
 import 'package:campus_sell/list_screen.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
@@ -87,6 +88,12 @@ class MainApp extends StatelessWidget {
         GetPage(
           name: '/shop/shopitems/:id',
           page: () => ListScreen(),
+          transition: Transition.cupertino,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/shop/followedshops/:id',
+          page: () => FollowedShopsScreen(),
           transition: Transition.cupertino,
           transitionDuration: const Duration(milliseconds: 500),
         ),

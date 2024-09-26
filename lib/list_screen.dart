@@ -1,17 +1,23 @@
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:campus_sell/controllers/device_controller.dart';
+import 'package:campus_sell/qr_code_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import for QuerySnapshot
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../controllers/delete_controller.dart';
 
 class ListScreen extends StatefulWidget {
-
   ListScreen({super.key});
 
   @override
@@ -24,16 +30,10 @@ class _ListScreenState extends State<ListScreen> {
   final RxString shopName = "".obs;
 
   final AuthController authController = Get.find<AuthController>();
+  final QRCodeController qrCodeController = Get.put(QRCodeController());
 
   final DeviceController deviceController = Get.find<DeviceController>();
 
-// @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       authController.checkAuthentication();
-//     });
-//   }
   @override
   Widget build(BuildContext context) {
     final String? shopId = Get.parameters["id"];
@@ -41,7 +41,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.home, color: Colors.black),
+          icon: const Icon(Icons.home, color: Colors.black),
           onPressed: () {
             Get.offAllNamed('/'); // Navigate to home and clear the stack
           },
@@ -60,10 +60,17 @@ class _ListScreenState extends State<ListScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.share, color: Colors.black),
+            icon: const Icon(Icons.share, color: Colors.black),
             onPressed: () {
               String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
               Share.share('Check out this shop: $shopUrl');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.qr_code, color: Colors.black),
+            onPressed: () {
+              String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
+             qrCodeController.generateAndDownloadQRCode(shopUrl, 'shop_qr_code',context);
             },
           ),
         ],
@@ -76,7 +83,9 @@ class _ListScreenState extends State<ListScreen> {
         stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
+            return const Center(
+              child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),
+            );
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -97,7 +106,7 @@ class _ListScreenState extends State<ListScreen> {
               String description = data["description"] ?? "Check out this item!";
               String url = "https://campussell.github.io/#/shopitems/itemcode/$id";
               String contentToShare = "$description\n\n$url";
-              
+
               // Call this after the tree has finished building
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (data["ownerId"] != authController.uid.value) {
@@ -132,7 +141,6 @@ class _ListScreenState extends State<ListScreen> {
                   ),
                   subtitle: Text(
                     "Gh¢${data["price"].toString()}",
-
                     style: GoogleFonts.average(
                       color: Colors.grey[700],
                       fontSize: 14,
@@ -176,7 +184,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            'There are no items in this shop.Consider adding to your shop!',
+            'There are no items in this shop. Consider adding to your shop!',
             style: GoogleFonts.average(
               fontSize: 16,
               color: Colors.grey[500],
@@ -186,4 +194,7 @@ class _ListScreenState extends State<ListScreen> {
       ),
     );
   }
+
+  
+
 }

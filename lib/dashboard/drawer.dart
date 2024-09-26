@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
     super.key,
     required this.authController,
@@ -11,6 +11,11 @@ class DrawerWidget extends StatelessWidget {
 
   final AuthController authController;
 
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -70,13 +75,6 @@ class DrawerWidget extends StatelessWidget {
                   ),
                   _drawerItem(
                     context,
-                    icon: Icons.message_outlined, // Changed to chat icon
-                    title: 'My Chats',
-                    route: '/chats',
-                    isSelected: Get.currentRoute == '/chats',
-                  ),
-                  _drawerItem(
-                    context,
                     icon: Icons.search_outlined, // Changed to search icon
                     title: 'Search Item',
                     route: '/shopitems/multisearch',
@@ -84,33 +82,54 @@ class DrawerWidget extends StatelessWidget {
                   ),
                   _drawerItem(
                     context,
-                    icon: Icons.store_mall_directory_outlined, // Changed to shop icon
+                    icon: Icons.message_outlined, // Changed to chat icon
+                    title: 'My Chats',
+                    route: '/chats',
+                    isSelected: Get.currentRoute == '/chats',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon:
+                        Icons.shopping_cart_outlined, // Changed to basket icon
+                    title: 'My Basket',
+                    route: '/shop/basket',
+                    isSelected: Get.currentRoute == '/shop/basket',
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons.follow_the_signs, //
+                    title: 'Follows',
+                    route: (widget.authController.isAuthenticated.isFalse)
+                        ? '/shop/followedshops/not-authenticated'
+                        : '/shop/followedshops/${widget.authController.uid.value}',
+                    isSelected:
+                        Get.currentRoute.contains('/shop/followedshops/'),
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons
+                        .business_outlined, // Changed to business/shop icon
+                    title: 'My Shop',
+                    route: (widget.authController.isAuthenticated.isFalse)
+                        ? "/shop/shopitems/not-authenticated"
+                        : "/shop/shopitems/${widget.authController.uid.value}",
+                    isSelected: Get.currentRoute.contains('shop/shopitems/'),
+                  ),
+                  _drawerItem(
+                    context,
+                    icon: Icons
+                        .store_mall_directory_outlined, // Changed to shop icon
                     title: 'Add to My Shop',
                     route: '/shopitems/addtostore',
                     isSelected: Get.currentRoute == '/shopitems/addtostore',
                   ),
                   _drawerItem(
                     context,
-                    icon: Icons.remove_shopping_cart_outlined, // Changed to remove shop icon
+                    icon: Icons
+                        .remove_shopping_cart_outlined, // Changed to remove shop icon
                     title: 'Remove from My Shop',
                     route: '/shopitems/removeitems',
                     isSelected: Get.currentRoute == '/shopitems/removeitems',
-                  ),
-                  _drawerItem(
-                    context,
-                    icon: Icons.business_outlined, // Changed to business/shop icon
-                    title: 'My Shop',
-                    route: (authController.isAuthenticated.isFalse)
-                        ? "/shop/shopitems/not-authenticated"
-                        : "/shop/shopitems/${authController.uid.value}",
-                    isSelected: Get.currentRoute.contains('shop/shopitems/'),
-                  ),
-                  _drawerItem(
-                    context,
-                    icon: Icons.shopping_cart_outlined, // Changed to basket icon
-                    title: 'My Basket',
-                    route: '/shop/basket',
-                    isSelected: Get.currentRoute == '/shop/basket',
                   ),
                 ],
               ),
@@ -124,9 +143,11 @@ class DrawerWidget extends StatelessWidget {
               _drawerItem(
                 context,
                 icon: Icons.logout, // Sign out icon
-                title: (authController.isAuthenticated.isFalse) ? "Sign In" : 'Sign Out',
+                title: (widget.authController.isAuthenticated.isFalse)
+                    ? "Sign In"
+                    : 'Sign Out',
                 onTap: () async {
-                  await authController.signOut();
+                  await widget.authController.signOut();
                   await Get.offAllNamed('/auth/signin');
                 },
               ),
@@ -152,15 +173,20 @@ class DrawerWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 250), // Animation duration
         curve: Curves.easeInOut,
         margin: const EdgeInsets.symmetric(vertical: 4.0), // Spacing
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0), // Padding
+        padding: const EdgeInsets.symmetric(
+            vertical: 10.0, horizontal: 8.0), // Padding
         decoration: BoxDecoration(
-          color: isSelected ? Colors.amber.shade50 : Colors.white, // Color change for selected item
+          color: isSelected
+              ? Colors.amber.shade50
+              : Colors.white, // Color change for selected item
           borderRadius: BorderRadius.circular(10.0), // Rounded corners
           border: Border.all(
-            color: isSelected ? Colors.amber.shade400 : Colors.transparent, // Border for selected item
+            color: isSelected
+                ? Colors.amber.shade400
+                : Colors.transparent, // Border for selected item
             width: 1.5,
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12, // Shadow for a slight elevation effect
               blurRadius: 4.0,
@@ -175,7 +201,9 @@ class DrawerWidget extends StatelessWidget {
               padding: const EdgeInsets.all(6.0), // Padding for icon
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected ? Colors.amber.shade400 : Colors.grey.shade300, // Background color of icon
+                color: isSelected
+                    ? Colors.amber.shade400
+                    : Colors.grey.shade300, // Background color of icon
               ),
               child: Icon(
                 icon,
@@ -194,7 +222,9 @@ class DrawerWidget extends StatelessWidget {
                     style: GoogleFonts.aBeeZee(
                       fontWeight: FontWeight.w500, // Font weight
                       fontSize: 14.0, // Font size
-                      color: isSelected ? Colors.amber.shade700 : Colors.black87, // Text color
+                      color: isSelected
+                          ? Colors.amber.shade700
+                          : Colors.black87, // Text color
                     ),
                   ),
                   if (isSelected)
