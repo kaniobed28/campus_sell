@@ -1,8 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/chat/chat_controller.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
+import 'package:campus_sell/reusable_widgets/custom_fullscreen_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+import 'chat_controller.dart';
 
 class ChatScreen extends StatefulWidget {
   final String receiverId;
@@ -15,13 +20,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final ChatController chatController = Get.put(ChatController());
-    AuthController authController = Get.find<AuthController>();
-
-
+  AuthController authController = Get.find<AuthController>();
   final TextEditingController messageController = TextEditingController();
+  final ImagePicker picker = ImagePicker();
 
-
-@override
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -31,20 +34,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String senderId = Get.find<AuthController>().uid.value;
+    String senderId = authController.uid.value;
     String chatId = chatController.getChatId(senderId, widget.receiverId);
 
-    // Load messages for this chat
     chatController.loadMessages(chatId);
-
-    // Mark messages as read
     chatController.markMessagesAsRead(chatId, senderId);
 
     return Scaffold(
       appBar: AppBar(
         title: FutureBuilder<Map<String, dynamic>?>(
-          future:
-              Get.find<AdditionalInfoController>().getDocumentById(widget.receiverId),
+          future: Get.find<AdditionalInfoController>().getDocumentById(widget.receiverId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Text("Loading...");
@@ -64,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.toNamed("/"); // Navigates to the root route ("/")
+            Get.toNamed("/");
           },
         ),
       ),
@@ -84,6 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     message: message['message'],
                     isSender: isSender,
                     isRead: isRead,
+                    imageUrl: message['imageUrl'],  // Handle image display
                   );
                 },
               );
@@ -93,6 +93,24 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
+                IconButton(
+                  icon: const Icon(Icons.image, color: Colors.blueAccent),
+                  onPressed: () async {
+                    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                    if (image != null) {
+                      String? imageUrl = await chatController.uploadImage(File(image.path));
+                      if (imageUrl != null) {
+                        chatController.sendMessage(
+                          chatId,
+                          '', // No text message, only image
+                          senderId,
+                          widget.receiverId,
+                          imageUrl: imageUrl,
+                        );
+                      }
+                    }
+                  },
+                ),
                 Expanded(
                   child: TextField(
                     controller: messageController,
@@ -131,16 +149,18 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-// Custom widget for each message
 class MessageTile extends StatelessWidget {
   final String message;
   final bool isSender;
   final bool isRead;
+  final String? imageUrl;
 
-  const MessageTile({super.key, 
+  const MessageTile({
+    super.key,
     required this.message,
     required this.isSender,
     required this.isRead,
+    this.imageUrl,
   });
 
   @override
@@ -149,24 +169,34 @@ class MessageTile extends StatelessWidget {
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: isSender ? Colors.blueAccent : Colors.grey[300],
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
-            color: isRead
-                ? Colors.transparent
-                : Colors.red, // Indicate unread messages with a border
+            color: isRead ? Colors.transparent : Colors.red,
             width: 2,
           ),
         ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isSender ? Colors.white : Colors.black87,
-            fontSize: 16,
-          ),
-        ),
+        child: imageUrl != null
+            ? GestureDetector(
+                onTap: () {
+                  // Open image in full-screen mode
+                  FullScreenImage.show(context, imageUrl!);
+                },
+                child: CachedNetworkImage(
+                  height: 200, // Set a height for image previews
+                  width: 200,
+                  fit: BoxFit.fill, imageUrl:imageUrl!,
+                ),
+              )
+            : Text(
+                message,
+                style: TextStyle(
+                  color: isSender ? Colors.white : Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
       ),
     );
   }

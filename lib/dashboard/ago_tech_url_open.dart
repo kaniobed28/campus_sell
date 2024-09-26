@@ -58,6 +58,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
         visible: !deviceController.isWeb.value,
         child: CustomBottomNavBar(height: 50)),
             appBar: AppBar(
+              backgroundColor: const Color(0xFFFBD300),
               actions: [
                 Obx(() {
                   return FittedBox(

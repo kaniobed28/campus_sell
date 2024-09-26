@@ -1,6 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/auth/views/signin.dart';
 import 'package:campus_sell/controllers/device_controller.dart';
+import 'package:campus_sell/dashboard/categories_pages.dart';
 import 'package:campus_sell/dashboard/custom_horizontal_products_list.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
@@ -8,17 +8,17 @@ import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
 import 'package:campus_sell/reusable_widgets/custom_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'controllers/streamer_controller.dart';
-//this is the new dashboard I used in replacement to the old one.
+
 class NewDashboard extends StatefulWidget {
-   NewDashboard({super.key});
+  NewDashboard({super.key});
 
   @override
   State<NewDashboard> createState() => _NewDashboardState();
 }
 
 class _NewDashboardState extends State<NewDashboard> {
+  final PageController _pageController = PageController(); // Step 1
   Streamer streamer = Get.find<Streamer>();
   AuthController authController = Get.find<AuthController>();
   final DeviceController deviceController = Get.find<DeviceController>();
@@ -38,110 +38,146 @@ class _NewDashboardState extends State<NewDashboard> {
       streamer.othersList,
       streamer.servicesList
     ];
-    
+
+    final categories = [
+      'All',
+      'Food',
+      'Electronics',
+      'Health Products',
+      'Beauty Products',
+      'Jewelry',
+      'Fashion',
+      'Sports Products',
+      'Stationery',
+      'Kitchen Products',
+      'Services',
+      'Other Products',
+    ];
+
     return SafeArea(
-      child:Scaffold(
-        endDrawer: DrawerWidget(authController: authController,),
+      child: Scaffold(
+        endDrawer: DrawerWidget(authController: authController),
         appBar: const CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
+        body: Column(
+          children: [
+            const SizedBox(height: 5),
+            const CustomSearchBar(),
+            const SizedBox(height: 5),
+
+            // Step 3: Navigation buttons
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(categories.length, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all<Color>(Colors.teal),
+                        elevation: WidgetStateProperty.all<double>(
+                            10.0), // This adds the raised effect
+                      ),
+                      onPressed: () {
+                        _pageController.jumpToPage(
+                            index); // Navigate to the respective page
+                      },
+                      child: Text(
+                        categories[index],
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  );
+                }),
               ),
-              const CustomSearchBar(),
-              const SizedBox(
-                height: 20,
+            ),
+
+            const SizedBox(height: 20),
+            Expanded(
+              child: PageView(
+                controller: _pageController, // Step 2
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CustomHorizontalProductsList(
+                          lists: lists[10],
+                          categoryLabel: 'Services',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[5],
+                          categoryLabel: 'Fashion',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[0],
+                          categoryLabel: 'Food',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[1],
+                          categoryLabel: 'Electronics',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[2],
+                          categoryLabel: 'Health Products',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[3],
+                          categoryLabel: 'Beauty Products',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[4],
+                          categoryLabel: 'Jewelry',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[6],
+                          categoryLabel: 'Sports Products',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[7],
+                          categoryLabel: 'Stationery',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[8],
+                          categoryLabel: 'Kitchen Products',
+                        ),
+                        CustomHorizontalProductsList(
+                          lists: lists[9],
+                          categoryLabel: 'Other Products',
+                        ),
+                      ],
+                    ),
+                  ),
+                  FoodPage(foodList: lists[0]),
+                  ElectronicsPage(electronicList: lists[1]),
+                  HealthPage(healthList: lists[2]),
+                  BeautyPage(beautyList: lists[3]),
+                  JewelryPage(jewelryList: lists[4]),
+                  FashionPage(fashionList: lists[5]),
+                  SportsPage(sportsList: lists[6]),
+                  StationaryPage(stationaryList: lists[7]),
+                  KitchenPage(kitchenList: lists[8]),
+                  ServicesPage(servicesList: lists[10]),
+                  OtherPage(otherList: lists[9]),
+                ],
               ),
-              // const Align(
-              //   alignment: Alignment.topLeft,
-              //   child: CustomCategoryLable(textLable: "Fashion")),
-              // Obx(() {
-              //   return SizedBox(
-              //     height:
-              //         225, //I managed the sizes of the cards here and I think it can be changed but 225 makes it not overflow as at now.
-              //     child: ListView.builder(
-              //       //the idea behind this builder is, I am receiveing a stream which I have made as a controller and initialized it in the main and finding it here so that I wouldnt be fetching it all the time to reduce cost.
-              //       //the stream is stored in a rxlist when fetching the data and I use the list everywhere
-              //       //so here what I am doing is,I am targeting each list and fetching the data that is a map from them.
-              //       scrollDirection: Axis.horizontal,
-              //       itemCount: lists[5].length,
-              //       itemBuilder: (context, index) {
-              //         final data = lists[5][index];
-              //         return Padding(
-              //           padding: const EdgeInsets.all(6.0),
-              //           child: SmallProductCard(
-              //             imageUrl: data["imagesUrls"][0],
-              //             title: data["itemName"].toString().trim(),
-              //             price: 'Gh¢${data["price"].toString().trim()}',
-              //           ),
-              //         );
-              //         //  Text("${data["price"]}");
-              //       },
-              //     ),
-              //   );
-              // }),
-          
-              // // Food will be here
-              // const Align(
-              //   alignment: Alignment.topLeft,
-              //   child: CustomCategoryLable(textLable: "Food")),
-              // Obx(() {
-              //   return SizedBox(
-              //     height:
-              //         225, //I managed the sizes of the cards here and I think it can be changed but 225 makes it not overflow as at now.
-              //     child: ListView.builder(
-              //       //the idea behind this builder is, I am receiveing a stream which I have made as a controller and initialized it in the main and finding it here so that I wouldnt be fetching it all the time to reduce cost.
-              //       //the stream is stored in a rxlist when fetching the data and I use the list everywhere
-              //       //so here what I am doing is,I am targeting each list and fetching the data that is a map from them.
-              //       scrollDirection: Axis.horizontal,
-              //       itemCount: lists[0].length,
-              //       itemBuilder: (context, index) {
-              //         final data = lists[0][index];
-              //         return Padding(
-              //           padding: const EdgeInsets.all(6.0),
-              //           child: SmallProductCard(
-              //             imageUrl: data["imagesUrls"][0],
-              //             title: data["itemName"].toString().trim(),
-              //             price: 'Gh¢${data["price"].toString().trim()}',
-              //           ),
-              //         );
-              //         //  Text("${data["price"]}");
-              //       },
-              //     ),
-              //   );
-              // }),
-              CustomHorizontalProductsList(lists: lists[10], categoryLabel: 'Services',),
-              CustomHorizontalProductsList(lists: lists[5], categoryLabel: 'Fashion',),
-              CustomHorizontalProductsList(lists: lists[0], categoryLabel: 'Food',),
-              CustomHorizontalProductsList(lists: lists[1], categoryLabel: 'Electronics',),
-              CustomHorizontalProductsList(lists: lists[2], categoryLabel: 'Health Products',),
-              CustomHorizontalProductsList(lists: lists[3], categoryLabel: 'Beauty Products',),
-              CustomHorizontalProductsList(lists: lists[4], categoryLabel: 'Jewery',),
-              CustomHorizontalProductsList(lists: lists[6], categoryLabel: 'Sports Products',),
-              CustomHorizontalProductsList(lists: lists[7], categoryLabel: 'Stationary',),
-              CustomHorizontalProductsList(lists: lists[8], categoryLabel: 'Kitchen Products',),
-              CustomHorizontalProductsList(lists: lists[9], categoryLabel: 'Other Products',),
-            ],
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFFF2F2F2),
+        bottomNavigationBar: Visibility(
+          visible: !deviceController.isWeb.value,
+          child: CustomBottomNavBar(height: 50),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.toNamed("/chats");
+          },
+          backgroundColor: Colors.amber,
+          child: const Icon(
+            Icons.chat,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xFFF2F2F2 ),
-      bottomNavigationBar: Visibility(
-        visible: !deviceController.isWeb.value,
-        child: CustomBottomNavBar(height: 50)),
-      // for the navigation bar down, I have to use smaller font size to reduce the size and the Icons too.
-      // when I reduce the size, I can change the height of the navbar from here.
-
-      floatingActionButton: FloatingActionButton(
-      onPressed: () {
-    Get.toNamed("/chats"); // Navigate to the "/chats" route
-  },
-  backgroundColor: Colors.amber, // A complementary color for visibility
-  child: const Icon(
-    Icons.chat,
-    color: Colors.white, // Set the icon color for contrast
-  ),
-    ),
       ),
     );
   }

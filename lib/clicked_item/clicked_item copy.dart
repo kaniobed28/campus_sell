@@ -131,7 +131,7 @@ class ClickedItemC extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              '"\$${data["price"].toString()}" ?? "Not Set"}',
+                              '"Gh¢${data["price"].toString()}" ?? "Not Set"}',
                               style: GoogleFonts.aclonica(
                                   color: Colors.white, fontSize: 16),
                             ),
@@ -158,7 +158,7 @@ class ClickedItemC extends StatelessWidget {
                                   const Icon(Icons.branding_watermark)),
                               _buildListTile(
                                   'Price',
-                                  '"\$${data["price"].toString()}" ?? "Not Set"}',
+                                  '"Gh¢${data["price"].toString()}" ?? "Not Set"}',
                                   Icon(Icons.sell)),
                               _buildFutureListTile('Phone', ownerInfo, 'phone',
                                   const Icon(Icons.phone)),

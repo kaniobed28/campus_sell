@@ -131,7 +131,7 @@ class _ListScreenState extends State<ListScreen> {
                     ),
                   ),
                   subtitle: Text(
-                    "\$${data["price"].toString()}",
+                    "Gh¢${data["price"].toString()}",
 
                     style: GoogleFonts.average(
                       color: Colors.grey[700],

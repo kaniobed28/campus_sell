@@ -31,7 +31,7 @@ class SearchResultPage extends StatelessWidget {
                     return ListTile(
                       title: Text(searchedController.searchResults[index]["itemName"].toString()),
                       subtitle: Text(searchedController.searchResults[index]["itemType"].toString()),
-                      trailing: Text("\$ ${searchedController.searchResults[index]["price"]}"),
+                      trailing: Text("Gh¢ ${searchedController.searchResults[index]["price"]}"),
                       onTap: () => Get.toNamed("/shopitems/itemcode/${data['id']}")
                       // () => Get.to(const searchedController.searchResults[index]),
                     );

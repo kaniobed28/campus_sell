@@ -1,9 +1,6 @@
-import 'package:campus_sell/dashboard/ago_tech_product_details_card.dart';
 import 'package:campus_sell/reusable_widgets/custom_copy_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 
 class MoreDetailsPage extends StatelessWidget {
   final String title;
@@ -43,69 +40,83 @@ class MoreDetailsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTitle(context),
+              const SizedBox(height: 20),
+              _buildDetailsCard(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _buildDetailsCard(BuildContext context) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Expanded(child: _buildDetailsGrid()),
+            _buildDetailItem("Owner's Shop", brandName),
+            _buildDetailItem("Price", "Gh¢ $price"),
+            _buildDetailItem("Phone", phone),
+            _buildDetailItem("City", city),
+            _buildDetailItem("Hostel/Address", hostel),
+            _buildDetailItem("University", university),
+            _buildDetailItem("Category", itemType),
+            _buildDetailItem("Social Media", socialMedia),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDetailsGrid() {
-    final details = {
-      "Owner's Shop": brandName,
-      "Price": "\$ $price",
-      "Phone": phone,
-      "City": city,
-      "Hostel/Address": hostel,
-      "University": university,
-      "Category": itemType,
-      "Social Media": socialMedia,
-    };
-
-    return ListView.builder(
-      itemCount: details.length,
-      itemBuilder: (context, index) {
-        final key = details.keys.elementAt(index);
-        final value = details[key]!;
-        return _buildDetailItem(key, value);
-      },
-    );
-  }
-
   Widget _buildDetailItem(String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            "$label:",
-            style: const TextStyle(fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              "$label:",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  value,
-                  style: const TextStyle(color: Colors.blueAccent),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+          Expanded(
+            flex: 3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    value,
+                    style: const TextStyle(color: Colors.blueAccent),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
                 ),
-              ),
-              CopyIconButton(value: value, label: label),
-            ],
+                CopyIconButton(value: value, label: label),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
