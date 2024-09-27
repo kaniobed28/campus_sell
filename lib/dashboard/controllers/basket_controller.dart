@@ -81,6 +81,19 @@ class BasketController extends GetxController {
           return items;
         });
   }
+  // lib/controllers/basket_controller.dart
+
+// Add this method inside BasketController
+Future<void> clearBasket(String userId) async {
+  try {
+    final basketDocs = await _basketCollection.where('userId', isEqualTo: userId).get();
+    for (var doc in basketDocs.docs) {
+      await _basketCollection.doc(doc.id).delete();
+    }
+  } catch (e) {
+    print('Failed to clear basket: $e');
+  }
+}
 }
 
 // Model for representing an item in the basket, including its name, count, price, and documentId.

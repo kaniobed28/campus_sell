@@ -1,110 +1,106 @@
-// screens/intermediary_registration_screen.dart
+// lib/screens/add_intermediary_screen.dart
 
 import 'package:campus_sell/intermediaries/controllers/inmediaries_controller.dart';
+import 'package:campus_sell/intermediaries/models/intermediaries_model.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-class IntermediaryRegistrationScreen extends StatefulWidget {
-  const IntermediaryRegistrationScreen({Key? key}) : super(key: key);
-
+class AddIntermediaryScreen extends StatefulWidget {
   @override
-  _IntermediaryRegistrationScreenState createState() => _IntermediaryRegistrationScreenState();
+  _AddIntermediaryScreenState createState() => _AddIntermediaryScreenState();
 }
 
-class _IntermediaryRegistrationScreenState extends State<IntermediaryRegistrationScreen> {
-  final IntermediaryController _intermediaryController = Get.find<IntermediaryController>();
+class _AddIntermediaryScreenState extends State<AddIntermediaryScreen> {
   final _formKey = GlobalKey<FormState>();
+  final IntermediaryController _intermediaryController = Get.put(IntermediaryController());
+
   String _name = '';
   String _email = '';
   String _phone = '';
-  bool _isSubmitting = false;
+
+  Future<void> _addIntermediary() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      try {
+        String intermediaryId = FirebaseFirestore.instance.collection('intermediaries').doc().id;
+        Intermediary newIntermediary = Intermediary(
+          intermediaryId: intermediaryId,
+          name: _name,
+          email: _email,
+          phone: _phone,
+          createdAt: Timestamp.now(),
+        );
+
+        await _intermediaryController.addIntermediary(newIntermediary);
+        Get.snackbar('Success', 'Intermediary added successfully!');
+        Navigator.of(context).pop();
+      } catch (e) {
+        Get.snackbar('Error', 'Failed to add intermediary: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register Intermediary'),
-        backgroundColor: const Color(0xFFFBD300),
+        title: Text('Add Intermediary'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              // Name Field
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
-                ),
-                onSaved: (value) => _name = value!.trim(),
-                validator: (value) => value == null || value.isEmpty ? 'Please enter a name' : null,
-              ),
-              const SizedBox(height: 20),
-              // Email Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                onSaved: (value) => _email = value!.trim(),
+                decoration: InputDecoration(labelText: 'Name'),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter an email';
-                  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                  if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a name';
+                  }
                   return null;
                 },
+                onSaved: (value) {
+                  _name = value!;
+                },
               ),
-              const SizedBox(height: 20),
-              // Phone Field
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Phone',
-                  border: OutlineInputBorder(),
-                ),
-                onSaved: (value) => _phone = value!.trim(),
-                validator: (value) => value == null || value.isEmpty ? 'Please enter a phone number' : null,
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.contains('@')) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _email = value!;
+                },
               ),
-              const SizedBox(height: 30),
-              // Submit Button
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Phone'),
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a phone number';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _phone = value!;
+                },
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _isSubmitting ? null : _submitForm,
-                child: _isSubmitting
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
-                    : const Text('Register'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  backgroundColor: const Color(0xFFFBD300),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                onPressed: _addIntermediary,
+                child: Text('Add Intermediary'),
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void _submitForm() async {
-    final form = _formKey.currentState;
-    if (form != null && form.validate()) {
-      form.save();
-      setState(() {
-        _isSubmitting = true;
-      });
-      await _intermediaryController.registerIntermediary(_name, _email, _phone);
-      setState(() {
-        _isSubmitting = false;
-      });
-      // Optionally, navigate back or clear the form
-      form.reset();
-    }
   }
 }

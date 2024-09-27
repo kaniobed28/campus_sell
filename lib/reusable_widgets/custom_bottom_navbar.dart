@@ -1,6 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/basket_screen.dart';
-import 'package:campus_sell/follow/views/followed_shops_screen.dart';
+import 'package:campus_sell/intermediaries/views/intermediary_registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'custom_navbar_item.dart';
@@ -41,16 +41,20 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           NavBarItem(
             icon: Icons.add_business_sharp,
-            label: 'My Shop',
+            label: 'register',
             isSelected: currentRoute.startsWith('/shop/shopitems'), // Check if selected
             onTap: () async {
-              if (authController.isAuthenticated.isFalse) {
-                await Get.offNamed('/shop/shopitems/not-authenticated');
-              } else {
-                await Get.offNamed('/shop/shopitems/${authController.uid.value}');
-              }
+              Get.to(AddIntermediaryScreen());
             },
           ),
+          NavBarItem(
+            icon: Icons.add_business_sharp,
+            label: 'dashbaord',
+            isSelected: currentRoute.startsWith('/shop/shopitems'), // Check if selected
+            onTap: () async {
+            },
+          ),
+          
           Visibility(
             visible: true,
             child: NavBarItem(

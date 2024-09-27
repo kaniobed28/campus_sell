@@ -15,6 +15,10 @@ import 'package:campus_sell/firebase_options.dart';
 import 'package:campus_sell/follow/controllers/follow_controller.dart';
 import 'package:campus_sell/follow/views/followed_shops_screen.dart';
 import 'package:campus_sell/forms_repo/seller_info_screen.dart';
+import 'package:campus_sell/intermediaries/controllers/inmediaries_controller.dart';
+import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
+import 'package:campus_sell/intermediaries/views/intermediary_registration_screen.dart';
+import 'package:campus_sell/intermediaries/views/user_transaction_page.dart';
 import 'package:campus_sell/list_screen.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
@@ -37,6 +41,8 @@ void main() async {
   Get.put(ChatController());
   Get.put(FollowController());
   Get.put(ViewController());
+  Get.put(IntermediaryController());
+  Get.put(TransactionController());
   runApp(const MainApp());
 }
 
@@ -148,6 +154,12 @@ class MainApp extends StatelessWidget {
         GetPage(
           name: '/auth/signup',
           page: () => Signup(),
+          transition: Transition.cupertino,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/transaction',
+          page: () => UserTransactionPage(userId: authController.uid.value,),
           transition: Transition.cupertino,
           transitionDuration: const Duration(milliseconds: 500),
         ),

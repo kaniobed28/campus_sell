@@ -131,6 +131,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     route: '/shopitems/removeitems',
                     isSelected: Get.currentRoute == '/shopitems/removeitems',
                   ),
+                  _drawerItem(
+                    context,
+                    icon: Icons
+                        .track_changes, // Changed to remove shop icon
+                    title: 'trans',
+                    route: '/transaction',
+                    isSelected: Get.currentRoute == '/shopitems/removeitems',
+                  ),
                 ],
               ),
             ),
