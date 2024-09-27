@@ -1,6 +1,7 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/basket_screen.dart';
 import 'package:campus_sell/intermediaries/views/intermediary_registration_screen.dart';
+import 'package:campus_sell/intermediaries/views/intermediary_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'custom_navbar_item.dart';
@@ -52,6 +53,7 @@ class CustomBottomNavBar extends StatelessWidget {
             label: 'dashbaord',
             isSelected: currentRoute.startsWith('/shop/shopitems'), // Check if selected
             onTap: () async {
+              Get.to(IntermediaryTransactionPage(intermediaryId: 'OP1JU5p1oFGuiMTKd42Y',));
             },
           ),
           

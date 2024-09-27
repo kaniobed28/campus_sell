@@ -26,6 +26,7 @@ class IntermediaryTransactionPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
+            print(snapshot.error);
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           final transactions = snapshot.data!;

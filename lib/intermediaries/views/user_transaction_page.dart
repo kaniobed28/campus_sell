@@ -1,5 +1,3 @@
-// lib/screens/user_transaction_page.dart
-
 import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
 import 'package:campus_sell/intermediaries/models/transaction_model.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +23,8 @@ class UserTransactionPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            print(snapshot.error);
-            return Center(child: Text('Error: ${snapshot.error}'));
+            // Show an error message to the user
+            return Center(child: Text('Error fetching transactions: ${snapshot.error}'));
           }
           final transactions = snapshot.data!;
           if (transactions.isEmpty) {
@@ -45,15 +43,16 @@ class UserTransactionPage extends StatelessWidget {
                     children: [
                       Text('Status: ${txn.status}'),
                       if (txn.status == 'accepted' || txn.status == 'rejected')
-                        Text('Intermediary Message: ${txn.intermediaryMessage}'),
-                      if (txn.intermediaryCharges > 0)
-                        Text('Intermediary Charges: Gh¢${txn.intermediaryCharges.toStringAsFixed(2)}'),
+                        Text('Intermediary Message: ${txn.intermediaryMessage ?? "N/A"}'),
+                      if (txn.intermediaryCharges != null && txn.intermediaryCharges! > 0)
+                        Text('Intermediary Charges: Gh¢${txn.intermediaryCharges!.toStringAsFixed(2)}'),
                       Text('Total Items: ${txn.items.length}'),
                     ],
                   ),
                   trailing: _buildActionButton(txn),
                   onTap: () {
-                    // Optionally, navigate to a detailed transaction page
+                    // Optionally navigate to a detailed transaction page
+                    // Get.toNamed('/transaction_detail/${txn.transactionId}');
                   },
                 ),
               );
@@ -89,6 +88,7 @@ class UserTransactionPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Implement continue transaction logic
+              // e.g., calling an appropriate method to continue the transaction
               Get.back();
               Get.snackbar('Continue', 'You have chosen to continue the transaction.');
             },
