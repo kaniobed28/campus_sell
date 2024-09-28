@@ -5,6 +5,7 @@ import 'package:campus_sell/chat/chat_list.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/device_controller.dart';
+import 'package:campus_sell/controllers/get_item_by_id_controller.dart';
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/dashboard/ago_tech_sell_screen.dart';
 import 'package:campus_sell/dashboard/ago_tech_url_open.dart';
@@ -19,6 +20,7 @@ import 'package:campus_sell/intermediaries/controllers/inmediaries_controller.da
 import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
 import 'package:campus_sell/intermediaries/views/intermediary_registration_screen.dart';
 import 'package:campus_sell/intermediaries/views/user_transaction_page.dart';
+import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:campus_sell/list_screen.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
@@ -43,6 +45,8 @@ void main() async {
   Get.put(ViewController());
   Get.put(IntermediaryController());
   Get.put(TransactionController());
+  Get.put(LikeItem());
+  Get.put(GetItemByIdController());
   runApp(const MainApp());
 }
 

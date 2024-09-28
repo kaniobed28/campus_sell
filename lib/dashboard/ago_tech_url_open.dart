@@ -21,8 +21,8 @@ class AgoTechUrlOpen extends StatefulWidget {
 }
 
 class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
-  LikeItem likeItemController = Get.put(LikeItem());
-  final getItemByIdController = Get.put(GetItemByIdController());
+  LikeItem likeItemController = Get.find<LikeItem>();
+  final getItemByIdController = Get.find<GetItemByIdController>();
   final DeviceController deviceController = Get.find<DeviceController>();
 
   @override

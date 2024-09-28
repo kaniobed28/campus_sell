@@ -99,12 +99,12 @@ class CategoryAllProductsPage extends StatelessWidget {
                       likes: data["likes"].length,
                       onTap: () async {
                         if (data['id'] != null) {
+                          await Get.toNamed(
+                              "/shopitems/itemcode/${data['id']}");
                           await viewController
                               .markItemAsViewedByUser(data['id']);
                           await viewController.markItemAsViewed(
                               data['id'], data['ownerId']);
-                          await Get.toNamed(
-                              "/shopitems/itemcode/${data['id']}");
                         } else {
                           // Handle the case when 'id' is null
                         }

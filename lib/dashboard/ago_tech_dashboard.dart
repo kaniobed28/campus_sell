@@ -18,40 +18,17 @@ class NewDashboard extends StatefulWidget {
 }
 
 class _NewDashboardState extends State<NewDashboard> {
-  final PageController _pageController = PageController(); // Step 1
-  Streamer streamer = Get.find<Streamer>();
-  AuthController authController = Get.find<AuthController>();
+  final PageController _pageController = PageController();
+  final Streamer streamer = Get.find<Streamer>();
+  final AuthController authController = Get.find<AuthController>();
   final DeviceController deviceController = Get.find<DeviceController>();
 
   @override
   Widget build(BuildContext context) {
-    final lists = [
-      streamer.foodList,
-      streamer.electronicList,
-      streamer.healthcareList,
-      streamer.beautyList,
-      streamer.jewelryList,
-      streamer.fashionList,
-      streamer.sportsList,
-      streamer.stationeryList,
-      streamer.kitchenList,
-      streamer.othersList,
-      streamer.servicesList
-    ];
-
     final categories = [
-      'All',
-      'Food',
-      'Electronics',
-      'Health Products',
-      'Beauty Products',
-      'Jewelry',
-      'Fashion',
-      'Sports Products',
-      'Stationery',
-      'Kitchen Products',
-      'Services',
-      'Other Products',
+      'All', 'Food', 'Electronics', 'Health Products', 'Beauty Products',
+      'Jewelry', 'Fashion', 'Sports Products', 'Stationery', 'Kitchen Products',
+      'Services', 'Other Products',
     ];
 
     return SafeArea(
@@ -63,102 +40,119 @@ class _NewDashboardState extends State<NewDashboard> {
             const SizedBox(height: 5),
             const CustomSearchBar(),
             const SizedBox(height: 5),
-
-            // Step 3: Navigation buttons
+            // Navigation buttons with optimized styling
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: List.generate(categories.length, (index) {
+                children: categories.map((category) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(Colors.teal),
-                        elevation: WidgetStateProperty.all<double>(
-                            10.0), // This adds the raised effect
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        elevation: 10.0,
                       ),
                       onPressed: () {
-                        _pageController.jumpToPage(
-                            index); // Navigate to the respective page
+                        int index = categories.indexOf(category);
+                        _pageController.jumpToPage(index);
                       },
                       child: Text(
-                        categories[index],
+                        category,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   );
-                }),
+                }).toList(),
               ),
             ),
-
             const SizedBox(height: 20),
             Expanded(
-              child: PageView(
-                controller: _pageController, // Step 2
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CustomHorizontalProductsList(
-                          lists: lists[10],
-                          categoryLabel: 'Services',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[5],
-                          categoryLabel: 'Fashion',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[0],
-                          categoryLabel: 'Food',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[1],
-                          categoryLabel: 'Electronics',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[2],
-                          categoryLabel: 'Health Products',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[3],
-                          categoryLabel: 'Beauty Products',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[4],
-                          categoryLabel: 'Jewelry',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[6],
-                          categoryLabel: 'Sports Products',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[7],
-                          categoryLabel: 'Stationery',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[8],
-                          categoryLabel: 'Kitchen Products',
-                        ),
-                        CustomHorizontalProductsList(
-                          lists: lists[9],
-                          categoryLabel: 'Other Products',
-                        ),
-                      ],
-                    ),
-                  ),
-                  FoodPage(foodList: lists[0]),
-                  ElectronicsPage(electronicList: lists[1]),
-                  HealthPage(healthList: lists[2]),
-                  BeautyPage(beautyList: lists[3]),
-                  JewelryPage(jewelryList: lists[4]),
-                  FashionPage(fashionList: lists[5]),
-                  SportsPage(sportsList: lists[6]),
-                  StationaryPage(stationaryList: lists[7]),
-                  KitchenPage(kitchenList: lists[8]),
-                  ServicesPage(servicesList: lists[10]),
-                  OtherPage(otherList: lists[9]),
-                ],
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    // "All" category page
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          CustomHorizontalProductsList(
+                            lists: streamer.servicesList,
+                            categoryLabel: 'Services',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.fashionList,
+                            categoryLabel: 'Fashion',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.foodList,
+                            categoryLabel: 'Food',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.electronicList,
+                            categoryLabel: 'Electronics',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.healthcareList,
+                            categoryLabel: 'Health Products',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.beautyList,
+                            categoryLabel: 'Beauty Products',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.jewelryList,
+                            categoryLabel: 'Jewelry',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.sportsList,
+                            categoryLabel: 'Sports Products',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.stationeryList,
+                            categoryLabel: 'Stationery',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.kitchenList,
+                            categoryLabel: 'Kitchen Products',
+                          ),
+                          CustomHorizontalProductsList(
+                            lists: streamer.othersList,
+                            categoryLabel: 'Other Products',
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    // Specific category pages
+                    switch (index) {
+                      case 1:
+                        return FoodPage(foodList: streamer.foodList);
+                      case 2:
+                        return ElectronicsPage(electronicList: streamer.electronicList);
+                      case 3:
+                        return HealthPage(healthList: streamer.healthcareList);
+                      case 4:
+                        return BeautyPage(beautyList: streamer.beautyList);
+                      case 5:
+                        return JewelryPage(jewelryList: streamer.jewelryList);
+                      case 6:
+                        return FashionPage(fashionList: streamer.fashionList);
+                      case 7:
+                        return SportsPage(sportsList: streamer.sportsList);
+                      case 8:
+                        return StationaryPage(stationaryList: streamer.stationeryList);
+                      case 9:
+                        return KitchenPage(kitchenList: streamer.kitchenList);
+                      case 10:
+                        return ServicesPage(servicesList: streamer.servicesList);
+                      case 11:
+                        return OtherPage(otherList: streamer.othersList);
+                      default:
+                        return OtherPage(otherList: streamer.othersList);
+                    }
+                  }
+                },
               ),
             ),
           ],
@@ -166,7 +160,7 @@ class _NewDashboardState extends State<NewDashboard> {
         backgroundColor: const Color(0xFFF2F2F2),
         bottomNavigationBar: Visibility(
           visible: !deviceController.isWeb.value,
-          child: CustomBottomNavBar(height: 50),
+          child:  CustomBottomNavBar(height: 50),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

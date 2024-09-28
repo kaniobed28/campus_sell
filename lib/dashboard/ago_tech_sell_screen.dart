@@ -38,7 +38,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final ImageController imageController2 = Get.put(ImageController());
   final DeviceController deviceController = Get.find<DeviceController>();
    AuthController authController = Get.find<AuthController>();
-   ViewController viewController = Get.find<ViewController>();
+  //  ViewController viewController = Get.find<ViewController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 
