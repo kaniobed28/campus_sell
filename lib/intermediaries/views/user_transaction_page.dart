@@ -1,11 +1,17 @@
 import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
 import 'package:campus_sell/intermediaries/models/transaction_model.dart';
+import 'package:campus_sell/intermediaries/views/transaction_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
+import 'package:campus_sell/intermediaries/models/transaction_model.dart';
+
 class UserTransactionPage extends StatelessWidget {
   final TransactionController _transactionController = Get.find<TransactionController>();
-  final String userId; // User ID to fetch transactions
+  final String userId;
 
   UserTransactionPage({super.key, required this.userId});
 
@@ -22,38 +28,40 @@ class UserTransactionPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+
           if (snapshot.hasError) {
-            // Show an error message to the user
             return Center(child: Text('Error fetching transactions: ${snapshot.error}'));
           }
-          final transactions = snapshot.data!;
+
+          final transactions = snapshot.data ?? [];
           if (transactions.isEmpty) {
             return const Center(child: Text('No transactions found.'));
           }
+
           return ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (context, index) {
               final txn = transactions[index];
               return Card(
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: ListTile(
                   title: Text('Transaction ID: ${txn.transactionId}'),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Status: ${txn.status}'),
-                      if (txn.status == 'accepted' || txn.status == 'rejected')
-                        Text('Intermediary Message: ${txn.intermediaryMessage ?? "N/A"}'),
-                      if (txn.intermediaryCharges != null && txn.intermediaryCharges! > 0)
-                        Text('Intermediary Charges: Gh¢${txn.intermediaryCharges!.toStringAsFixed(2)}'),
                       Text('Total Items: ${txn.items.length}'),
                     ],
                   ),
-                  trailing: _buildActionButton(txn),
-                  onTap: () {
-                    // Optionally navigate to a detailed transaction page
-                    // Get.toNamed('/transaction_detail/${txn.transactionId}');
-                  },
+                  trailing: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => TransactionDetailsPage(transaction: txn)); // Navigate to details page
+                      },
+                      child: const Text('View Details'),
+                    ),
+                  ),
                 ),
               );
             },
@@ -62,6 +70,8 @@ class UserTransactionPage extends StatelessWidget {
       ),
     );
   }
+}
+
 
   Widget _buildActionButton(TransactionModel txn) {
     if (txn.status == 'accepted') {
@@ -81,6 +91,8 @@ class UserTransactionPage extends StatelessWidget {
   }
 
   void _showContinueTerminateDialog(TransactionModel txn) {
+      final TransactionController _transactionController = Get.find<TransactionController>();
+
     Get.defaultDialog(
       title: 'Transaction Options',
       content: Column(
@@ -109,4 +121,4 @@ class UserTransactionPage extends StatelessWidget {
       ),
     );
   }
-}
+
