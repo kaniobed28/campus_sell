@@ -3,7 +3,7 @@ import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/countryCityUniversitiesMapping.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +40,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _authController.checkAuthentication();
+      _authController.checkAuthentication(context);
       await _populateFormWithData();
     });
   }

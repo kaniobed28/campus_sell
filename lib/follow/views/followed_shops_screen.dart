@@ -2,7 +2,7 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/follow/controllers/follow_controller.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -27,7 +27,7 @@ class _FollowedShopsScreenState extends State<FollowedShopsScreen> {
 
     return Scaffold(
       endDrawer: DrawerWidget(authController: authController),
-      appBar:  CustomAppBar(appBarTitle: "Shops I Follow", height: 75),
+      appBar:  CustomAppBar(appBarTitle: "Shops I Follow", height: 75,elevation: 5,),
       body: FutureBuilder<List<String>>(
         future: followController.getUserFollowedShops(userId!),
         builder: (context, snapshot) {

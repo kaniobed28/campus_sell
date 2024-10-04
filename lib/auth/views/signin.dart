@@ -82,11 +82,11 @@ class _SignInState extends State<SignIn> {
 
                   // Subheading Text
                   RichText(
-                    text: const TextSpan(
+                    text:  TextSpan(
                       text: 'Sign in to ',
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                      children: <TextSpan>[
-                        TextSpan(
+                      style: TextStyle(color:Theme.of(context).colorScheme.onSurface, fontSize: 20),
+                      children: const <TextSpan>[
+                         TextSpan(
                           text: 'Continue',
                           style: TextStyle(
                             color: Colors.amber,

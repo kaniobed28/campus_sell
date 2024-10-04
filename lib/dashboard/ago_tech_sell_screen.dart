@@ -4,7 +4,7 @@ import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/data_lists.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/constants.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkAuthentication();
+      authController.checkAuthentication(context);
     });
   }
 
@@ -75,7 +75,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController,),
-        appBar:  CustomAppBar(),
+        appBar:  CustomAppBar(elevation: 5,),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Obx(

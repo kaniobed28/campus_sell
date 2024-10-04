@@ -1,6 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkAuthentication();
+      authController.checkAuthentication(context);
     });
   }
 
@@ -31,7 +31,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar:  CustomAppBar(),
+        appBar:  CustomAppBar(elevation: 5,),
         endDrawer: DrawerWidget(
           authController: authController,
         ),

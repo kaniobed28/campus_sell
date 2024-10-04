@@ -1,6 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:campus_sell/search/controllers/search_controller.dart';
 import 'package:campus_sell/search/views/search_results_page.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +85,7 @@ class SearchScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         // backgroundColor: const Color(0xFFF2F2F2 ),
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(elevation: 5,appBarTitle: "Multi Search...",),
       endDrawer:  DrawerWidget(authController: authController,),
         body: SingleChildScrollView(
           child: Form(
@@ -158,7 +158,7 @@ class SearchScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.transparent),
+                            WidgetStateProperty.all<Color>(Theme.of(context).colorScheme.onSurface),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -181,11 +181,12 @@ class SearchScreen extends StatelessWidget {
                           //     hostelController.text.trim().toLowerCase());
                         }
                       },
-                      icon: const Icon(
+                      icon:  Icon(
+                        color: Theme.of(context).colorScheme.onPrimary,
                           Icons.search), // Add your desired icon here
-                      label: const Text(
+                      label:  Text(
                         'Search',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ),
                   ),

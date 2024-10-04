@@ -88,9 +88,9 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 20),
 
                   // Subheading Text
-                  const Text(
+                   Text(
                     "Your First Market",
-                    style: TextStyle(fontSize: 18, color: Colors.black),
+                    style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
                   ),
 
                   const SizedBox(height: 20),

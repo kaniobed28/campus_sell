@@ -2,7 +2,7 @@ import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/controllers/basket_controller.dart';
 import 'package:campus_sell/dashboard/custom_product_card.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,6 +34,7 @@ class CategoryAllProductsPage extends StatelessWidget {
         appBar: showAppBar == true 
             ? CustomAppBar(
                 appBarTitle: categoryLabel,
+                elevation: 5,
               )
             : null,
 

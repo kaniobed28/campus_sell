@@ -22,6 +22,7 @@ import 'package:campus_sell/intermediaries/views/intermediary_registration_scree
 import 'package:campus_sell/intermediaries/views/user_transaction_page.dart';
 import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:campus_sell/list_screen.dart';
+import 'package:campus_sell/main_board/custom_appbar/controllers/custom_appbar_controller.dart';
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
@@ -47,6 +48,7 @@ void main() async {
   Get.put(TransactionController());
   Get.put(LikeItem());
   Get.put(GetItemByIdController());
+  Get.put(ThemeController());
   runApp(const MainApp());
 }
 

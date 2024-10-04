@@ -3,7 +3,7 @@ import 'package:campus_sell/chat/chat_controller.dart';
 import 'package:campus_sell/chat/individual_chat.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,7 +44,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkAuthentication();
+      authController.checkAuthentication(context);
     });
   }
 
@@ -55,7 +55,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController),
-        appBar:   CustomAppBar(),
+        appBar:   CustomAppBar(elevation: 5,),
         body: StreamBuilder<QuerySnapshot>(
           stream: _firestore.collection('chats')
               .where('participants', arrayContains: currentUserId)
