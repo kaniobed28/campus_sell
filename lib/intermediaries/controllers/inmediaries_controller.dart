@@ -29,6 +29,7 @@ class IntermediaryController extends GetxController {
     try {
       await _transactionCollection.doc(transactionId).update({
         'status': 'accepted',
+        'statusChangedTime':FieldValue.serverTimestamp(),
         'intermediaryMessage': message,
         'intermediaryCharges': charges,
       });

@@ -16,7 +16,7 @@ class IntermediaryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Assigned Transactions'),
+        title: const Text('Intermedite Transactions'),
         backgroundColor: const Color(0xFFFBD300),
       ),
       body: StreamBuilder<List<TransactionModel>>(

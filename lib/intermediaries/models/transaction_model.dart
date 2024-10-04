@@ -7,12 +7,16 @@ class TransactionItem {
   final String itemName;
   final int quantity;
   final double price;
+  final Timestamp? timestamp; // Make timestamp nullable
+  final Timestamp? statusChangedTime; // Make statusChangedTime nullable
 
   TransactionItem({
     required this.itemId,
     required this.itemName,
     required this.quantity,
     required this.price,
+    this.timestamp, // Nullable parameter
+    this.statusChangedTime, // Nullable parameter
   });
 
   factory TransactionItem.fromMap(Map<String, dynamic> map) {
@@ -21,6 +25,8 @@ class TransactionItem {
       itemName: map['itemName'],
       quantity: map['quantity'],
       price: map['price'].toDouble(),
+      timestamp: map['timestamp'], // Initialize timestamp
+      statusChangedTime: map['statusChangedTime'], // Initialize statusChangedTime
     );
   }
 
@@ -30,6 +36,8 @@ class TransactionItem {
       'itemName': itemName,
       'quantity': quantity,
       'price': price,
+      'timestamp': timestamp, // Include timestamp in map
+      'statusChangedTime': statusChangedTime, // Include statusChangedTime in map
     };
   }
 }
@@ -42,7 +50,7 @@ class TransactionModel {
   final String status;
   late final String intermediaryMessage;
   late final double intermediaryCharges;
-  final Timestamp timestamp;
+  final Timestamp? timestamp; // Make transaction timestamp nullable
 
   TransactionModel({
     required this.transactionId,
@@ -52,7 +60,7 @@ class TransactionModel {
     required this.status,
     required this.intermediaryMessage,
     required this.intermediaryCharges,
-    required this.timestamp,
+    this.timestamp, // Nullable parameter
   });
 
   factory TransactionModel.fromDocument(DocumentSnapshot doc) {
@@ -67,7 +75,7 @@ class TransactionModel {
       status: data['status'],
       intermediaryMessage: data['intermediaryMessage'] ?? '',
       intermediaryCharges: data['intermediaryCharges']?.toDouble() ?? 0.0,
-      timestamp: data['timestamp'],
+      timestamp: data['timestamp'], // Initialize nullable transaction timestamp
     );
   }
 
@@ -79,7 +87,7 @@ class TransactionModel {
       'status': status,
       'intermediaryMessage': intermediaryMessage,
       'intermediaryCharges': intermediaryCharges,
-      'timestamp': timestamp,
+      'timestamp': timestamp, // Include nullable transaction timestamp in map
     };
   }
 }

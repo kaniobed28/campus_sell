@@ -196,7 +196,7 @@ class BasketScreen extends StatelessWidget {
                           itemId: basketItem.itemId,
                           itemName: basketItem.itemName,
                           quantity: basketItem.count.toInt(),
-                          price: basketItem.price,
+                          price: basketItem.price, 
                         ))
                     .toList(),
               );

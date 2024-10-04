@@ -132,7 +132,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     isSelected: Get.currentRoute == '/shopitems/removeitems',
                   ),
                   Visibility(
-                    visible:false,
+                    visible:true,
                     child: _drawerItem(
                       context,
                       icon: Icons

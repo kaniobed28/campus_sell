@@ -4,11 +4,6 @@ import 'package:campus_sell/intermediaries/views/transaction_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:campus_sell/intermediaries/controllers/transaction_controller.dart';
-import 'package:campus_sell/intermediaries/models/transaction_model.dart';
-
 class UserTransactionPage extends StatelessWidget {
   final TransactionController _transactionController = Get.find<TransactionController>();
   final String userId;

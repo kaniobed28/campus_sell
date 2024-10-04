@@ -10,14 +10,14 @@ class TransactionController extends GetxController {
 
   // Stream to listen to user's transactions
   Stream<List<TransactionModel>> getUserTransactions(String userId) {
-    return _transactionCollection
-        .where('userId', isEqualTo: userId)
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TransactionModel.fromDocument(doc))
-            .toList());
-  }
+  return _transactionCollection
+      .where('userId', isEqualTo: userId)
+      .orderBy('statusChangedTime', descending: true) // Sort by statusChangedTime
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => TransactionModel.fromDocument(doc))
+          .toList());
+}
 
   // Create a new transaction during checkout
   Future<void> createTransaction({
@@ -34,6 +34,7 @@ class TransactionController extends GetxController {
         'intermediaryMessage': '',
         'intermediaryCharges': 0.0,
         'timestamp': FieldValue.serverTimestamp(),
+        'statusChangedTime':FieldValue.serverTimestamp(),
       });
     } catch (e) {
       Get.snackbar('Error', 'Failed to create transaction: $e');
@@ -41,21 +42,27 @@ class TransactionController extends GetxController {
   }
 
   // Update transaction status and intermediary details
-  Future<void> updateTransaction({
-    required String transactionId,
-    String? status,
-    String? intermediaryMessage,
-    double? intermediaryCharges,
-  }) async {
-    try {
-      Map<String, dynamic> updateData = {};
-      if (status != null) updateData['status'] = status;
-      if (intermediaryMessage != null) updateData['intermediaryMessage'] = intermediaryMessage;
-      if (intermediaryCharges != null) updateData['intermediaryCharges'] = intermediaryCharges;
-
-      await _transactionCollection.doc(transactionId).update(updateData);
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to update transaction: $e');
+  Future<bool> updateTransaction({
+  required String transactionId,
+  String? status,
+  String? intermediaryMessage,
+  double? intermediaryCharges,
+}) async {
+  try {
+    Map<String, dynamic> updateData = {};
+   if (status != null) {
+      updateData['status'] = status;
+      updateData['statusChangedTime'] = FieldValue.serverTimestamp(); // Update status changed time
     }
+    if (intermediaryMessage != null) updateData['intermediaryMessage'] = intermediaryMessage;
+    if (intermediaryCharges != null) updateData['intermediaryCharges'] = intermediaryCharges;
+
+    await _transactionCollection.doc(transactionId).update(updateData);
+    return true; // Indicate success
+  } catch (e) {
+    Get.snackbar('Error', 'Failed to update transaction: $e');
+    return false; // Indicate failure
   }
+}
+
 }
