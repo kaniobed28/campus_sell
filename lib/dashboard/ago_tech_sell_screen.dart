@@ -75,7 +75,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController,),
-        appBar: const CustomAppBar(),
+        appBar:  CustomAppBar(),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Obx(

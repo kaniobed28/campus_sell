@@ -59,7 +59,10 @@ class MainApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
+      theme: lightTheme, // Default light theme
+      darkTheme: darkTheme, // Dark theme
+      themeMode: ThemeMode
+          .system, // Switches between light and dark based on system settings
       home: SafeArea(
         child: NewDashboard(),
       ),
@@ -163,7 +166,9 @@ class MainApp extends StatelessWidget {
         ),
         GetPage(
           name: '/transaction',
-          page: () => UserTransactionPage(userId: authController.uid.value,),
+          page: () => UserTransactionPage(
+            userId: authController.uid.value,
+          ),
           transition: Transition.cupertino,
           transitionDuration: const Duration(milliseconds: 500),
         ),

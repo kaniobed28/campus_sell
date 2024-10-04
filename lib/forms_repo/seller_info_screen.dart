@@ -1,7 +1,9 @@
 import 'package:campus_sell/dashboard/ago_tech_dashboard.dart';
 import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
+import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/countryCityUniversitiesMapping.dart';
+import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,19 +74,8 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("User Profile", style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-          centerTitle: true,
-          backgroundColor: const Color(0xFFFBD300),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.cameraswitch),
-              onPressed: () {
-                // Handle icon button press
-              },
-            ),
-          ],
-        ),
+        endDrawer:  DrawerWidget(authController: _authController,),
+        appBar:  CustomAppBar(appBarTitle: "My Profile",elevation: 5,),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -124,7 +115,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
         labelText: label,
         prefixIcon: Icon(icon, color: Colors.black),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.amber)),
+        focusedBorder:  OutlineInputBorder(borderSide: BorderSide(color:Theme.of(context).colorScheme.onSurface)),
       ),
       keyboardType: inputType,
       validator: (value) {
@@ -232,7 +223,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        backgroundColor: const Color(0xFFFBD300),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       child: Obx(() {
         return _updateInfo.value
@@ -243,7 +234,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                 ),
               )
-            : Text("Submit", style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.black));
+            : Text("Submit", style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.onSurface));
       }),
     );
   }

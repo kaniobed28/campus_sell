@@ -193,7 +193,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           borderRadius: BorderRadius.circular(10.0), // Rounded corners
           border: Border.all(
             color: isSelected
-                ? Colors.amber.shade400
+                ? Colors.black26
                 : Colors.transparent, // Border for selected item
             width: 1.5,
           ),

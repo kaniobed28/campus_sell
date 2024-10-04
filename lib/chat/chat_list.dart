@@ -55,7 +55,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController),
-        appBar:  const CustomAppBar(),
+        appBar:   CustomAppBar(),
         body: StreamBuilder<QuerySnapshot>(
           stream: _firestore.collection('chats')
               .where('participants', arrayContains: currentUserId)

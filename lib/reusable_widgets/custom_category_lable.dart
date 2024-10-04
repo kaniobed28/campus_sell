@@ -11,7 +11,7 @@ class CustomCategoryLabel extends StatelessWidget {
   const CustomCategoryLabel({
     super.key,
     required this.textLabel,
-    this.backgroundColor = Colors.amber,  // Default to amber as it's part of your color theme
+    this.backgroundColor = Colors.white,  // Default to amber as it's part of your color theme
     this.textColor = Colors.white,        // Default white text on amber background
     this.padding = 8.0,                   // Default padding
     this.borderRadius = 12.0,             // Default border radius

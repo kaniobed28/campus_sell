@@ -42,7 +42,7 @@ class _SignInState extends State<SignIn> {
               width: widthOfScreen,
               height: heightOfScreen,
               padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey[50],
+              color: Theme.of(context).colorScheme.onPrimary,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -159,7 +159,7 @@ class _SignInState extends State<SignIn> {
                   // Login Button
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700],
+                      backgroundColor: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 100,
                         vertical: 15,
@@ -195,9 +195,9 @@ class _SignInState extends State<SignIn> {
                         }
                       }
                     },
-                    child: const Text(
+                    child:  Text(
                       'Login',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color:Theme.of(context).colorScheme.onSurface),
                     ),
                   ),
 

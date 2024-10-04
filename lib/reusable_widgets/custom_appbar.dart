@@ -7,9 +7,10 @@ import 'package:get/get.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height; // Height of the AppBar, defaulting to the standard toolbar height.
   final String? appBarTitle;
+   double? elevation = 0;
 
   // Constructor for CustomAppBar. The height parameter is optional, with a default value of kToolbarHeight.
-  const CustomAppBar({super.key, this.height = kToolbarHeight, this.appBarTitle});
+   CustomAppBar({super.key, this.height = kToolbarHeight, this.appBarTitle, this.elevation});
 
   // This defines the size of the AppBar, which is required by the PreferredSizeWidget interface.
   @override
@@ -23,40 +24,45 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         bottomLeft: Radius.circular(20.0),
         bottomRight: Radius.circular(20.0),
       ),
-      child: Container(
-        height: height, // Sets the height of the AppBar container.
-        color: const Color(0xFFFBD300), // Custom background color for the AppBar.
-        child: AppBar(
-          title: Text(appBarTitle ?? ''),
-
-          backgroundColor: Colors.transparent, // Makes the AppBar background transparent so that the container color is visible.
-          elevation: 0, // Removes the default AppBar shadow.
-          leading:  Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () {
-                Get.toNamed("/");
-              },
-              child: const CircleAvatar(
-                backgroundColor: Colors.white, // Outer circle's background color.
-                child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: CircleAvatar(
-                    // Inner circle image. Replace with an appropriate image for your app.
-                    backgroundImage: AssetImage("assets/img/campus-sell-favicon-color.png"),
+      child: Material(
+        elevation: elevation!,
+        child: Container(
+          height: height, // Sets the height of the AppBar container.
+          color: Theme.of(context).primaryColor, // Custom background color for the AppBar.
+          child: AppBar(
+            title: Text(appBarTitle ?? ''),
+        
+            backgroundColor: Colors.transparent, // Makes the AppBar background transparent so that the container color is visible.
+            elevation: 0, // Removes the default AppBar shadow.
+            leading:  Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed("/");
+                },
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white, // Outer circle's background color.
+                  child: Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent, // Inner circle's background color.
+                      // foregroundColor: Colors.black,
+                      // Inner circle image. Replace with an appropriate image for your app.
+                      backgroundImage: AssetImage("assets/img/campus-sell-favicon-color.png"),
+                    ),
                   ),
                 ),
               ),
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.menu), // Menu icon at the right side of the AppBar.
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer(); // Opens the end drawer when the menu icon is tapped.
+                },
+              ),
+            ],
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.menu), // Menu icon at the right side of the AppBar.
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer(); // Opens the end drawer when the menu icon is tapped.
-              },
-            ),
-          ],
         ),
       ),
     );

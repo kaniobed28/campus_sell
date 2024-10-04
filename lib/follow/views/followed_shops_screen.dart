@@ -27,7 +27,7 @@ class _FollowedShopsScreenState extends State<FollowedShopsScreen> {
 
     return Scaffold(
       endDrawer: DrawerWidget(authController: authController),
-      appBar: const CustomAppBar(appBarTitle: "Shops I Follow", height: 75),
+      appBar:  CustomAppBar(appBarTitle: "Shops I Follow", height: 75),
       body: FutureBuilder<List<String>>(
         future: followController.getUserFollowedShops(userId!),
         builder: (context, snapshot) {

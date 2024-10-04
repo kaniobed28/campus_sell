@@ -1,6 +1,5 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/basket_screen.dart';
-import 'package:campus_sell/intermediaries/views/intermediary_registration_screen.dart';
 import 'package:campus_sell/intermediaries/views/intermediary_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,14 +19,14 @@ class CustomBottomNavBar extends StatelessWidget {
 
     return Container(
       height: height,
-      color: const Color(0xFFFBD300),
+      color: Theme.of(context).primaryColor, // Using primary color from the theme
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           NavBarItem(
             icon: Icons.location_on_outlined,
             label: 'Home',
-            isSelected: currentRoute == '/'||currentRoute == '/shop'||currentRoute == '/shopitems', // Check if this item is selected
+            isSelected: currentRoute == '/' || currentRoute == '/shop' || currentRoute == '/shopitems',
             onTap: () {
               Get.offNamed('/');
             },
@@ -35,49 +34,39 @@ class CustomBottomNavBar extends StatelessWidget {
           NavBarItem(
             icon: Icons.chat_sharp,
             label: 'Chats',
-            isSelected: currentRoute == '/chats', // Check selection
+            isSelected: currentRoute == '/chats',
             onTap: () async {
               await Get.offNamed('/chats');
             },
           ),
-          // Visibility(
-          //   visible: false,
-          //   child: NavBarItem(
-          //     icon: Icons.add_business_sharp,
-          //     label: 'register',
-          //     isSelected: currentRoute.startsWith('/shop/shopitems'), // Check if selected
-          //     onTap: () async {
-          //       Get.to(AddIntermediaryScreen());
-          //     },
-          //   ),
-          // ),
           Visibility(
             visible: true,
             child: NavBarItem(
               icon: Icons.add_business_sharp,
-              label: 'dashbaord',
-              isSelected: currentRoute.startsWith('/shop/shopitems'), // Check if selected
+              label: 'Dashboard',
+              isSelected: currentRoute.startsWith('/shop/shopitems'),
               onTap: () async {
-                Get.to(IntermediaryTransactionPage(intermediaryId: 'OP1JU5p1oFGuiMTKd42Y',));
+                Get.to(IntermediaryTransactionPage(intermediaryId: 'OP1JU5p1oFGuiMTKd42Y'));
               },
             ),
           ),
-          
           Visibility(
             visible: true,
             child: NavBarItem(
               icon: Icons.follow_the_signs,
               label: 'Follows',
-              isSelected: currentRoute == '/follows', // Check if selected
+              isSelected: currentRoute == '/follows',
               onTap: () async {
-                await Get.toNamed((authController.isAuthenticated.isFalse)?'/shop/followedshops/not-authenticated':'/shop/followedshops/${authController.uid.value}');
+                await Get.toNamed((authController.isAuthenticated.isFalse)
+                    ? '/shop/followedshops/not-authenticated'
+                    : '/shop/followedshops/${authController.uid.value}');
               },
             ),
           ),
           NavBarItem(
             icon: Icons.add_shopping_cart,
             label: 'Basket',
-            isSelected: currentRoute == '/basket', // Check if selected
+            isSelected: currentRoute == '/basket',
             onTap: () async {
               await Get.to(BasketScreen(userId: authController.uid.value));
             },

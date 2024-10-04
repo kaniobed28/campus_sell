@@ -85,7 +85,7 @@ class SearchScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         // backgroundColor: const Color(0xFFF2F2F2 ),
-        appBar:const CustomAppBar(),
+        appBar: CustomAppBar(),
       endDrawer:  DrawerWidget(authController: authController,),
         body: SingleChildScrollView(
           child: Form(

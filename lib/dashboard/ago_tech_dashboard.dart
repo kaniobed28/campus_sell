@@ -33,8 +33,9 @@ class _NewDashboardState extends State<NewDashboard> {
 
     return SafeArea(
       child: Scaffold(
+        
         endDrawer: DrawerWidget(authController: authController),
-        appBar: const CustomAppBar(),
+        appBar:  CustomAppBar(elevation: 0,),
         body: Column(
           children: [
             const SizedBox(height: 5),
@@ -46,10 +47,10 @@ class _NewDashboardState extends State<NewDashboard> {
               child: Row(
                 children: categories.map((category) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
+                        backgroundColor: const Color.fromARGB(255, 255, 255, 254),
                         elevation: 10.0,
                       ),
                       onPressed: () {
@@ -58,7 +59,7 @@ class _NewDashboardState extends State<NewDashboard> {
                       },
                       child: Text(
                         category,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   );
@@ -166,10 +167,10 @@ class _NewDashboardState extends State<NewDashboard> {
           onPressed: () {
             Get.toNamed("/chats");
           },
-          backgroundColor: Colors.amber,
-          child: const Icon(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          child:  Icon(
             Icons.chat,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),

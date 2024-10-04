@@ -35,6 +35,7 @@ class _SignupState extends State<Signup> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -140,7 +141,7 @@ class _SignupState extends State<Signup> {
                   // Sign Up Button
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700],
+                      backgroundColor: Theme.of(context).colorScheme.onPrimary,
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -169,7 +170,7 @@ class _SignupState extends State<Signup> {
                         }
                       }
                     },
-                    child: const Text("Sign Up",style: TextStyle(color: Colors.white),),
+                    child:  Text("Sign Up",style: TextStyle(color:Theme.of(context).colorScheme.onSurface),),
                   ),
 
                   const SizedBox(height: 10),
