@@ -204,10 +204,10 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
 
                                 ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                    backgroundColor: WidgetStateProperty.all<Color>(
                                       const Color(0xFFFBD300),
                                     ),
-                                    foregroundColor: MaterialStateProperty.all<Color>(
+                                    foregroundColor: WidgetStateProperty.all<Color>(
                                         Colors.black),
                                   ),
                                   onPressed: () async {
