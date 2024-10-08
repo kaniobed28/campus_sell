@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(15.0),
           boxShadow: [
             BoxShadow(
@@ -68,7 +68,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       itemName,
                       style:  TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -79,7 +79,7 @@ class ProductCard extends StatelessWidget {
                       price,
                       style: TextStyle(
                         fontSize: 16.0,
-                        color:Theme.of(context).colorScheme.onPrimary,
+                        color:Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -90,7 +90,7 @@ class ProductCard extends StatelessWidget {
                         const SizedBox(width: 5),
                         Text(
                           likes.toString(),
-                          style:  TextStyle(fontSize: 14.0,color: Theme.of(context).colorScheme.onPrimary,),
+                          style:  TextStyle(fontSize: 14.0,color: Theme.of(context).colorScheme.onSurface,),
                         ),
                       ],
                     ),
