@@ -16,8 +16,8 @@ class IntermediaryTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Intermedite Transactions'),
-        backgroundColor: const Color(0xFFFBD300),
+        title:  Text('Intermediate Transactions',style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+        backgroundColor:Theme.of(context).colorScheme.onPrimary,
       ),
       body: StreamBuilder<List<TransactionModel>>(
         stream: _intermediaryController.getIntermediaryTransactions(intermediaryId),

@@ -41,7 +41,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.home, color: Colors.black),
+          icon:  Icon(Icons.home, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () {
             Get.offAllNamed('/'); // Navigate to home and clear the stack
           },
@@ -50,24 +50,24 @@ class _ListScreenState extends State<ListScreen> {
           () => Text(
             shopName.value,
             style: GoogleFonts.aclonica(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 22,
             ),
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFFBD300),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.share, color: Colors.black),
+            icon:  Icon(Icons.share, color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
               String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
               Share.share('Check out this shop: $shopUrl');
             },
           ),
           IconButton(
-            icon: const Icon(Icons.qr_code, color: Colors.black),
+            icon:  Icon(Icons.qr_code, color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
               String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
              qrCodeController.generateAndDownloadQRCode(shopUrl, 'shop_qr_code',context);

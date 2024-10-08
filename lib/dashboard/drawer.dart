@@ -25,9 +25,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         children: [
           // Drawer Header
           DrawerHeader(
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.amber, Colors.teal],
+                colors: [Theme.of(context).colorScheme.onPrimary,Theme.of(context).colorScheme.onSurface,],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -58,6 +58,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                
                 children: [
                   _drawerItem(
                     context,
@@ -131,17 +132,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     route: '/shopitems/removeitems',
                     isSelected: Get.currentRoute == '/shopitems/removeitems',
                   ),
-                  Visibility(
-                    visible:true,
-                    child: _drawerItem(
-                      context,
-                      icon: Icons
-                          .track_changes, // Changed to remove shop icon
-                      title: 'trans',
-                      route: '/transaction',
-                      isSelected: Get.currentRoute == '/shopitems/removeitems',
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible:true,
+                  //   child: _drawerItem(
+                  //     context,
+                  //     icon: Icons
+                  //         .track_changes, // Changed to remove shop icon
+                  //     title: 'trans',
+                  //     route: '/transaction',
+                  //     isSelected: Get.currentRoute == '/shopitems/removeitems',
+                  //   ),
+                  // ),
                 ],
               ),
             ),

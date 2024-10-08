@@ -30,7 +30,7 @@ class BasketScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFFBD300),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 0,
       ),
       body: StreamBuilder<List<BasketItemCount>>(

@@ -30,7 +30,7 @@ class SmallProductCard extends StatelessWidget {
         width: 154.43,
         height: 210.5,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(20.0),
           boxShadow: [
             BoxShadow(
@@ -104,14 +104,14 @@ class SmallProductCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[700],
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       Row(
                         children: [
                           Icon(
                             Icons.favorite_border,
-                            color: Colors.grey[700],
+                            color:Theme.of(context).colorScheme.onSurface,
                           ),
                           Text(
                             totalLikes,

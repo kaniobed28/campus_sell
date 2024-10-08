@@ -33,7 +33,7 @@ class _NewDashboardState extends State<NewDashboard> {
 
     return SafeArea(
       child: Scaffold(
-        
+        backgroundColor: Theme.of(context).primaryColor,
         endDrawer: DrawerWidget(authController: authController),
         appBar:  CustomAppBar(elevation: 0,),
         body: Column(
@@ -43,14 +43,16 @@ class _NewDashboardState extends State<NewDashboard> {
             const SizedBox(height: 5),
             // Navigation buttons with optimized styling
             SingleChildScrollView(
+              
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: categories.map((category) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
                     child: ElevatedButton(
+                      
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 255, 255, 254),
+                        backgroundColor:Theme.of(context).colorScheme.onPrimary,
                         elevation: 10.0,
                       ),
                       onPressed: () {
@@ -59,7 +61,7 @@ class _NewDashboardState extends State<NewDashboard> {
                       },
                       child: Text(
                         category,
-                        style: const TextStyle(color: Colors.black),
+                        style:  TextStyle(color: Theme.of(context).colorScheme.onSurface),
                       ),
                     ),
                   );
@@ -158,7 +160,6 @@ class _NewDashboardState extends State<NewDashboard> {
             ),
           ],
         ),
-        backgroundColor: const Color(0xFFF2F2F2),
         bottomNavigationBar: Visibility(
           visible: !deviceController.isWeb.value,
           child:  CustomBottomNavBar(height: 50),

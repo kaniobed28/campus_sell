@@ -70,7 +70,7 @@ ThemeData lightTheme = ThemeData(
 // Dark Theme
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF212121), // Dark primary color
+  primaryColor: const Color(0xFF151513), // Dark primary color
   scaffoldBackgroundColor: const Color(0xFF121212), // Dark background color
 
   // Dark Color Scheme

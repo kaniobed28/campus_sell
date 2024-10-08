@@ -28,14 +28,14 @@ class NavBarItem extends StatelessWidget {
               ),
               child: Icon(
                 icon,
-                color: isSelected ? Colors.black : const Color.fromARGB(255, 105, 103, 103), // Highlight if selected
+                color: isSelected ? Theme.of(context).colorScheme.onSurface : const Color.fromARGB(255, 105, 103, 103), // Highlight if selected
               ),
             ),
             const SizedBox(height: 1.0),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.black :const Color.fromARGB(255, 105, 103, 103),  // Highlight if selected
+                color: isSelected ? Theme.of(context).colorScheme.onSurface :const Color.fromARGB(255, 105, 103, 103),  // Highlight if selected
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // Bold if selected
               ),
             ),

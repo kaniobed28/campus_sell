@@ -14,8 +14,8 @@ class TransactionDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transaction Details'),
-        backgroundColor: const Color(0xFFFBD300),
+        title: Text('Transaction Details',style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+        backgroundColor:  Theme.of(context).colorScheme.onPrimary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

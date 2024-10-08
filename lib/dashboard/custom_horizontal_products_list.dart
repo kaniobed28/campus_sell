@@ -78,7 +78,7 @@ class CustomHorizontalProductsList extends StatelessWidget {
                       child: Text(
                         "See All",
                         style: TextStyle(
-                          color: Colors.blue[900],
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.none,
                         ),

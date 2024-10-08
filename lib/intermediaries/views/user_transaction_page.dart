@@ -14,8 +14,8 @@ class UserTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Transactions'),
-        backgroundColor: const Color(0xFFFBD300),
+        title:  Text('Your Transactions',style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: StreamBuilder<List<TransactionModel>>(
         stream: _transactionController.getUserTransactions(userId),

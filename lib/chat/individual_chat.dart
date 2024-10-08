@@ -58,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
             }
           },
         ),
-        backgroundColor: Colors.amber,
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 5,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -113,11 +113,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 Expanded(
                   child: TextField(
+                    
                     controller: messageController,
                     decoration: InputDecoration(
                       hintText: "Enter a message",
                       filled: true,
-                      fillColor: Colors.grey[200],
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,

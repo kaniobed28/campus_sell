@@ -59,7 +59,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                     visible: !deviceController.isWeb.value,
                     child: CustomBottomNavBar(height: 50)),
               appBar: AppBar(
-                backgroundColor: const Color(0xFFFBD300),
+                backgroundColor: Theme.of(context).colorScheme.onPrimary,
                 actions: [
                   Obx(() {
                     return FittedBox(
@@ -70,7 +70,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                               likeItemController.liked.value
                                   ? Icons.favorite
                                   : Icons.favorite_border,
-                              color: likeItemController.liked.value ? Colors.red : Colors.black,
+                              color: likeItemController.liked.value ? Colors.red : Theme.of(context).colorScheme.onSurface,
                             ),
                             onPressed: () {
                               if (!authController.isAuthenticated.value) {
@@ -87,7 +87,7 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                   }),
                   // Share Icon Button
                   IconButton(
-                    icon: const Icon(Icons.share, color: Colors.black),
+                    icon:  Icon(Icons.share, color: Theme.of(context).colorScheme.onSurface),
                     onPressed: () {
                       Share.share(contentToShare);
                     },

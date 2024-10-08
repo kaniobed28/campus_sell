@@ -67,18 +67,19 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       itemName,
-                      style: const TextStyle(
+                      style:  TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 5),
+                     SizedBox(height: 5),
                     Text(
                       price,
                       style: TextStyle(
                         fontSize: 16.0,
-                        color: Colors.grey[700],
+                        color:Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -89,7 +90,7 @@ class ProductCard extends StatelessWidget {
                         const SizedBox(width: 5),
                         Text(
                           likes.toString(),
-                          style: const TextStyle(fontSize: 14.0),
+                          style:  TextStyle(fontSize: 14.0,color: Theme.of(context).colorScheme.onPrimary,),
                         ),
                       ],
                     ),

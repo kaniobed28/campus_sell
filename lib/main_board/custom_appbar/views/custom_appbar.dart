@@ -50,12 +50,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              ),
               Obx(() => IconButton(
                 icon: Icon(themeController.isDarkMode.value
                     ? Icons.dark_mode
@@ -64,6 +58,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   themeController.toggleTheme();
                 },
               )),
+              IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
             ],
           ),
         ),
