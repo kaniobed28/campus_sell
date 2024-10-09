@@ -22,6 +22,7 @@ class _NewDashboardState extends State<NewDashboard> {
   final Streamer streamer = Get.find<Streamer>();
   final AuthController authController = Get.find<AuthController>();
   final DeviceController deviceController = Get.find<DeviceController>();
+  final SearchBarController searchController = Get.find<SearchBarController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,11 @@ class _NewDashboardState extends State<NewDashboard> {
         body: Column(
           children: [
             const SizedBox(height: 5),
-            const CustomSearchBar(),
+            Obx(
+              ()=> Visibility(
+                visible: searchController.searchBarVisibilty.value,
+                child: const CustomSearchBar()),
+            ),
             const SizedBox(height: 5),
             // Navigation buttons with optimized styling
             SingleChildScrollView(

@@ -51,3 +51,14 @@ class CustomSearchBar extends StatelessWidget {
     );
   }
 }
+
+
+class SearchBarController extends GetxController{
+
+  RxBool searchBarVisibilty = true.obs;
+
+  void searchVisibility(){
+    searchBarVisibilty.value != searchBarVisibilty.value;
+  }
+  
+}
