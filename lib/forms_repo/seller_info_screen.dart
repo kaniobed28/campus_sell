@@ -84,7 +84,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  _buildTextField(_brandNameController, "Shop's Name", Icons.branding_watermark),
+                  _buildTextField(_brandNameController, "User/Shop's Name", Icons.branding_watermark),
                   const SizedBox(height: 20),
                   _buildCountryDropdown(),
                   const SizedBox(height: 20),
