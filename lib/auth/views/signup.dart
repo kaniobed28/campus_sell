@@ -1,5 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/auth/views/signin.dart';
+import 'package:campus_sell/controllers/additional_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class _SignupState extends State<Signup> {
   bool _obscureText = true;
 
   AuthController authController = Get.find<AuthController>();
+  AdditionalInfoController additionalInfoController = Get.find<AdditionalInfoController>();
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -150,6 +152,8 @@ class _SignupState extends State<Signup> {
                             widget.emailOfFormController.text.trim(),
                             widget.passwordOfFormController.text.trim(),
                           );
+                                additionalInfoController.addDataToFirestore({"ownerId":authController.uid.value}, authController.uid.value);
+
                           if (authController.uid.value.isNotEmpty) {
                             Get.toNamed("/shop");
                           } else {

@@ -39,17 +39,17 @@ class CustomBottomNavBar extends StatelessWidget {
               await Get.offNamed('/chats');
             },
           ),
-          // Visibility(
-          //   visible: true,
-          //   child: NavBarItem(
-          //     icon: Icons.add_business_sharp,
-          //     label: 'Dashboard',
-          //     isSelected: currentRoute.startsWith('/shop/shopitems'),
-          //     onTap: () async {
-          //       Get.to(IntermediaryTransactionPage(intermediaryId: 'OP1JU5p1oFGuiMTKd42Y'));
-          //     },
-          //   ),
-          // ),
+          Visibility(
+            visible: true,
+            child: NavBarItem(
+              icon: Icons.add_business_sharp,
+              label: 'Dashboard',
+              isSelected: currentRoute.startsWith('/shop/shopitems'),
+              onTap: () async {
+                Get.to(IntermediaryTransactionPage(intermediaryId: 'OP1JU5p1oFGuiMTKd42Y'));
+              },
+            ),
+          ),
           Visibility(
             visible: true,
             child: NavBarItem(

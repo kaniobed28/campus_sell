@@ -50,6 +50,7 @@ void main() async {
   Get.put(GetItemByIdController());
   Get.put(ThemeController());
   Get.put(SearchBarController());
+  Get.put(AdditionalInfoController());
   runApp(const MainApp());
 }
 

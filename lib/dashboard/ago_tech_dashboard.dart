@@ -42,7 +42,7 @@ class _NewDashboardState extends State<NewDashboard> {
             const SizedBox(height: 5),
             Obx(
               ()=> Visibility(
-                visible: searchController.searchBarVisibilty.value,
+                visible: searchController.searchBarVisibility.value,
                 child: const CustomSearchBar()),
             ),
             const SizedBox(height: 5),

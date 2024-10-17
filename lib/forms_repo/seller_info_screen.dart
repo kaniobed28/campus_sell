@@ -120,7 +120,7 @@ class _SellInfoScreenState extends State<SellInfoScreen> {
       keyboardType: inputType,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter $label';
+          // return 'Please enter $label';
         }
         return null;
       },

@@ -1,9 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
-import 'package:campus_sell/chat/chat_list.dart';
-import 'package:campus_sell/chat/individual_chat.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
-import 'package:campus_sell/reusable_widgets/custom_copy_icon_button.dart';
-import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
+import 'package:campus_sell/dashboard/product_card_builds.dart';
 import 'package:campus_sell/reusable_widgets/more_details_page.dart';
 import 'package:campus_sell/follow/controllers/follow_controller.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +20,9 @@ class AgoTechProductDetailsCard extends StatelessWidget {
   final String ownerId;
   final String itemId;
 
-  const AgoTechProductDetailsCard({
-    Key? key,
+
+   const AgoTechProductDetailsCard({
+    super.key,
     required this.title,
     required this.description,
     required this.price,
@@ -37,7 +35,7 @@ class AgoTechProductDetailsCard extends StatelessWidget {
     required this.socialMedia,
     required this.ownerId,
     required this.itemId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,25 +67,27 @@ class AgoTechProductDetailsCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                _buildActionButton(isOwnerController.isOwner, ownerId),
+                // Pass `isOwner` to the widget to show edit button or chat button
+                ProductDetailWidgets.buildEditProductName(isOwnerController.isOwner, ownerId),
               ],
             ),
             const SizedBox(height: 8.0),
 
             // Description with Dropdown Effect
-            _buildDescriptionSection(description),
+            ProductDetailWidgets.buildDescriptionSection(description, ),
             const SizedBox(height: 12.0),
 
             // Brand Name and Follow Section
-            _buildBrandAndFollowSection(brandName, ownerId, followController),
+            ProductDetailWidgets.buildBrandAndFollowSection(
+                brandName, ownerId, followController, ),
             const SizedBox(height: 12.0),
 
             // Price Section
-            _buildPriceSection(price),
+            ProductDetailWidgets.buildPriceSection(price,),
             const SizedBox(height: 12.0),
 
             // Phone Number Section
-            _buildPhoneSection(phone),
+            ProductDetailWidgets.buildPhoneSection(phone, ),
             const SizedBox(height: 12.0),
 
             // More Details Button
@@ -122,127 +122,6 @@ class AgoTechProductDetailsCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildActionButton(bool isOwner, String ownerId) {
-    if (isOwner) {
-      return IconButton(
-        icon: const Icon(Icons.edit, color: Colors.grey),
-        onPressed: () {
-          // Edit logic
-        },
-      );
-    } else {
-      return ElevatedButton(
-        onPressed: () {
-          Get.to(ChatScreen(receiverId: ownerId));
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: const Text("Chat now", style: TextStyle(color: Colors.white)),
-      );
-    }
-  }
-
-  Widget _buildDescriptionSection(String description) {
-    return ExpansionTile(
-      title: const Text(
-        "Description",
-        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            description,
-            style: const TextStyle(fontSize: 14.0, color: Colors.black54),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildBrandAndFollowSection(String brandName, String ownerId, FollowController followController) {
-    return Row(
-      children: [
-        const Icon(Icons.business, color: Colors.grey),
-        const SizedBox(width: 8.0),
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed("/shop/shopitems/$ownerId");
-            },
-            child: Text(
-              brandName,
-              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10.0),
-        Obx(() {
-          return Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  followController.isFollowingShop.value ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.redAccent,
-                ),
-                onPressed: () {
-                  followController.isFollowingShop.value
-                      ? followController.unfollowShop(ownerId)
-                      : followController.followShop(ownerId);
-                },
-              ),
-              Text(
-                '${followController.followerCount.value} followers',
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ],
-          );
-        }),
-      ],
-    );
-  }
-
-  Widget _buildPriceSection(String price) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.attach_money, color: Colors.grey),
-            const SizedBox(width: 5.0),
-            Text(
-              "Gh¢ $price",
-              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        CopyIconButton(value: price, label: 'Price'),
-      ],
-    );
-  }
-
-  Widget _buildPhoneSection(String phone) {
-    return Row(
-      children: [
-        const Icon(Icons.phone, color: Colors.grey),
-        const SizedBox(width: 5.0),
-        Expanded(
-          child: Text(
-            phone,
-            style: const TextStyle(fontSize: 16.0),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        CopyIconButton(value: phone, label: 'Phone'),
-      ],
     );
   }
 }
