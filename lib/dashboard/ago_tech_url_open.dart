@@ -8,6 +8,8 @@ import 'package:campus_sell/likes/controller/likes.dart';
 import 'package:campus_sell/reusable_widgets/custom_add_to_basket.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
+import 'package:campus_sell/share_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -24,6 +26,9 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
   LikeItem likeItemController = Get.find<LikeItem>();
   final getItemByIdController = Get.find<GetItemByIdController>();
   final DeviceController deviceController = Get.find<DeviceController>();
+  final ShareController shareController = Get.find<ShareController>();
+  
+  RxBool isLoading = false.obs; // Observable for loading state
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +56,14 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
           // Construct the share content here
           final String description = itemData["description"];
           final String url = "https://campussell.github.io/#/shopitems/itemcode/$itemId";
-          final String contentToShare = "$description\n\n$url";
+          final String contentToShare = "${itemData['itemName']}\n$url\n$description";
 
           return SafeArea(
             child: Scaffold(
-              bottomNavigationBar:Visibility(
-                    visible: !deviceController.isWeb.value,
-                    child: CustomBottomNavBar(height: 50)),
+              bottomNavigationBar: Visibility(
+                visible: !deviceController.isWeb.value,
+                child: CustomBottomNavBar(height: 50)
+              ),
               appBar: AppBar(
                 backgroundColor: Theme.of(context).colorScheme.onPrimary,
                 actions: [
@@ -85,13 +91,26 @@ class _AgoTechClickedItemState extends State<AgoTechUrlOpen> {
                       ),
                     );
                   }),
-                  // Share Icon Button
-                  IconButton(
-                    icon:  Icon(Icons.share, color: Theme.of(context).colorScheme.onSurface),
-                    onPressed: () {
-                      Share.share(contentToShare);
-                    },
-                  ),
+                  // Share Icon Button with loading icon integration using Obx
+                  Obx(() {
+                    return IconButton(
+                      icon: isLoading.value 
+                          ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onSurface)
+                          : Icon(Icons.share, color: Theme.of(context).colorScheme.onSurface),
+                      onPressed: () async {
+                        isLoading.value = true; // Show loading icon
+                        try {
+                          if (!kIsWeb) {
+                            await shareController.shareWithImage(itemData["imagesUrls"][0], contentToShare);
+                          } else {
+                            await Share.share(contentToShare);
+                          }
+                        } finally {
+                          isLoading.value = false; // Hide loading icon
+                        }
+                      },
+                    );
+                  }),
                 ],
               ),
               body: SingleChildScrollView(

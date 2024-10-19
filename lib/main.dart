@@ -25,6 +25,7 @@ import 'package:campus_sell/main_board/custom_appbar/controllers/custom_appbar_c
 import 'package:campus_sell/main_board/delete_page.dart';
 import 'package:campus_sell/reusable_widgets/custom_search_bar.dart';
 import 'package:campus_sell/search/views/search_screen.dart';
+import 'package:campus_sell/share_controller.dart';
 import 'package:campus_sell/themes/theme_constants.dart';
 import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -51,6 +52,7 @@ void main() async {
   Get.put(ThemeController());
   Get.put(SearchBarController());
   Get.put(AdditionalInfoController());
+  Get.put(ShareController());
   runApp(const MainApp());
 }
 
