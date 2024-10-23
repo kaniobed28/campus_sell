@@ -19,7 +19,6 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
-
   AuthController authController = Get.put(AuthController());
 
   void _togglePasswordVisibility() {
@@ -47,208 +46,31 @@ class _SignInState extends State<SignIn> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-
-                  // Logo at the top using Asset Image with Circle Outline
-                  Container(
-                    width: 100, // Increase the width and height slightly for the circle
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.yellow[700]!, // Border color
-                        width: 3.0, // Border thickness
-                      ),
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/img/campus-sell-favicon-color.png', // Replace with your image path
-                        height: 80,
-                        width: 80,
-                        fit: BoxFit.cover, // Ensures the image fits within the circle
-                      ),
-                    ),
-                  ),
-
+                  const LogoWithBorder(),
                   const SizedBox(height: 20),
-
-                  // Welcome Text
-                  const Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  // Subheading Text
-                  RichText(
-                    text:  TextSpan(
-                      text: 'Sign in to ',
-                      style: TextStyle(color:Theme.of(context).colorScheme.onSurface, fontSize: 20),
-                      children: const <TextSpan>[
-                         TextSpan(
-                          text: 'Continue',
-                          style: TextStyle(
-                            color: Colors.amber,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
+                  const WelcomeText(),
                   const SizedBox(height: 20),
-
-                  // Social Media Icons Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.google),
-                        onPressed: () {
-                          // Handle Google sign-in
-                        },
-                      ),
-                      IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.twitter),
-                        onPressed: () {
-                          // Handle Twitter sign-in
-                        },
-                      ),
-                      IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.linkedin),
-                        onPressed: () {
-                          // Handle LinkedIn sign-in
-                        },
-                      ),
-                      IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.github),
-                        onPressed: () {
-                          // Handle GitHub sign-in
-                        },
-                      ),
-                    ],
-                  ),
-
+                  const SocialMediaRow(),
                   const SizedBox(height: 30),
-
-                  // Divider with text "Or"
-                  const Row(
-                    children: [
-                      Expanded(child: Divider()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("Or"),
-                      ),
-                      Expanded(child: Divider()),
-                    ],
-                  ),
-
+                  const DividerWithText(),
                   const SizedBox(height: 20),
-
-                  // Email Form Field
                   emailFormWidget(widget.emailOfFormController),
-
                   const SizedBox(height: 20),
-
-                  // Password Form Field
                   passWrdFormWidget(widget.passwordOfFormController),
-
                   const SizedBox(height: 10),
-
-                  // Login Button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 100,
-                        vertical: 15,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        try {
-                          await authController.signInWithEmailAndPassword(
-                            widget.emailOfFormController.text.trim(),
-                            widget.passwordOfFormController.text.trim(),
-                          );
-                          if (authController.uid.isNotEmpty) {
-                            Get.toNamed("/shop");
-                          } else {
-                            Get.snackbar(
-                              'Something went wrong',
-                              'Check your credentials or sign up.',
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 3),
-                            );
-                          }
-                        } catch (e) {
-                          Get.snackbar(
-                            'Something went wrong',
-                            'Check your Internet connection',
-                            snackPosition: SnackPosition.BOTTOM,
-                            duration: const Duration(seconds: 3),
-                          );
-                        }
-                      }
-                    },
-                    child:  Text(
-                      'Login',
-                      style: TextStyle(color:Theme.of(context).colorScheme.onSurface),
-                    ),
+                  LoginButton(
+                    formKey: _formKey,
+                    authController: authController,
+                    emailController: widget.emailOfFormController,
+                    passwordController: widget.passwordOfFormController,
                   ),
-
                   const SizedBox(height: 10),
-
-                  // Forgot Password Link
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (widget.emailOfFormController.text.isNotEmpty) {
-                          await authController
-                              .resetPassword(widget.emailOfFormController.text.trim());
-                        } else {
-                          Get.snackbar(
-                            'Error',
-                            'Please enter your email to reset the password',
-                            snackPosition: SnackPosition.BOTTOM,
-                            duration: const Duration(seconds: 3),
-                          );
-                        }
-                      },
-                      child: const Text(
-                        "Forgot your password?",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          // decoration: TextDecoration.,
-                        ),
-                      ),
-                    ),
+                  ForgotPasswordLink(
+                    emailController: widget.emailOfFormController,
+                    authController: authController,
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Sign Up Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't have an account? "),
-                      GestureDetector(
-                        onTap: () => Get.to(() => Signup()),
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SignUpLink(),
                 ],
               ),
             ),
@@ -258,8 +80,7 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  TextFormField passWrdFormWidget(
-      TextEditingController passwordOfFormController) {
+  TextFormField passWrdFormWidget(TextEditingController passwordOfFormController) {
     return TextFormField(
       controller: passwordOfFormController,
       obscureText: _obscureText,
@@ -298,6 +119,238 @@ class _SignInState extends State<SignIn> {
         }
         return null;
       },
+    );
+  }
+}
+
+class LogoWithBorder extends StatelessWidget {
+  const LogoWithBorder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.yellow[700]!,
+          width: 3.0,
+        ),
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/img/campus-sell-favicon-color.png',
+          height: 80,
+          width: 80,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class WelcomeText extends StatelessWidget {
+  const WelcomeText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text(
+          "Welcome Back!",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        RichText(
+          text: TextSpan(
+            text: 'Sign in to ',
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 20),
+            children: const <TextSpan>[
+              TextSpan(
+                text: 'Continue',
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SocialMediaRow extends StatelessWidget {
+  const SocialMediaRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.google),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.twitter),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.linkedin),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.github),
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class DividerWithText extends StatelessWidget {
+  const DividerWithText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        Expanded(child: Divider()),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text("Or"),
+        ),
+        Expanded(child: Divider()),
+      ],
+    );
+  }
+}
+
+class LoginButton extends StatelessWidget {
+  const LoginButton({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required this.authController,
+    required this.emailController,
+    required this.passwordController,
+  }) : _formKey = formKey;
+
+  final GlobalKey<FormState> _formKey;
+  final AuthController authController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).primaryColor,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 100,
+          vertical: 15,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      onPressed: () async {
+        if (_formKey.currentState!.validate()) {
+          try {
+            await authController.signInWithEmailAndPassword(
+              emailController.text.trim(),
+              passwordController.text.trim(),
+            );
+            if (authController.uid.isNotEmpty) {
+              Get.toNamed("/shop");
+            } else {
+              Get.snackbar(
+                'Something went wrong',
+                'Check your credentials or sign up.',
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 3),
+              );
+            }
+          } catch (e) {
+            Get.snackbar(
+              'Something went wrong',
+              'Check your Internet connection',
+              snackPosition: SnackPosition.BOTTOM,
+              duration: const Duration(seconds: 3),
+            );
+          }
+        }
+      },
+      child: Text(
+        'Login',
+        style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+      ),
+    );
+  }
+}
+
+class ForgotPasswordLink extends StatelessWidget {
+  const ForgotPasswordLink({
+    super.key,
+    required this.emailController,
+    required this.authController,
+  });
+
+  final TextEditingController emailController;
+  final AuthController authController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () async {
+          if (emailController.text.isNotEmpty) {
+            await authController.resetPassword(emailController.text.trim());
+          } else {
+            Get.snackbar(
+              'Error',
+              'Please enter your email to reset the password',
+              snackPosition: SnackPosition.BOTTOM,
+              duration: const Duration(seconds: 3),
+            );
+          }
+        },
+        child: const Text(
+          "Forgot your password?",
+          style: TextStyle(
+            color: Colors.blue,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SignUpLink extends StatelessWidget {
+  const SignUpLink({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Don't have an account? "),
+        GestureDetector(
+          onTap: () => Get.to(() => Signup()),
+          child: const Text(
+            "Sign Up",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
