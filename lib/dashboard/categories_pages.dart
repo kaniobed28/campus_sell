@@ -1,28 +1,61 @@
-// Base CategoryPage class
 import 'package:campus_sell/dashboard/category_all_product_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   final RxList<Map<String, dynamic>> productList; // Replace `dynamic` with your actual product type
   final String categoryLabel;
 
   const CategoryPage({
-    super.key,
+    Key? key,
     required this.productList,
     required this.categoryLabel,
-  });
+  }) : super(key: key);
+
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    return 
-          CategoryAllProductsPage(
-                        productList: productList,
-                        categoryLabel: categoryLabel,
-                        showAppBar: false,
-                      )
-        
-    ;
+    return VisibilityDetector(
+      key: Key(widget.categoryLabel), // Ensure a unique key
+      onVisibilityChanged: (visibilityInfo) {
+        if (visibilityInfo.visibleFraction > 0 && !isVisible) {
+          setState(() => isVisible = true); // Trigger animation on visibility
+        }
+      },
+      child: Animate(
+        effects: [
+          FadeEffect(duration: 500.ms, curve: Curves.easeIn),
+          SlideEffect(
+            begin: const Offset(0, 0.2),
+            end: const Offset(0, 0),
+            duration: 500.ms, // Adjusted to match the fade duration
+          ),
+          RotateEffect(
+            begin: 0.05, // Start at 0 degrees
+            end: 0.0, // End at 5 degrees
+            duration: 500.ms, // Duration to match fade
+            curve: Curves.easeIn, // Optional: use a curve
+          ),
+        ],
+        child: AnimatedOpacity(
+          opacity: isVisible ? 1.0 : 0.0, // Fade in and out
+          duration: 500.ms,
+          child: CategoryAllProductsPage(
+            productList: widget.productList,
+            categoryLabel: widget.categoryLabel,
+            showAppBar: false,
+          ),
+        ),
+      ),
+    );
   }
 }
 
