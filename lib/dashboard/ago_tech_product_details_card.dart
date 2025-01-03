@@ -1,32 +1,10 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/controllers/is_owner_controller.dart';
-import 'package:campus_sell/reusable_widgets/item_editable_widgets.dart';
+import 'package:campus_sell/dashboard/product_card_builds.dart';
 import 'package:campus_sell/reusable_widgets/more_details_page.dart';
+import 'package:campus_sell/follow/controllers/follow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
-
-class CopyIconButton extends StatelessWidget {
-  final String value;
-  final String label;
-
-  const CopyIconButton({
-    Key? key,
-    required this.value,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.copy, color: Colors.blueAccent),
-      onPressed: () {
-        Clipboard.setData(ClipboardData(text: value));
-        Get.snackbar("Copied", "$label copied to clipboard");
-      },
-    );
-  }
-}
 
 class AgoTechProductDetailsCard extends StatelessWidget {
   final String title;
@@ -35,15 +13,16 @@ class AgoTechProductDetailsCard extends StatelessWidget {
   final String brandName;
   final String phone;
   final String city;
-  final String hostel; // hostel is the same as address. its hostel or address
+  final String hostel;
   final String university;
   final String itemType;
   final String socialMedia;
   final String ownerId;
   final String itemId;
 
-  const AgoTechProductDetailsCard({
-    Key? key,
+
+   const AgoTechProductDetailsCard({
+    super.key,
     required this.title,
     required this.description,
     required this.price,
@@ -56,206 +35,91 @@ class AgoTechProductDetailsCard extends StatelessWidget {
     required this.socialMedia,
     required this.ownerId,
     required this.itemId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController itemNameController = TextEditingController();
-    final TextEditingController itemPriceController = TextEditingController();
-    final TextEditingController itemDescriptionController = TextEditingController();
-    final RegExp itemNameRegExp = RegExp(r'^[a-zA-Z0-9\s]+$');
-    final RegExp itemPriceRegExp = RegExp(r'^\d+(\.\d+)?$');
-    final RegExp itemDescriptionRegExp = RegExp(r'^[\p{L}\p{N}\p{P}\p{S}\s]+$', unicode: true);
-
+    final FollowController followController = Get.put(FollowController());
     final IsOwnerController isOwnerController = Get.find<IsOwnerController>();
     final AuthController authController = Get.find<AuthController>();
+
+    // Initialize data
+    followController.getShopFollowers(ownerId);
     isOwnerController.isShopItemOwner(authController.uid.value, ownerId);
+    followController.checkIfFollowing(ownerId);
 
     return Card(
-      color: const Color(0xffffffff),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-      ),
       elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Title and Edit Button
+          children: [
+            // Title and Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
+                Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (isOwnerController.isOwner)
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      Get.defaultDialog(
-                        title: "Edit Name",
-                        content: ItemEditForm(
-                          itemId: itemId,
-                          textController: itemNameController,
-                          validationPattern: itemNameRegExp,
-                          fieldName: 'itemName',
-                        ),
-                        textCancel: "Cancel",
-                      );
-                    },
-                  ),
+                // Pass `isOwner` to the widget to show edit button or chat button
+                ProductDetailWidgets.buildEditProductName(isOwnerController.isOwner, ownerId),
               ],
             ),
-            const SizedBox(height: 5.0),
-            
-            // Description and Edit Button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    description,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ),
-                if (isOwnerController.isOwner)
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      Get.defaultDialog(
-                        title: "Edit Description",
-                        content: ItemEditForm(
-                          itemId: itemId,
-                          textController: itemDescriptionController,
-                          validationPattern: itemDescriptionRegExp,
-                          fieldName: 'description',
-                        ),
-                        textCancel: "Cancel",
-                      );
-                    },
-                  ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            
-            // Brand Name and Copy Button
-            Row(
-              children: <Widget>[
-                Icon(Icons.add_business_sharp, color: Colors.grey[600]),
-                const SizedBox(width: 5.0),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed("/shop/shopitems/$ownerId");
-                          },
-                          child: Text(
-                            brandName,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey[600],
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                      CopyIconButton(value: brandName, label: 'Brand Name'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            
-            // Price and Copy Button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: <Widget>[
-                    Icon(Icons.sell, color: Colors.grey[600]),
-                    const SizedBox(width: 5.0),
-                    Text(
-                      "Gh¢ $price",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-                CopyIconButton(value: price, label: 'Price'),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            
-            // Phone Number and Copy Button
-            Row(
-              children: <Widget>[
-                Icon(Icons.phone, color: Colors.grey[600]),
-                const SizedBox(width: 5.0),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          phone,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey[600],
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      CopyIconButton(value: phone, label: 'Phone'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            
-            // More Details Button
-            _buildMoreDetailsButton(context),
-          ],
-        ),
-      ),
-    );
-  }
+            const SizedBox(height: 8.0),
 
-  Widget _buildMoreDetailsButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () {
-          Get.to(() => MoreDetailsPage(
-            title: title,
-            brandName: brandName,
-            price: price,
-            phone: phone,
-            city: city,
-            hostel: hostel,
-            university: university,
-            itemType: itemType,
-            socialMedia: socialMedia,
-          ));
-        },
-        child: const Text(
-          'More Details',
-          style: TextStyle(color: Colors.blueAccent),
+            // Description with Dropdown Effect
+            ProductDetailWidgets.buildDescriptionSection(description, ),
+            const SizedBox(height: 12.0),
+
+            // Brand Name and Follow Section
+            ProductDetailWidgets.buildBrandAndFollowSection(
+                brandName, ownerId, followController, ),
+            const SizedBox(height: 12.0),
+
+            // Price Section
+            ProductDetailWidgets.buildPriceSection(price,),
+            const SizedBox(height: 12.0),
+
+            // Phone Number Section
+            ProductDetailWidgets.buildPhoneSection(phone, ),
+            const SizedBox(height: 12.0),
+
+            // More Details Button
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.to(() => MoreDetailsPage(
+                    title: title,
+                    brandName: brandName,
+                    price: price,
+                    phone: phone,
+                    city: city,
+                    hostel: hostel,
+                    university: university,
+                    itemType: itemType,
+                    socialMedia: socialMedia,
+                  ));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "More Details",
+                  style: TextStyle(fontSize: 16.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

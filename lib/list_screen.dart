@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:campus_sell/controllers/device_controller.dart';
+import 'package:campus_sell/qr_code_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
+import 'package:campus_sell/share_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import for QuerySnapshot
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/reusable_widgets/custom_bottom_navbar.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +17,6 @@ import 'package:share_plus/share_plus.dart';
 import '../controllers/delete_controller.dart';
 
 class ListScreen extends StatefulWidget {
-
   ListScreen({super.key});
 
   @override
@@ -22,18 +27,14 @@ class _ListScreenState extends State<ListScreen> {
   final DeleteController deleteController = Get.put(DeleteController());
 
   final RxString shopName = "".obs;
+  RxBool isLoading = false.obs; // Observable for loading state
 
   final AuthController authController = Get.find<AuthController>();
+  final QRCodeController qrCodeController = Get.put(QRCodeController());
 
   final DeviceController deviceController = Get.find<DeviceController>();
+  final ShareController shareController = Get.find<ShareController>();
 
-// @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       authController.checkAuthentication();
-//     });
-//   }
   @override
   Widget build(BuildContext context) {
     final String? shopId = Get.parameters["id"];
@@ -41,7 +42,8 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.home, color: Colors.black),
+          icon:
+              Icon(Icons.home, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () {
             Get.offAllNamed('/'); // Navigate to home and clear the stack
           },
@@ -50,20 +52,32 @@ class _ListScreenState extends State<ListScreen> {
           () => Text(
             shopName.value,
             style: GoogleFonts.aclonica(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 22,
             ),
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFFBD300),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.share, color: Colors.black),
+            icon: Icon(Icons.share,
+                color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
-              String shopUrl = "https://campussell.github.io/#/shop/shopitems/$shopId";
+              String shopUrl =
+                  "https://campussell.github.io/#/shop/shopitems/$shopId";
               Share.share('Check out this shop: $shopUrl');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.qr_code,
+                color: Theme.of(context).colorScheme.onSurface),
+            onPressed: () {
+              String shopUrl =
+                  "https://campussell.github.io/#/shop/shopitems/$shopId";
+              qrCodeController.generateAndDownloadQRCode(
+                  shopUrl, 'shop_qr_code', context);
             },
           ),
         ],
@@ -76,7 +90,10 @@ class _ListScreenState extends State<ListScreen> {
         stream: deleteController.listForShopItems(shopId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
+            return const Center(
+              child: CustomImageLoader(
+                  imagePath: "assets/img/campus-sell-favicon-color.png"),
+            );
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -89,15 +106,18 @@ class _ListScreenState extends State<ListScreen> {
           return ListView.separated(
             padding: const EdgeInsets.all(8.0),
             itemCount: items.length,
-            separatorBuilder: (context, index) => Divider(color: Colors.grey[300]),
+            separatorBuilder: (context, index) =>
+                Divider(color: Colors.grey[300]),
             itemBuilder: (context, index) {
               Map<String, dynamic> data = items[index].data();
               String id = items[index].id;
 
-              String description = data["description"] ?? "Check out this item!";
-              String url = "https://campussell.github.io/#/shopitems/itemcode/$id";
-              String contentToShare = "$description\n\n$url";
-              
+              String description =
+                  data["description"] ?? "Check out this item!";
+              String url =
+                  "https://campussell.github.io/#/shopitems/itemcode/$id";
+              String contentToShare = "${data['itemName']}\n$url\n$description";
+
               // Call this after the tree has finished building
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (data["ownerId"] != authController.uid.value) {
@@ -131,17 +151,33 @@ class _ListScreenState extends State<ListScreen> {
                     ),
                   ),
                   subtitle: Text(
-                    "GH¢ ${data["price"].toString()}",
+                    "Gh¢${data["price"].toString()}",
                     style: GoogleFonts.average(
                       color: Colors.grey[700],
                       fontSize: 14,
                     ),
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.share, color: Colors.blue),
-                    onPressed: () {
-                      Share.share(contentToShare);
-                    },
+                  trailing: 
+                  
+                  Obx((){
+                    return IconButton(
+                      icon: isLoading.value 
+                            ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onSurface)
+                            : Icon(Icons.share, color: Theme.of(context).colorScheme.onSurface),
+                      onPressed: () async {
+                        // because of some difficulties I am sending with images when only I am not on web. This should be changed in the future.
+                        isLoading.value = true; // Show loading icon
+                          try {
+                            if (!kIsWeb) {
+                              await shareController.shareWithImage(data["imagesUrls"][0], contentToShare);
+                            } else {
+                              await Share.share(contentToShare);
+                            }
+                          } finally {
+                            isLoading.value = false; // Hide loading icon
+                          }
+                      },
+                    );}
                   ),
                   onTap: () {
                     Get.toNamed('/shopitems/itemcode/$id');
@@ -175,7 +211,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            'There are no items in this shop.Consider adding to your shop!',
+            'There are no items in this shop. Consider adding to your shop!',
             style: GoogleFonts.average(
               fontSize: 16,
               color: Colors.grey[500],

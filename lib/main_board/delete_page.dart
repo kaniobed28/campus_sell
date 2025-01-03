@@ -1,6 +1,6 @@
 import 'package:campus_sell/auth/controllers/auth_controller.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
 import 'package:campus_sell/reusable_widgets/custom_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkAuthentication();
+      authController.checkAuthentication(context);
     });
   }
 
@@ -29,99 +29,101 @@ class _DeleteScreenState extends State<DeleteScreen> {
   Widget build(BuildContext context) {
     DeleteController deleteController = Get.put(DeleteController());
 
-    return Scaffold(
-      appBar: const CustomAppBar(),
-      endDrawer: DrawerWidget(
-        authController: authController,
-      ),
-      body: StreamBuilder(
-        stream: deleteController.listForShopItems(authController.uid.value),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return _buildEmptyList();
-          }
-
-          final items = snapshot.data!.docs;
-          return ListView.separated(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: items.length,
-            separatorBuilder: (context, index) =>
-                Divider(color: Colors.grey[300]),
-            itemBuilder: (context, index) {
-              Map<String, dynamic> data = items[index].data();
-              return Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(16.0),
-                  leading: const CircleAvatar(
-                    backgroundColor: Colors.deepOrangeAccent,
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar:  CustomAppBar(elevation: 5,),
+        endDrawer: DrawerWidget(
+          authController: authController,
+        ),
+        body: StreamBuilder(
+          stream: deleteController.listForShopItems(authController.uid.value),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CustomImageLoader(imagePath: "assets/img/campus-sell-favicon-color.png"),);
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return _buildEmptyList();
+            }
+      
+            final items = snapshot.data!.docs;
+            return ListView.separated(
+              padding: const EdgeInsets.all(8.0),
+              itemCount: items.length,
+              separatorBuilder: (context, index) =>
+                  Divider(color: Colors.grey[300]),
+              itemBuilder: (context, index) {
+                Map<String, dynamic> data = items[index].data();
+                return Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    leading: const CircleAvatar(
+                      backgroundColor: Colors.deepOrangeAccent,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text(
+                      data["itemName"],
+                      style: GoogleFonts.average(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      data["itemType"],
+                      style: GoogleFonts.average(color: Colors.grey[700]),
+                    ),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Gh¢ ${data["price"].toString()}",
+                          style: GoogleFonts.average(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Flexible(
+                          child: IconButton(
+                            icon:
+                                const Icon(Icons.delete, color: Colors.redAccent),
+                            onPressed: () {
+                              Get.defaultDialog(
+                                title: "Confirm Delete",
+                                middleText:
+                                    "Are you sure you want to delete this item?",
+                                textConfirm: "Yes",
+                                textCancel: "No",
+                                confirmTextColor: Colors.white,
+                                onCancel: () {
+                                  Get.back();
+                                },
+                                onConfirm: () {
+                                  items[index].reference.delete();
+                                  Get.back();
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  title: Text(
-                    data["itemName"],
-                    style: GoogleFonts.average(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    data["itemType"],
-                    style: GoogleFonts.average(color: Colors.grey[700]),
-                  ),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "GH¢ ${data["price"].toString()}",
-                        style: GoogleFonts.average(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Flexible(
-                        child: IconButton(
-                          icon:
-                              const Icon(Icons.delete, color: Colors.redAccent),
-                          onPressed: () {
-                            Get.defaultDialog(
-                              title: "Confirm Delete",
-                              middleText:
-                                  "Are you sure you want to delete this item?",
-                              textConfirm: "Yes",
-                              textCancel: "No",
-                              confirmTextColor: Colors.white,
-                              onCancel: () {
-                                Get.back();
-                              },
-                              onConfirm: () {
-                                items[index].reference.delete();
-                                Get.back();
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

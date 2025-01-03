@@ -4,7 +4,8 @@ import 'package:campus_sell/controllers/device_controller.dart';
 import 'package:campus_sell/dashboard/data_lists.dart';
 import 'package:campus_sell/dashboard/drawer.dart';
 import 'package:campus_sell/reusable_widgets/constants.dart';
-import 'package:campus_sell/reusable_widgets/custom_appbar.dart';
+import 'package:campus_sell/main_board/custom_appbar/views/custom_appbar.dart';
+import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   final ImageController imageController2 = Get.put(ImageController());
   final DeviceController deviceController = Get.find<DeviceController>();
    AuthController authController = Get.find<AuthController>();
+  //  ViewController viewController = Get.find<ViewController>();
   RxInt totalImages = 0.obs;
   RxBool uploading = false.obs;
 
@@ -56,7 +58,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkAuthentication();
+      authController.checkAuthentication(context);
     });
   }
 
@@ -73,7 +75,7 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController,),
-        appBar: const CustomAppBar(),
+        appBar:  CustomAppBar(elevation: 5,),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Obx(
@@ -202,10 +204,10 @@ class _AgoTechSellScreenState extends State<AgoTechSellScreen> {
 
                                 ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                    backgroundColor: WidgetStateProperty.all<Color>(
                                       const Color(0xFFFBD300),
                                     ),
-                                    foregroundColor: MaterialStateProperty.all<Color>(
+                                    foregroundColor: WidgetStateProperty.all<Color>(
                                         Colors.black),
                                   ),
                                   onPressed: () async {

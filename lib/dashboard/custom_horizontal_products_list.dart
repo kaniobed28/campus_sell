@@ -1,31 +1,96 @@
+import 'package:campus_sell/dashboard/category_all_product_page.dart';
 import 'package:campus_sell/reusable_widgets/custom_category_lable.dart';
 import 'package:campus_sell/reusable_widgets/custom_small_product_card.dart';
+import 'package:campus_sell/viewers/controllers/viewers_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart'; // Import the package
 import 'package:get/get.dart';
 
 class CustomHorizontalProductsList extends StatelessWidget {
   final RxList<Map<String, dynamic>> lists;
-  final String categoryLable;
-  const CustomHorizontalProductsList(
-      {super.key, required this.lists, required this.categoryLable});
+  final String categoryLabel;
+
+  const CustomHorizontalProductsList({
+    super.key,
+    required this.categoryLabel,
+    required this.lists,
+  });
 
   @override
   Widget build(BuildContext context) {
+    ViewController viewController = Get.find<ViewController>();
     return Obx(
-      //because the column was not observable it was not able to get the data because I think by the time the data base is quering the thing it
-      //the widget has already initialized.
       () => Visibility(
-        visible: lists.isNotEmpty, //I am checking if the list of the product is not empty then I will show it
+        visible: lists.isNotEmpty, // Show only if the list is not empty
         child: Column(
           children: [
-            CustomCategoryLable(textLable: categoryLable),
+            Slidable(
+              key: ValueKey(categoryLabel),
+              startActionPane: ActionPane(
+                motion: const ScrollMotion(), // Slideable motion type
+                children: [
+                  SlidableAction(
+                    
+                    onPressed: (context) {
+                      // Trigger action when sliding
+                       Get.to(
+                        duration: const Duration(milliseconds: 500),
+                        transition:Transition.downToUp,
+                        CategoryAllProductsPage(
+                        productList: lists,
+                        categoryLabel: categoryLabel,
+                        
+                      ));
+                    },
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                    icon: Icons.arrow_drop_down,
+                    label: 'See All',
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomCategoryLabel(
+                      textLabel: categoryLabel,
+                      backgroundColor: Colors.teal, // Custom color
+                      textColor: Colors.white,
+                      padding: 12.0,
+                      borderRadius: 16.0,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to a new page showing all items in the category
+                      Get.to(
+                        duration: const Duration(milliseconds: 500),
+                        transition:Transition.cupertino,
+                        CategoryAllProductsPage(
+                        productList: lists,
+                        categoryLabel: categoryLabel,
+                      ));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "See All",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
-              height:
-                  225, //I managed the sizes of the cards here and I think it can be changed but 225 makes it not overflow as at now.
+              height: 225, // Card size
               child: ListView.builder(
-                //the idea behind this builder is, I am receiveing a stream which I have made as a controller and initialized it in the main and finding it here so that I wouldnt be fetching it all the time to reduce cost.
-                //the stream is stored in a rxlist when fetching the data and I use the list everywhere
-                //so here what I am doing is,I am targeting each list and fetching the data that is a map from them.
                 scrollDirection: Axis.horizontal,
                 itemCount: lists.length,
                 itemBuilder: (context, index) {
@@ -33,11 +98,13 @@ class CustomHorizontalProductsList extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (data['id'] != null) {
-                          Get.toNamed("/shopitems/itemcode/${data['id']}");
+                          await Get.toNamed("/shopitems/itemcode/${data['id']}");
+                          await viewController.markItemAsViewedByUser(data['id']);
+                          await viewController.markItemAsViewed(data['id'], data['ownerId']);
                         } else {
-                          //I will handle the case when 'id' is null
+                          // Handle the case when 'id' is null
                         }
                       },
                       child: SmallProductCard(
@@ -48,10 +115,9 @@ class CustomHorizontalProductsList extends StatelessWidget {
                       ),
                     ),
                   );
-                  //  Text("${data["price"]}");
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -100,16 +100,27 @@ class Streamer extends GetxController {
   });
 }
 
+// Sort the list from highest to lowest based on the combined number of likes and viewby
+List<Map<String, dynamic>> _sortByArrayLength(List<Map<String, dynamic>> list) {
+  list.sort((a, b) {
+    int aLikes = (a['likes'] as List<dynamic>).length;
+    int bLikes = (b['likes'] as List<dynamic>).length;
+    
+    int aViewby = (a['viewedBy'] as List<dynamic>).length;
+    int bViewby = (b['viewedBy'] as List<dynamic>).length;
 
-  // Sort the list from highest to lowest based on the number of likes
-  List<Map<String, dynamic>> _sortByArrayLength(List<Map<String, dynamic>> list) {
-    list.sort((a, b) {
-      int aLength = (a['likes'] as List<dynamic>).length;
-      int bLength = (b['likes'] as List<dynamic>).length;
-      return bLength.compareTo(aLength);
-    });
-    return list;
-  }
+    // Combine likes and viewby
+    int aTotal = aLikes + aViewby;
+    int bTotal = bLikes + bViewby;
+
+    // Sort based on the combined total of likes and viewby
+    return bTotal.compareTo(aTotal);
+  });
+  return list;
+}
+
+
+
 
   void unsubscribe() {
     subscription?.pause();

@@ -18,6 +18,15 @@ class NameForm extends StatelessWidget {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
         ),
       ),
     );
@@ -43,6 +52,15 @@ class DescriptionForm extends StatelessWidget {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
         ),
       ),
     );
@@ -68,6 +86,15 @@ class PriceForm extends StatelessWidget {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
         ),
       ),
     );
@@ -96,7 +123,18 @@ class CustomDropdownButtonFormField extends StatelessWidget {
       },
       decoration: InputDecoration(
         labelText: labelText,
-        border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderSide: BorderSide(color: Colors.black),  // Set border color to black
+        ),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {

@@ -9,7 +9,7 @@ class CustomFormLable extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Align(
       alignment: Alignment.topLeft,
-      child: Text(textLable,style: GoogleFonts.poppins(textStyle: Theme.of(context).textTheme.labelSmall,
+      child: Text(textLable,style: GoogleFonts.poppins(color: Colors.black,textStyle: Theme.of(context).textTheme.labelSmall,
         
       )),
     );

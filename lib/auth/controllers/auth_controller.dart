@@ -1,7 +1,7 @@
 import 'package:campus_sell/auth/views/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart'; // Add this to use Colors
+import 'package:flutter/material.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,66 +23,71 @@ class AuthController extends GetxController {
     });
   }
 
-  // Method to check authentication and show dialog if not authenticated
-  void checkAuthentication() {
-  if (isAuthenticated.isFalse) {
-    Get.defaultDialog(
-      title: "Authentication Required",
-      titleStyle: const TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-        color: Colors.black87,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.lock_outline,
-            color: Colors.redAccent,
-            size: 50,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "Please log in to access this page.",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[700],
+  void checkAuthentication(BuildContext context, {String? cancelRoute}) {
+    if (isAuthenticated.isFalse) {
+      Get.defaultDialog(
+        title: "Authentication Required",
+        titleStyle:  TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.lock_outline,
+              color: Colors.redAccent,
+              size: 50,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-      barrierDismissible: false, // Prevent dismissal by tapping outside
-      radius: 10, // Rounded corners for the dialog
-      confirm: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+            const SizedBox(height: 10),
+            Text(
+              "Please log in to access this page.",
+              style: TextStyle(
+                fontSize: 16,
+                color:Theme.of(context).colorScheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        icon: const Icon(Icons.login, color: Colors.black),
-        label: const Text("Login",style:  TextStyle(color: Colors.black),),
-        onPressed: () {
-          Get.to(() => SignIn()); // Redirect to login page
-        },
-      ),
-      cancel: OutlinedButton.icon(
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.redAccent), // Border color
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+        barrierDismissible: cancelRoute != null, // Make dismissible if route is provided
+        radius: 10, // Rounded corners for the dialog
+        confirm: ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.surface ,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
+          icon: Icon(Icons.login, color: Theme.of(context).colorScheme.onSurface),
+          label:  Text("Login", style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+          onPressed: () {
+            Get.to(() => SignIn()); // Redirect to login page
+          },
         ),
-        icon: const Icon(Icons.cancel, color: Colors.redAccent),
-        label: const Text("Cancel", style: TextStyle(color: Colors.redAccent)),
-        onPressed: () {
-          Get.toNamed("/"); // Close the dialog
-        },
-      ),
-    );
+        cancel: OutlinedButton.icon(
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.redAccent), // Border color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          icon: const Icon(Icons.cancel, color: Colors.redAccent),
+          label: const Text("Cancel", style: TextStyle(color: Colors.redAccent)),
+          onPressed: () {
+            Get.back(); // Close the dialog
+            // Navigate to provided route or home if null
+            if (cancelRoute != null) {
+              Get.toNamed(cancelRoute); // Navigate to the provided route
+            } else {
+              Get.toNamed('/'); // Navigate to the home route
+            }
+          },
+        ),
+      );
+    }
   }
-}
-
 
   Future<User?> signInWithEmailAndPassword(String email, String password) async {
     try {
