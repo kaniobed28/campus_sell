@@ -28,7 +28,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: height,
           color: Theme.of(context).primaryColor,
           child: AppBar(
-            title: Text(appBarTitle ?? '',style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+            title: Text(
+              appBarTitle ?? '',
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+            ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: Padding(
@@ -51,13 +54,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             actions: [
               Obx(() => IconButton(
-                icon: Icon(themeController.isDarkMode.value
-                    ? Icons.dark_mode
-                    : Icons.light_mode),
+                    icon: Icon(themeController.isDarkMode.value
+                        ? Icons.dark_mode
+                        : Icons.light_mode),
+                    onPressed: () {
+                      themeController.toggleTheme();
+                    },
+                  )),
+              IconButton(
+                icon: const Icon(Icons.notifications),
                 onPressed: () {
-                  themeController.toggleTheme();
+                  // Handle notification icon tap
+                  Get.toNamed('/notifications'); // Replace with your notification screen route
                 },
-              )),
+              ),
               IconButton(
                 icon: const Icon(Icons.menu),
                 onPressed: () {

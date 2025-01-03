@@ -28,7 +28,6 @@ class CategoryAllProductsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         endDrawer: DrawerWidget(authController: authController),
-        drawer: DrawerWidget(authController: authController),
 
         // Conditionally show AppBar based on showAppBar value
         appBar: showAppBar == true 
